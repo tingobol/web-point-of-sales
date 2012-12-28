@@ -144,7 +144,7 @@ $lok=explode(",",$this->zetro_auth->cek_area());
 <input type='hidden' id='aktif' value=''/>
 <input type='hidden' id='stat_sim' value=''/>
 <input type='hidden' id='aktif_user' value='<?=$this->session->userdata('idlevel');?>'/>
-<input type='hidden' id='id_lok' value=<?=(count($lok)>1)?current($lok):$lok;?>/>
+<input type='hidden' id='id_lok' value=<?=(count($lok)>0)?current($lok):$lok;?>/>
 <script language="javascript">
 $(document).ready(function(e) {
     $('#cbayare').html("<? dropdown('inv_penjualan_jenis','ID','Jenis_Jual',"where ID not in ('3','5') order by ID",'1');?>");

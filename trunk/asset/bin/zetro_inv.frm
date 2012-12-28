@@ -15,7 +15,7 @@
 5|Satuan Jual,input,text n,nm_satuan,S35 upper,,5%,,,,15
 ;6|Expire Date,input, date t,expired,w35,,8%
 6|Harga Beli,input,text d,stokmin,w35 angka,0,7%,10
-7|Harga Jual,input,text d,stokmax,w35 angka,0,7%,10
+7|Harga Toko,input,text d,stokmax,w35 angka,0,7%,10
 8|Minimum Stock,input,text d,stoklimit,w25 angka,,5%,10
 9|,input,hidden n,status_barang,w35 upper,Continue,,10
 
@@ -27,7 +27,7 @@
 5|Satuan Jual,input,text n,nm_satuan,S35 upper,,5%,,,,15
 6|Total Stock,input,text n,expired,w35,,10%,,15
 7|Harga Beli,input,text d,stokmin,w35 angka,0,7%,10
-8|Harga Jual,input,text d,stokmax,w35 angka,0,7%,10
+8|Harga Toko,input,text d,stokmax,w35 angka,0,7%,10
 9|Minimum Stock,input,text d,stoklimit,w25 angka,,5%,10
 
 [Harga Beli]

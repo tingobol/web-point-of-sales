@@ -10,6 +10,8 @@ class Report extends CI_Controller
 		$this->load->model("purch_model");
 		$this->load->helper("print_report");
 		$this->load->library("zetro_auth");
+		$this->load->library("printer");
+		$this->load->library("ThreeCore_Output_CLI");
 		$this->userid=$this->session->userdata('idlevel');
 	  }
 	
@@ -142,8 +144,22 @@ class Report extends CI_Controller
 		$this->View('laporan/transaksi/lap_mutasi');
 	}
 	function print_laporan_mutasi(){
-		//$handle=("\\\\192.168.1.115\Epson LX");
-		//echo printer_list();
+		$data=array();$where='';$orderby='';
+		$where=($this->input->post('sampai_tgl')=='')?
+				"where Tanggal='".tglToSql($this->input->post('dari_tgl'))."'":
+				"where Tanggal between '".tglToSql($this->input->post('dari_tgl'))."' and '".tglToSql($this->input->post('sampai_tanggal'));
+		$where.=($this->input->post('id_lok')=='')?'':" and ID_Lokasi_asal='".$this->input->post('id_lok')."'";
+		$orderby="order by ".$this->input->post('orderby');
+		$orderby.=($this->input->post('orderby')=='')?'':" ".$this->input->post('urutan');
+		//---------------------
+		$data['lokasi']	=($this->input->post('id_lok')=='')?'All':rdb('user_lokasi','lokasi','lokasi',"where ID='".$this->input->post('id_lok')."'");
+		$data['dari']	=$this->input->post('dari_tgl');
+		$data['sampai']	=$this->input->post('sampai_tgl');
+		$data['temp_rec']=$this->Admin_model->show_list('inv_mutasi_stock',$where);
+		$this->zetro_auth->menu_id(array('trans_beli'));
+		$this->list_data($data);
+		$this->View("laporan/transaksi/lap_mutasi_print");
+		
 	}
 	function lap_penjualan(){
 		$data=array();$where='';

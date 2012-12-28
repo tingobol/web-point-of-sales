@@ -164,7 +164,7 @@ $(document).ready(function(e) {
 				function(result){
 					keluar();
 					$.post(path+'inventory/show_list',{
-						'id'		:$('#plh_kategori').val(),
+						'id'		:$('#plh').val(),
 						'id_jenis'	:$('#plh_jenis').val(),
 						'stat'		:$('#plh_stat').val(),
 						'cari'		:$('#plh_cari').val()
@@ -420,7 +420,7 @@ $(document).ready(function(e) {
 			})
 		$('#frm9 #nm_jenis')
 			.focus(function(){
-				($(this).val()=='')? $('#frm9 #nm_kategori').focus().select:'';
+				//($(this).val()=='')? $('#frm9 #nm_kategori').focus().select:'';
 			})
 			.coolautosuggest({
 				url	:'get_jenis?limit=8&str=',
@@ -604,7 +604,7 @@ function on_clicked(id,fld,frm){
 }
 function _show_data(){
 	var path=$('#path').val()
-		show_indicator('ListTable','11');
+		show_indicator('ListTable','12');
 		$('plh_cari').val('')
 		$.post(path+'inventory/show_list',{
 			'id'		:$('#plh').val(),

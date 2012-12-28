@@ -38,6 +38,7 @@
  * @param	integer
  * @return	string
  */
+ 
 if ( ! function_exists('heading'))
 {
 	function heading($data = '', $h = '1', $attributes = '')
@@ -511,6 +512,19 @@ if (! function_exists('td')){
 if (! function_exists('aksi')){
 	function aksi($img_name,$id='edit',$title='click for edit data',$onClick=''){
 		return "<img src='".base_url().$img_name."' title='$title' onclick=\"".$onClick."\"/>";	
+	}
+}
+if (! function_exists('submite')){
+	function submit($field,$kosong=false){
+		$data= '$this->input->post("'.$field.'")';
+		return $data;
+	}
+
+	function post($field,$kosong=false){
+		return $_POST[$field];
+	}
+	function get($field,$kosong=false){
+		return $_GET[$field];
 	}
 }
 /* End of file html_helper.php */

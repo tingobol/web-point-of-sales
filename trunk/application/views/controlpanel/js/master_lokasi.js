@@ -48,6 +48,7 @@ function _show_data(){
 			cek_lok_server();
 			cekAsServer();
 			$('table#ListTable tbody').html(result);
+			$('table#ListTable').fixedHeader({'width':(screen.width-300),'height':270});
 		})
 }
 
