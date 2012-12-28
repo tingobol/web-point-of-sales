@@ -2,8 +2,10 @@
 
 class zetro_slip{
 	public $path;
-	function __construct($path=''){
-		$this->path=$path;
+	public $sessi;
+	function __construct($sessi=''){
+		$this->sessi=$sessi;
+		 
 	}
 	function namafile($filename){
 		$this->filename=$filename;
@@ -23,14 +25,20 @@ class zetro_slip{
 		$this->model=$model;	
 	}
 	
-	function create_file($nm=true){
-		$newfile=fopen($this->path.'_slip.txt',$this->model);
+	function create_file($nm=true,$printer_name=''){
+		$dir=sys_get_temp_dir();
+		$file=tempnam($dir,$this->sessi.'_slip');
+		$newfile=fopen($file,$this->model);
 		if ($nm==true){ fwrite($newfile,$this->newline());}
 		foreach($this->isifile as $data){
 		fwrite($newfile,$data);
 		}
 		if ($nm==true){ fwrite($newfile,$this->newline());}
 		fclose($newfile);
+		copy($file,$printer_name);
+		unlink($file);
+		echo $file."=".$printer_name;
+	
 	}
 	function content($isifile=array()){
 		$this->isifile=$isifile;

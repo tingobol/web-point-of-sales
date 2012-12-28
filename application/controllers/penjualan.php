@@ -297,14 +297,14 @@ class Penjualan extends CI_Controller{
 		redirect('penjualan/index');
 	}
 	function print_slip(){
-		$this->zetro_slip->path=$this->session->userdata('userid');
+		$this->zetro_slip->sessi=$this->session->userdata('userid');
 		$this->zetro_slip->modele('wb');
 		$this->zetro_slip->newline();
 		$this->no_transaksi($_POST['no_transaksi']);
 		$this->tanggal(tgltoSql($_POST['tanggal']));
 		$this->zetro_slip->content($this->struk_header());
-		$this->zetro_slip->create_file();
-		$this->re_print();
+		$this->zetro_slip->create_file(true,"Bullzip PDF Printer");
+		//$this->zetro_slip->print_to_printer('');
 		//$this->index();
 	}
 	function struk_header(){
@@ -415,6 +415,9 @@ class Penjualan extends CI_Controller{
 	function re_print(){
 		system("print ".$this->session->userdata('userid')."_slip.txt");
 		system("close");
+		$tmpdir=sys_get_temp_dir();
+		
+		//copy($file, "//localhost/xprinter");  # Lakukan cetak
 	}
 	//simpan komposisi resep
 	function stock_resep(){

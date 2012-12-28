@@ -3,22 +3,15 @@
 		  $a=new reportProduct();
 		  $zn=new zetro_manager();
 		  $nfile='asset/bin/zetro_neraca.frm';
-		  //$a->Header();
 		  $a->setKriteria("transkip");
-		  $a->setNama("REKAP PEMAKAIAN BARANG");
-		  $a->setSection("pemakaian");
-		  $a->setFilter(array($dari ." s/d ".$sampai));
-		  $a->setReferer(array('Periode'));
+		  $a->setNama("REKAP MUTASI BARANG");
+		  $a->setSection("mutasi");
+		  $a->setFilter(array(empty($sampai)?$dari:$dari ." s/d ".$sampai));
+		  $a->setReferer(array('Periode Tanggal'));
 		  $a->setFilename($nfile);
 		  $a->AliasNbPages();
 		  $a->AddPage("L","A4");
-	
 		  $a->SetFont('Arial','',10);
-		  //echo $a->getColWidth();
-		  // set lebar tiap kolom tabel transaksi
-		 // $a->SetWidths(array(10,25,60,20,15,25));
-		 $lebar=width_kol_pdf('pemakaian',$nfile);
-		 echo $lebar;
 		  $a->SetWidths(array(10,20,30,60,20,20,25,30,60));
 		  // set align tiap kolom tabel transaksi
 		  $a->SetAligns(array("C","C","C","L","L","R","R","R","L"));
