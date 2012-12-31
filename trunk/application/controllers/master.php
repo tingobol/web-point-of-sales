@@ -222,31 +222,39 @@ class Master extends CI_Controller {
 	}
 	function list_kas_harian(){
 		$data=array();	
-		$data=array();$n=0;
+		$data=array();$n=0;$total=0;
 		$lokasi=empty($_POST['lokasi'])?'':" and id_lokasi='".$_POST['lokasi']."' ";
-		$data=$this->Admin_model->show_list('mst_kas_harian',"where month(tgl_kas)='".date('m')."' and year(tgl_kas)='".date('Y')."' $lokasi order by id_kas");
+		$data=$this->Admin_model->show_list('mst_kas_harian',"where month(tgl_kas)='".date('m')."' and year(tgl_kas)='".date('Y')."' $lokasi order by no_trans desc");
 		foreach($data as $r){
 			$n++;
-			echo tr().td($n,'center').td($r->no_trans,'center').
+			echo tr(($r->tgl_kas==date('Y-m-d'))?'list_ganjil':'').td($n,'center').td($r->no_trans,'center').
 				 td(tglfromSql($r->tgl_kas),'center').
 				 td($r->id_kas).td($r->nm_kas).td(number_format($r->sa_kas,2),'right').
 				 td(rdb('user_lokasi','lokasi','lokasi',"where ID='".$r->id_lokasi."'")).
 				 _tr();
+			$total=($total+$r->sa_kas);
 		}
+		echo tr('list_genap').td('<b>Total</b>','right\' colspan=\'5').td('<b>'.number_format($total,2),'right').td('')._tr();
 	}
 	function list_kas_trans(){
 		$data=array();	
-		$data=array();$n=0;
+		$data=array();$n=0;$kredit=0;
 		$tanggal=tgltoSql($_POST['tanggal']);
 		$lokasi=empty($_POST['lokasi'])?'':" and id_lokasi='".$_POST['lokasi']."' ";
-		$data=$this->Admin_model->show_list('mst_kas_trans',"where tgl_trans='".$tanggal."' $lokasi order by id_trans");
+		$data=$this->Admin_model->show_list('mst_kas_trans',"where tgl_trans='".$tanggal."' $lokasi order by created_by,id_trans");
 		foreach($data as $r){
-			$n++;
+			$n++;$saldo_akhir=0;
+			$kredit=($kredit+$r->jumlah);
+			$saldo_kas=rdb('mst_kas_trans','saldo_kas','saldo_kas',"where uraian_trans='Saldo Awal hari ini' and tgl_trans='".$tanggal."'");
+			$saldo_akhir=($r->uraian_trans!='Saldo Awal hari ini')?
+						($saldo_kas-$kredit):$saldo_kas;
+						
 			echo tr().td($n,'center').td($r->id_trans,'center').
 				 td(tglfromSql($r->tgl_trans),'center').
 				 td($r->id_kas).td($r->uraian_trans).
 				 td(number_format($r->jumlah,2),'right').
-				 td(number_format($r->saldo_kas,2),'right').
+				 td(number_format($saldo_akhir,2),'right').
+				 /*td(number_format($r->saldo_kas,2),'right').*/
 				 td(rdb('user_lokasi','lokasi','lokasi',"where ID='".$r->id_lokasi."'")).
 				 _tr();
 		}

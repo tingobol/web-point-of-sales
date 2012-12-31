@@ -154,9 +154,10 @@ class Stock extends CI_Controller{
 		$this->View("inventory/countsheet_print");
 	}
 	function get_stock(){
-		$data=array();$n=0;
-		$where=empty($_POST['kategori'])?'':"where im.ID_Kategori='".$_POST['kategori']."' and ms.Stock<>'0'";
-		$where.=empty($_POST['lokasi'])?'':" and id_lokasi='".$_POST['lokasi']."' and ms.Stock!='0'";
+		$data=array();$n=0;$where='';
+		$where=empty($_POST['kategori'])?'':"where im.ID_Kategori='".$_POST['kategori']."'/* and ms.Stock<>'0'*/";
+		$where.=($where=='' && !empty($_POST['lokasi']))?"where ms.id_lokasi='".$_POST['lokasi']."' and ms.Stock!='0'":
+				"and ms.id_lokasi='".$_POST['lokasi']."' and ms.Stock!='0'";
 		$orderby=empty($_POST['orderby'])?'':" order by ".str_replace('-',',',$_POST['orderby'])." ";
 		$orderby.=empty($_POST['urutan'])?'':strtoupper($_POST['urutan']);
 		$sesi=$this->session->userdata('menus');
