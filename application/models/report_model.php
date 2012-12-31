@@ -28,14 +28,14 @@ class Report_model extends CI_Model {
 		
 		return ($rpt=='No')?$sql:$this->db->query($sql);
 	}
-	function stock_list($where,$tipe,$orderby='order by im.Nama_Barang'){
+	function stock_list($where,$tipe,$orderby='order by im.Nama_Barang',$pos='left'){
 		switch($tipe){
 			case "stock":	
 			$sql="select im.ID_Kategori,im.ID,im.ID_Satuan,im.Nama_Barang,im.Kode,
 				  sum(ms.stock) as stock,im.Status,s.Satuan,k.Kategori,
 				  sum(ms.harga_beli) as harga_beli,ms.batch,ms.id_lokasi
 				  from inv_barang as im
-				  left join inv_material_stok as ms
+				  $pos join inv_material_stok as ms
 				  on ms.id_barang=im.ID
 				  left join inv_barang_satuan as s
 				  on s.ID=im.ID_Satuan
@@ -74,7 +74,7 @@ class Report_model extends CI_Model {
 			$sql="select * from ".$this->session->userdata('userid')."_tmp_lapkas $where $orderby";
 			break;
 		}
-		//echo $sql;
+		echo $sql;
 		$data=$this->db->query($sql);	
 		return $data->result();
 	}
@@ -167,7 +167,7 @@ class Report_model extends CI_Model {
 			where t.Tanggal between '".tglToSql($dari)."' and '".tglToSql($sd)."'
 			and t.ID_CC='$ID_CC' $lokasi
 			group by t.ID_CC";
-			//echo $sql;
+			echo $sql;
 			$data=$this->db->query($sql);	
 			return $data->result();
 		

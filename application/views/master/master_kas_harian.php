@@ -10,7 +10,7 @@ tab_select('');
 panel_begin('Kas Harian Toko');
 panel_multi('setupsaldokas','none',false);
 if($all_kas_harian!=''){
-	$zfm->AddBarisKosong(true);
+	$zfm->AddBarisKosong(false);
 	$zfm->Start_form(true,'frm1');
 	$zfm->BuildForm('kasharian',($c_kas_harian=='')? false:true,'50%');
 	($c_kas_harian=='')?'': $zfm->BuildFormButton('Simpan','kas');

@@ -231,7 +231,7 @@ function __show_data(id){
 		'lokasi' :$('#id_lok').val()},
 	function(result){
 		$('#v_setupsaldokas table#ListTable tbody').html(result);
-       	$('#v_setupsaldokas table#ListTable').fixedHeader({width:(screen.width-100), height:150})
+       	$('#v_setupsaldokas table#ListTable').fixedHeader({width:(screen.width-100), height:200})
 	})
 }
 function __show_data_trans(id){

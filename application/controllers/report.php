@@ -147,7 +147,7 @@ class Report extends CI_Controller
 		$data=array();$where='';$orderby='';
 		$where=($this->input->post('sampai_tgl')=='')?
 				"where Tanggal='".tglToSql($this->input->post('dari_tgl'))."'":
-				"where Tanggal between '".tglToSql($this->input->post('dari_tgl'))."' and '".tglToSql($this->input->post('sampai_tanggal'));
+				"where Tanggal between '".tglToSql($this->input->post('dari_tgl'))."' and '".tglToSql($this->input->post('sampai_tanggal'))."'";
 		$where.=($this->input->post('id_lok')=='')?'':" and ID_Lokasi_asal='".$this->input->post('id_lok')."'";
 		$orderby="order by ".$this->input->post('orderby');
 		$orderby.=($this->input->post('orderby')=='')?'':" ".$this->input->post('urutan');
