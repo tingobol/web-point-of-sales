@@ -126,7 +126,7 @@ echo "<input type='hidden' value='".date('d/m/Y')."' id='today'>";
 ?>
 <script language="javascript">
 	$(document).ready(function(e) {
-        $('#plh').html("<? dropdown('inv_barang_kategori','ID','Kategori','order by Kategori');?>");
+        $('#plh').html("<? dropdown('inv_barang_kategori','ID','Kategori','order by Kategori','28');?>");
 		$('#plh_jenis').html("<? dropdown('inv_barang_jenis','ID','JenisBarang','order by JenisBarang');?>");
 		//$('#v_listobat table#ListTable').fixedHeader({width:900,height:400})
 	_show_data();

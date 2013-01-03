@@ -163,10 +163,14 @@
 	5|<hr>|x||
 	6|Stock Adjustment|stock/stock_barang||
 	
+	[Tambah Barang]
+	1|Tambah Barang|tambahbarang|y|zcev
+	2|Detail Barang|detailbarang|y|zcev
+	
 	[Mutasi Stock]
 	1|Mutasi Stock|mutasistock|y|zcev|
 	2|List Mutasi|lismutasi|y|zevp|
-	
+	1|Tambah Barang|gudang/index|y|zcev
 	[gudang lama]
 	4|Kategori Barang|gudang/kategori||
 	5|Jenis Barang|gudang/jenis||

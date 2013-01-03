@@ -13,11 +13,24 @@
 3|Kode Barang,input,text n,id_barang,w70 upper,,10%,
 4|Nama Barang,input,text n,nm_barang,w90 upper,,20%,60
 5|Satuan Jual,input,text n,nm_satuan,S35 upper,,5%,,,,15
-;6|Expire Date,input, date t,expired,w35,,8%
 6|Harga Beli,input,text d,stokmin,w35 angka,0,7%,10
 7|Harga Toko,input,text d,stokmax,w35 angka,0,7%,10
 8|Minimum Stock,input,text d,stoklimit,w25 angka,,5%,10
 9|,input,hidden n,status_barang,w35 upper,Continue,,10
+
+[BarangDetail]
+1|Nama Barang,input,text n,nm_barang,w90 upper,,20%,60
+2|Model/Merk,input,text n,sn,w70 upper,,15%,30
+3|Harga Beli,input,text d,hpp,w35 angka,,10%,15
+4|Harga Jual Toko,input,text d,harga_toko,w35 angka,,10%,15
+5|Harga Jual Partai,input,text d,harga_partai,w35 angka,,10%,15
+6|Harga Jual Cabang,input,text d,harga_cabang,w35 angka,,10%,15
+7|Mata Uang,select,text d,mata_uang,S25,,10%,RS,MataUang,
+8|Garansi,input,text n,garansi,w35,,8%
+9|Dimensi Packing,,,,,,,,,,
+10|&nbsp;&nbsp;&bull;&nbsp Ukuran (PxLxT in CM),input,text n,panjang,w50,,5%,10
+11|&nbsp;&nbsp;&bull;&nbsp Berat (Kg),input,text n,berat,w25 angka,,5%,10
+12|&nbsp;&nbsp;&bull;&nbsp Warna,input,text n,warna,w50 angka,,5%,10
 
 [BarangList]
 1|Kategori,input,text n,nm_kategori,w70 upper,,10%,,,,20
@@ -131,3 +144,8 @@
 [lapmutasiurutan]
 1|a.Nama_Barang,Nama Barang
 2|p.ID_Lokasi,Gudang
+
+[MataUang]
+1|IDR,Rupiah
+2|USD,US Dolar
+3|EUR,Euro

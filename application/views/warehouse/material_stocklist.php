@@ -49,8 +49,8 @@ popup_end();
 <input type='hidden' value='' id='lokasi' />
 <script language="javascript">
 $(document).ready(function(e) {
-    $('#Kategori').html("<? dropdown('inv_barang_kategori','ID','Kategori','order by Kategori','17');?>")
-    $('#id_lokasi').html("<? dropdown('user_lokasi','ID','lokasi','order by id',$this->session->user);?>")
+    $('#Kategori').html("<? dropdown('inv_barang_kategori','ID','Kategori','order by Kategori','28');?>")
+    $('#id_lokasi').html("<? dropdown('user_lokasi','ID','lokasi','order by id',$this->session->userdata('gudang'));?>")
 	$('#okelah').click();
     $('#stockadjustment').removeClass('tab_button');
 	$('#stockadjustment').addClass('tab_select');

@@ -74,7 +74,7 @@ class Report_model extends CI_Model {
 			$sql="select * from ".$this->session->userdata('userid')."_tmp_lapkas $where $orderby";
 			break;
 		}
-		echo $sql;
+		//echo $sql;
 		$data=$this->db->query($sql);	
 		return $data->result();
 	}

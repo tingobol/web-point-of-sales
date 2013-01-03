@@ -266,9 +266,16 @@ class Inventory extends CI_Controller {
 		$str	=addslashes($_GET['str']);
 		$limit	=$_GET['limit'];
 		$fld	=$_GET['fld'];
-		$dest	=empty($_GET['dest'])?'':$dest;
+		$dest	=empty($_GET['dest'])?'':$_GET['dest'];
 		$datax=$this->inv_model->get_nm_material($str,$limit,$fld,$dest);
 		echo json_encode($datax);	
+	}
+	
+	function detail_material(){
+		$datax=array();
+		$str	=empty($_POST['ID'])?'':$_POST['ID'];
+		$datax=$this->Admin_model->show_list('barang',"where nama='".$str."'");
+		echo empty($datax)?json_encode("{'sn':'';'hpp':0}"):json_encode($datax[0]);	
 	}
 	function data_produsen(){
 		$str=addslashes($_POST['str']);
