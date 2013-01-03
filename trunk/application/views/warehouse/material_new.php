@@ -9,9 +9,10 @@ $path='application/views/warehouse';
 link_css('jquery.coolautosuggest.css','asset/css');
 link_js('jquery.coolautosuggest.js,jquery_terbilang.js','asset/js,asset/js');
 link_js('jquery.fixedheader.js,material_new.js','asset/js,'.$path.'/js');
-panel_begin('Gudang');
+link_js('material_detail.js',$path.'/js');
+panel_begin('Tambah Barang');
 panel_multi('tambahbarang','block',false);
-if($c_gudang__index!=''){
+if($c_tambahbarang!=''){
 	$zfm->AddBarisKosong(true);
 	$zfm->Start_form(true,'frm1');
 	$zfm->BuildForm($section,true,'70%');
@@ -20,7 +21,18 @@ if($c_gudang__index!=''){
 	no_auth();
 }
 panel_multi_end();
-echo "<div id='status' style='width:99%; border:1px solid #DDDDD'></div>";
+panel_multi('detailbarang','none',false);
+if($c_detailbarang!=''){
+	$zfm->AddBarisKosong(true);
+	$zfm->Start_form(true,'frm2');
+	$zfm->BuildForm('BarangDetail',true,'50%');
+	$zfm->BuildFormButton('Simpan','detail');
+}else{
+	no_auth();
+}
+panel_multi_end();
+echo "<div id='status' style='width:99%; border:1px solid #DDDDD'>
+</div>";
 panel_end();
 terbilang();
 ?>

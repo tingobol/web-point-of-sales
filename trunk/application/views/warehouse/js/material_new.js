@@ -16,9 +16,9 @@ $(document).ready(function(e) {
 	})
 		$('#frm1 input#nm_barang')
 		.coolautosuggest({
-				url:path+'inventory/data_material?fld=Nama_Barang&limit=10&str=',
-				width:350,
-				showDescription	:false,
+				url:path+'inventory/data_material?fld=Nama_Barang&limit=20&str=',
+				width:370,
+				showDescription	:true,
 				onSelected:function(result){
 					$('#frm1 #nm_jenis').val(result.nm_jenis)
 					$('#frm1 #nm_kategori').val(result.nm_kategori)
@@ -32,7 +32,7 @@ $(document).ready(function(e) {
 		})
 		$('#frm1 input#id_barang')
 		.coolautosuggest({
-				url:path+'inventory/data_material?fld=Kode&limit=10&str=',
+				url:path+'inventory/data_material?fld=Kode&limit=20&str=',
 				width:250,
 				showDescription	:true,
 				onSelected:function(result){

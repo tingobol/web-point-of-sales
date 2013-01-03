@@ -611,7 +611,6 @@ function _show_data(){
 			'id_jenis'	:$('#plh_jenis').val(),
 			'stat'		:$('#plh_stat').val(),
 			'cari'		:$('#plh_cari').val(),
-			'zero'		:'no'
 		},
 		function(result){
 			$('#v_listbarang table#ListTable tbody').html(result);
