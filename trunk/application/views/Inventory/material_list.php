@@ -36,59 +36,6 @@ addText(array('Filter by Kategori :',' Jenis :','Status',' Cari by nama'),array(
 }
 echo "<hr><div id='bawahan' style='display:none;width:100%; height:25px; background:#AAA; border:1px outset #CCCC'></div>";
 panel_multi_end();
-panel_multi('hargabeli','none',false);
-if($c_hargabeli!=''){
-	$zfm->AddBarisKosong();
-	$zfm->Start_form(true,'frm2');
-	$zfm->BuildForm('Harga Beli',true,'70%');
-	$zfm->BuildFormButton('Simpan','hgb');
-	echo "<hr>";
-		$zlb->section('Harga Beli');
-		$zlb->aksi(true);
-		$zlb->icon();
-		$zlb->Header('70%','HargaBeli');
-		echo "</tbody></table>";
-}else{
-	no_auth();
-}
-panel_multi_end();
-panel_multi('satuan','none',false);
-if($c_hargabeli!=''){
-	$zfm->AddBarisKosong();
-	$zfm->Start_form(true,'frm3');
-	$zfm->BuildForm('Satuan',true,'70%');
-	$zfm->BuildFormButton('Simpan','sat','button');
-	echo "<hr>";
-	$sql2="select * from inv_barang_satuan order by Satuan";
-		$zlb->section('Satuan');
-		$zlb->aksi(true);
-		$zlb->icon();
-		$zlb->Header('60%');
-		$zlb->query($sql2);
-		$zlb->list_data('Satuan');
-		$zlb->BuildListData('Satuan');
-		echo "</tbody></table>";
-inline_edit('satuan');
-}else{
-	no_auth();
-}
-panel_multi_end();
-panel_multi('unitkonversi','none',false);
-if($c_hargabeli!=''){
-	$zfm->AddBarisKosong();
-	$zfm->Start_form(true,'frm4');
-	$zfm->BuildForm('Konversi',true,'70%');
-	$zfm->BuildFormButton('Simpan','konv');
-	echo "<hr>";
-		$zlb->section('Konversi');
-		$zlb->aksi();
-		$zlb->icon('deleted');
-		$zlb->Header('70%','konversi');
-		echo "</tbody></table>";
-}else{
-	no_auth();
-}
-panel_multi_end();
 panel_end();
 popup_start('nm_jenis','Tambah Jenis',350);
 	$zfm->AddBarisKosong(true);
@@ -119,6 +66,12 @@ popup_start('edit_barang','Edit Data',550);
 	$zfm->Start_form(true,'frm9');
 	$zfm->BuildForm($section,true,'100%');
 	$zfm->BuildFormButton('Simpan','edit_mat');
+popup_end();
+popup_start('edit_detail_barang','Edit Data Detail',550);
+	$zfm->AddBarisKosong(true);
+	$zfm->Start_form(true,'frm11');
+	$zfm->BuildForm('BarangDetail',true,'100%');
+	$zfm->BuildFormButton('Simpan','edit_mat_det');
 popup_end();
 auto_sugest();
 terbilang();

@@ -39,3 +39,4 @@ terbilang();
 <input type='hidden' id='id_kategori' value=''>
 <input type='hidden' id='id_jenis' value=''>
 <input type='hidden' id='id_satuan' value=''>
+<input type='hidden' id='id_barang' value=''>

@@ -108,14 +108,14 @@ class Inv_model extends CI_Model {
 	}
 	function get_nm_material($str,$limit,$fld,$dest=''){
 		$data=array();
-		$where=($dest=='')?'':$dest;
+		$where=($dest=='' || $dest=='detail')?'':$dest;
 		$sql="select * from inv_barang where $fld like '".$str."%' $where order by nama_barang limit $limit";	
 		//echo $sql;
-		($dest=='')?$dest='Nama_Barang':$dest=$dest;
+		($dest=='')?$dest='Nama_Barang': $dest=$dest;
 		$rw= mysql_query($sql) or die(mysql_error());
 		while($row=mysql_fetch_object($rw)){
 				$data[]=array('data'		=>$row->$fld,
-							  'description' =>$row->$dest,
+							  'description' =>($dest=='detail')?rdb('inv_barang_kategori','kategori','kategori',"where ID='".$row->ID_Kategori."'"):$row->$dest,
 							  'jenis'		=>$row->ID_Jenis,
 							  'kategori'	=>$row->ID_Kategori,
 							  'satuan'		=>$row->ID_Satuan,
@@ -128,8 +128,30 @@ class Inv_model extends CI_Model {
 							  'id_pemasok'	=>$row->ID_Pemasok,
 							  'hargajual'	=>$row->Harga_Jual,
 							  'id_barang'	=>$row->ID,
-							  'nm_kategori'	=>rdb('inv_barang_kategori','Kategori','Kategori',"where ID='".$row->ID_Kategori."'")
+							  'nm_kategori'	=>rdb('inv_barang_kategori','Kategori','Kategori',"where ID='".$row->ID_Kategori."'"),
+							  'hpp'			=>rdb('barang','hpp','hpp',"where nama='".$row->Nama_Barang."'"),
+							  'h_jualToko'	=>rdb('barang','harga_toko','harga_toko',"where nama='".$row->Nama_Barang."'")
 							  );
+		}
+		return $data;
+	}
+	function get_det_material($str,$limit,$fld='nama',$dest=''){
+		$data=array();
+		$where=($dest=='')?'':$dest;
+		$sql="select * from barang where $fld like '".$str."%' $where order by nama limit $limit";	
+		//echo $sql;
+		($dest=='')?$dest='nama':$dest=$dest;
+		$rw= mysql_query($sql) or die(mysql_error());
+		while($row=mysql_fetch_object($rw)){
+				$data[]=array('data'		=>$row->$fld,
+							  'description' =>$row->kategori.'&rArr;'.$row->golongan,
+							  'hpp'			=>$row->hpp,
+							  'harga_toko'	=>$row->harga_toko,
+							  'harga_partai'=>$row->harga_partai,
+							  'harga_cabang'=>$row->harga_cabang,
+							  'sn'			=>$row->sn
+							  );
+			
 		}
 		return $data;
 	}

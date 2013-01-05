@@ -110,17 +110,19 @@ class Stock extends CI_Controller{
 		}
 	}
 	function get_material_stock(){
-		$data=array();$stok=0;$sat='';
+		$data=array();$stok=0;$sat='';$datax=array();
 		$id_material=$_POST['id_material'];
 		$lokasi=empty($_POST['lokasi'])?'':" and s.id_lokasi='".$_POST['lokasi']."'";
 		$data=$this->inv_model->get_total_stock($id_material,$lokasi);
 		foreach($data as $r){
 			$stok	=$r->stock;
 			$sat	=$r->satuan;
+			$datax[]=array('stock'=>$r->stock,
+						   'satuan'=>$r->satuan);
 			
 		}
 		($stok=='')?'0':$stok;
-		echo json_encode($data[0]);
+		echo json_encode($datax);
 	}
 	function data_hgb(){
 		$data=array();

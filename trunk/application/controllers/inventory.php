@@ -174,9 +174,9 @@ class Inventory extends CI_Controller {
 		$data['Nama_Barang']=addslashes(strtoupper($_POST['nm_barang']));
 		$data['ID_Satuan']	=empty($_POST['id_satuan'])?'1':$_POST['id_satuan'];
 		$data['Status']		=ucwords($_POST['status_barang']);
-		$data['Harga_Beli']	=$_POST['stokmin'];
-		$data['Harga_Jual']	=$_POST['stokmax'];
-		$data['minstok']	=$_POST['minstok'];
+		$data['Harga_Beli']	=empty($_POST['stokmin'])?'0':$_POST['stokmin'];
+		$data['Harga_Jual']	=empty($_POST['stokmax'])?'0':$_POST['stokmax'];
+		$data['minstok']	=empty($_POST['minstok'])?'0':$_POST['minstok'];
 		$kat['Kategori']	=empty($_POST['nm_kategori'])?'':strtoupper($_POST['nm_kategori']);
 		$jen['JenisBarang']	=empty($_POST['nm_kategori'])?'':strtoupper($_POST['nm_jenis']);
 		$sat['Satuan']		=empty($_POST['nm_kategori'])?'':strtoupper($_POST['nm_satuan']);
@@ -191,6 +191,39 @@ class Inventory extends CI_Controller {
 		}
 		$this->Admin_model->replace_data('inv_barang',$data);
 		echo $this->inv_model->total_record('inv_barang','');
+	}
+	function simpan_barang_detail(){
+		$data=array();
+/**/	$data['nama']		=$_POST['nama'];
+		$sn			=empty($_POST['sn'])?''		:$_POST['sn'];	
+		$hpp		=empty($_POST['hpp'])?''	:$_POST['hpp'];	
+		$htk		=empty($_POST['htk'])?'0'	:$_POST['htk'];	
+		$htp		=empty($_POST['htp'])?'0'	:$_POST['htp'];	
+		$htc		=empty($_POST['htc'])?'0'	:$_POST['htc'];	
+		$mata_uang	=empty($_POST['idr'])?'IDR'	:$_POST['idr'];	
+		$garansi	=empty($_POST['garansi'])?'':$_POST['garansi'];	
+		$ukuran		=empty($_POST['ukuran'])?''	:$_POST['ukuran'];	
+		$berat		=empty($_POST['berat'])?''	:$_POST['berat'];	
+		$warna		=empty($_POST['warna'])?''	:$_POST['warna'];	
+
+	$set ="set sn='".$sn."', ";
+	$set.="hpp='".$hpp."', ";
+	$set.="harga_toko='".$htk."', ";
+	$set.="harga_partai='".$htp."', ";
+	$set.="harga_cabang='".$htc."', ";
+	$set.="mata_uang='".$mata_uang."', ";
+	$set.="garansi='".$garansi."', ";
+	$set.="ukuran='".$ukuran."', ";
+	$set.="berat='".$berat."', ";
+	$set.="warna='".$warna."' ";
+	$where="where nama ='".$_POST['nama']."'";
+	
+		if($this->Admin_model->upd_data('barang',$set,$where)){
+			echo "Data berhasil di simpan....";
+			$this->Admin_model->upd_data('inv_barang',"set harga_beli='".$hpp."', harga_jual='".$htk."'","where Nama_Barang='".$_POST['nama']."'");
+		}else{
+			echo die(mysql_error());	
+		}
 	}
 	function data_hgb(){
 		$data=array();
@@ -326,7 +359,8 @@ class Inventory extends CI_Controller {
 				 td(number_format($r->Harga_Jual,2),'right').td($r->minstok,'center');
 			echo ($this->zetro_auth->cek_oto('e','list')!='')?
 				($this->session->userdata('menus')=='QWNjb3VudGluZw==')?'':
-				 td(aksi('asset/images/editor.png','edit','Click for edit',"upd_barang('".$r->ID."');").'&nbsp;'.
+				 td(aksi('asset/images/clipboard_16.png','edit','Click for edit detail',"upd_det_barang('".$r->Nama_Barang."');").'&nbsp;'.
+				    aksi('asset/images/editor.png','edit','Click for edit',"upd_barang('".$r->ID."');").'&nbsp;'.
 				 	aksi('asset/images/no.png','del','Click for delete',"delet_barang('".$r->ID."','".$r->batch."');"),'center'):'';
 			echo _tr();
 		}

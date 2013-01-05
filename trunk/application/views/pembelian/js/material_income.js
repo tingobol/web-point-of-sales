@@ -86,7 +86,8 @@ $(document).ready(function(e) {
 						function(data){
 							$('#1__nm_satuan').html(data)
 						})
-						$('#1__nm_satuan').val(rs.ID_Satuan).select()
+						$('#1__nm_satuan').val(rs.satuan).select()
+						$('#1__harga_beli').val(result.hpp);
 						$('#1__jml_transaksi').focus().select();
 					}
 				})
@@ -110,7 +111,8 @@ $(document).ready(function(e) {
 					function(data){
 						$('#1__nm_satuan').html(data)
 					})
-					$('#1__nm_satuan').val(result.ID_Satuan).select()
+					$('#1__nm_satuan').val(result.satuan).select()
+					$('#1__harga_beli').val(result.hpp);
 					$('#1__jml_transaksi').focus().select();
 				}
 			})
