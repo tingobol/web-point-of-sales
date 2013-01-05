@@ -1,9 +1,9 @@
 // JavaScript Document
 // material_list.js
 // author : Iswan Putera
+	var path=$('#path').val();
 
 $(document).ready(function(e) {
-	var path=$('#path').val();
 	var prs=$('#prs').val();
 	$('#v_satuan img.edit').hide();
 	lock('#frm4 #saved-konv')
@@ -162,19 +162,7 @@ $(document).ready(function(e) {
 				 'linked'		:''
 				 },
 				function(result){
-					keluar();
-					$.post(path+'inventory/show_list',{
-						'id'		:$('#plh').val(),
-						'id_jenis'	:$('#plh_jenis').val(),
-						'stat'		:$('#plh_stat').val(),
-						'cari'		:$('#plh_cari').val()
-					},
-					function(result){
-						$('#v_listbarang table#ListTable tbody').html(result);
-						$('#bawahan').html("<b>&bull;&bull;&bull; Total record :"+$('#v_listbarang table#ListTable tbody tr').length+"");
-						$('#v_listbarang table#ListTable').fixedHeader({width:(screen.width-30),height:(screen.height-345)});
-						$('#bawahan').show();
-					})
+					_show_data();
 				})
 			break;
 			case 'saved-hgb': //simpan harga beli
@@ -208,6 +196,9 @@ $(document).ready(function(e) {
 						$('sapn#sat').html('-');
 						lock('#frm4 #saved-konv');
 					})
+			break;
+			case 'saved-edit_mat_det':
+			simpan_detail();
 			break;
 		}
 	});
@@ -338,68 +329,18 @@ $(document).ready(function(e) {
 	
 	//click filter by
 	$('#plh').change(function(){
-		show_indicator('ListTable','10');
-		$('plh_cari').val('')
-		$.post(path+'inventory/show_list',{
-			'id'		:$(this).val(),
-			'id_jenis'	:$('#plh_jenis').val(),
-			'stat'		:$('#plh_stat').val(),
-			'cari'		:$('#plh_cari').val()
-		},
-		function(result){
-			$('#v_listbarang table#ListTable tbody').html(result);
-			$('#bawahan').html("<b>&bull;&bull;&bull; Total record :"+$('#v_listbarang table#ListTable tbody tr').length+"");
-			$('#v_listbarang table#ListTable').fixedHeader({width:(screen.width-30),height:(screen.height-345)});
-			$('#bawahan').show();
-		})
+		_show_data();
 	})
 	$('#plh_jenis').change(function(){
-		show_indicator('ListTable','10');
-		$('plh_cari').val('')
-		$.post(path+'inventory/show_list',{
-			'id'		:$('#plh').val(),
-			'id_jenis'	:$('#plh_jenis').val(),
-			'stat'		:$('#plh_stat').val(),
-			'cari'		:$('#plh_cari').val()
-		},
-		function(result){
-			$('#v_listbarang table#ListTable tbody').html(result);
-			$('#bawahan').html("<b>&bull;&bull;&bull; Total record :"+$('#v_listbarang table#ListTable tbody tr').length+"");
-			$('#v_listbarang table#ListTable').fixedHeader({width:(screen.width-30),height:(screen.height-355)});
-			$('#bawahan').show();
-		})
+		_show_data();
 	})
 	$('#plh_stat').change(function(){
-		show_indicator('ListTable','10');
-		$.post(path+'inventory/show_list',{
-			'id'		:$('#plh').val(),
-			'id_jenis'	:$('#plh_jenis').val(),
-			'stat'		:$('#plh_stat').val(),
-			'cari'		:$('#plh_cari').val()
-		},
-		function(result){
-			$('#v_listbarang table#ListTable tbody').html(result);
-			$('#bawahan').html("<b>&bull;&bull;&bull; Total record :"+$('#v_listbarang table#ListTable tbody tr').length+"");
-			$('#v_listbarang table#ListTable').fixedHeader({width:(screen.width-30),height:(screen.height-355)});
-			$('#bawahan').show();
-		})
+		_show_data();
 	})
 	$('#plh_cari')
 	.keyup(function(){
 		if($(this).val().length >2){
-			show_indicator('ListTable','10');
-			$.post(path+'inventory/show_list',{
-				'id'		:$('#plh').val(),
-				'id_jenis'	:$('#plh_jenis').val(),
-				'stat'		:$('#plh_stat').val(),
-				'cari'		:$('#plh_cari').val()
-			},
-			function(result){
-				$('#v_listbarang table#ListTable tbody').html(result);
-				$('#bawahan').html("<b>&bull;&bull;&bull; Total record :"+$('#v_listbarang table#ListTable tbody tr').length+"");
-				$('#v_listbarang table#ListTable').fixedHeader({width:(screen.width-30),height:(screen.height-355)});
-				$('#bawahan').show();
-			})
+		_show_data();
 		}
 	})
 		//auotsuggest kategori
@@ -443,26 +384,76 @@ $(document).ready(function(e) {
 				$('#id_satuan').val(result.ID)	
 				}
 			})
+	//show terbilang edit material
 		$('#frm9 #stokmin')
 			.focus(function(){$(this).select()})
 			.keyup(function(){kekata(this);})
-			.focusout(function(){kekata_hide();$('#stokmax').focus().select()})
+			.focusout(function(){kekata_hide();$('#frm9 #stokmax').focus().select()})
 			.keypress(function(e){if(e.which==13){ $(this).focusout();}})
 		
 		$('#frm9 #stokmax')
 			.focus(function(){$(this).select()})
 			.keyup(function(){kekata(this);})
-			.focusout(function(){kekata_hide();$('#stoklimit').focus().select()})
+			.focusout(function(){kekata_hide();$('#frm9 #stoklimit').focus().select()})
 			.keypress(function(e){if(e.which==13){$(this).focusout();}})
 		
 		$('#frm9 #stoklimit')
 			.focusout(function(){$(':button').focus()})
 			.keypress(function(e){if(e.which==13){$(this).focusout();}})
-
+   //show terbilang edit detail material
+   		$('#frm11 #hpp')
+			.focus(function(){$(this).select();kekata(this)})
+			.keyup(function(){kekata(this);})
+			.focusout(function(){kekata_hide();})
+			.keypress(function(e){if(e.which==13){ $(this).focusout();$('#frm11 #harga_toko').focus().select()}})
+		$('#frm11 #harga_toko')
+			.focus(function(){$(this).select();kekata(this)})
+			.keyup(function(){kekata(this);})
+			.focusout(function(){kekata_hide();})
+			.keypress(function(e){if(e.which==13){ $(this).focusout();$('#frm11 #harga_partai').focus().select()}})
+		$('#frm11 #harga_partai')
+			.focus(function(){$(this).select();kekata(this)})
+			.keyup(function(){kekata(this);})
+			.focusout(function(){kekata_hide();})
+			.keypress(function(e){if(e.which==13){$('#frm11 #harga_cabang').focus().select(); $(this).focusout();}})
+		$('#frm11 #harga_cabang')
+			.focus(function(){$(this).select();kekata(this)})
+			.keyup(function(){kekata(this);})
+			.focusout(function(){kekata_hide();})
+			.keypress(function(e){if(e.which==13){$('#frm11 #garansi').focus().select(); $(this).focusout();}})
+		$('#frm11 :reset').click(function(){
+			keluar_edit_detail_barang();
+		})
 });
 
  //update data_material dari daftar barang
+ 	function upd_det_barang(id){
+		//tampilkan detail barang
+					$('#pp-edit_detail_barang').css({'left':'20%','top':'15%'});
+						$('#nama').val('edit_detail_barang');
+						//lock('#frm11 input#nm_barang');
+						$('#frm11 input#nm_barang')
+							.attr('readonly','readonly')
+							.val(id);
+						$.post(path+'inventory/detail_material',{'ID':id},
+						function(data){
+							var result=$.parseJSON(data);
+							$('#frm11 #sn').val(result.sn);
+							$('#frm11 #hpp').val(to_number(result.hpp));
+							$('#frm11 #harga_toko').val(to_number(result.harga_toko));
+							$('#frm11 #harga_partai').val(to_number(result.harga_partai));
+							$('#frm11 #harga_cabang').val(to_number(result.harga_cabang));
+							$('#frm11 #mata_uang').val(result.mata_uang).select();
+							$('#frm11 #garansi').val(result.garansi);
+							$('#frm11 #panjang').val(result.ukuran);
+							$('#frm11 #berat').val(result.berat);
+							$('#frm11 #warna').val(result.warna);
+						})
+						$('#lock').show();
+						$('#pp-edit_detail_barang').show('slow');
+	}
 	function upd_barang(id){
+		//tampilkan data barang basic
 		var path=$('#path').val();
 					$('#pp-edit_barang').css({'left':'20%','top':'20%'});
 						$('#nama').val('edit_barang');
@@ -615,7 +606,30 @@ function _show_data(){
 		function(result){
 			$('#v_listbarang table#ListTable tbody').html(result);
 			$('#bawahan').html("<b>&bull;&bull;&bull; Total record :"+$('#v_listbarang table#ListTable tbody tr').length+"");
-			$('#v_listbarang table#ListTable').fixedHeader({width:(screen.width-30),height:(screen.height-345)});
+			$('#v_listbarang table#ListTable').fixedHeader({width:(screen.width-30),height:(screen.height-350)});
 			$('#bawahan').show();
 		})
+}
+
+function simpan_detail(){
+	$.post(path+'inventory/simpan_barang_detail',{
+		'ID'	:$('#id_barang').val(),
+		'nama'	:$('#frm11 #nm_barang').val(),
+		'sn'	:$('#frm11 #sn').val(),
+		'hpp'	:$('#frm11 #hpp').val(),
+		'htk'	:$('#frm11 #harga_toko').val(),
+		'htp'	:$('#frm11 #harga_partai').val(),
+		'htc'	:$('#frm11 #harga_cabang').val(),
+		'idr'	:$('#frm11 #mata_uang').val(),
+		'garansi':$('#frm11 #garansi').val(),
+		'ukuran':$('#frm11 #panjang').val(),
+		'warna'	:$('#frm11 #warna').val(),
+		'berat'	:$('#frm11 #berat').val()
+		
+	},function(result){
+		$('div#result').html(result)
+		$('div#result').fadeOut(3000);
+		$('#frm11 :reset').click();
+		keluar_edit_detail_barang()
+	})
 }

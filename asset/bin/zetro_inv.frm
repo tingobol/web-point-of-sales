@@ -30,7 +30,7 @@
 9|Dimensi Packing,,,,,,,,,,
 10|&nbsp;&nbsp;&bull;&nbsp Ukuran (PxLxT in CM),input,text n,panjang,w50,,5%,10
 11|&nbsp;&nbsp;&bull;&nbsp Berat (Kg),input,text n,berat,w25 angka,,5%,10
-12|&nbsp;&nbsp;&bull;&nbsp Warna,input,text n,warna,w50 angka,,5%,10
+12|&nbsp;&nbsp;&bull;&nbsp Warna,input,text n,warna,w50 ,,5%,10
 
 [BarangList]
 1|Kategori,input,text n,nm_kategori,w70 upper,,10%,,,,20

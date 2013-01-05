@@ -85,8 +85,8 @@ $(document).ready(function(e) {
 											'id_material'	:result.id_barang,
 											'lokasi'		:$('#id_lok').val()},
 											function(data){
-												var jm=$.parseJSON(data);
-												if($.trim(jm.stock)=='0'||jm.stock==null){
+												//var jm=$.parseJSON(data);
+												if($.trim(data.stock)=='0'||data.stock==null){
 /*													if(confirm('Stock '+result.data+' = 0 (Kosong)\nTransaksi akan dilanjutkan?')){
 														$('table#inform tr td#ist').html((jm.satuan==null)?'0 '+result.nm_satuan:'0 '+jm.satuan)
 													}else{
@@ -98,8 +98,8 @@ $(document).ready(function(e) {
 												$('#frm2 input#'+id[0]+'__jml_transaksi')
 													.val('1')
 													.focus().select()
-												$('#max_input').val(jm.stock);
-												$('table#inform tr td#ist').html(jm.stock+'  '+jm.satuan)
+												$('#max_input').val(data.stock);
+												$('table#inform tr td#ist').html(data.stock+'  '+data.satuan)
 												}
 												$.post(path+'stock/get_bacth',{
 													'id_barang':result.id_barang},

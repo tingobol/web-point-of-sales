@@ -27,7 +27,9 @@ $(document).ready(function(e) {
 					$('#frm1 #status_barang').val(result.status);
 					$('#id_kategori').val(result.jenis);
 					$('#id_jenis').val(result.kategori);
-					$('#id_satuan').val(result.satuan)
+					$('#id_satuan').val(result.satuan);
+					$('#stokmin').val(result.hpp);
+					$('#stokmax').val(result.h_jualToko)
 				}
 		})
 		$('#frm1 input#id_barang')
@@ -116,7 +118,7 @@ function _simpan_data(){
 		},
 		function(result){
 			$(':reset').click()
-			$('#status').html('Data berhasil di simpan , Total data : '+result)
-			$('#status').fadeOut(3000);
+			$('#result').html('Data berhasil di simpan , Total data : '+result)
+			$('#result').fadeOut(3000);
 		})
 }

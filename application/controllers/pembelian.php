@@ -106,7 +106,7 @@ class Pembelian extends CI_Controller{
 		$data['Jumlah']		=$_POST['jumlah'];
 		$data['Harga_Beli']	=$_POST['harga_beli'];
 		$data['ID_Satuan']	=$_POST['id_satuan'];
-		$data['batch']		=($find_batch=='' || $find_batch==NULL)?date('yz').'-'.rand(0,9):$find_batch;
+		$data['batch']		=($find_batch=='' || $find_batch==NULL)?date('Yzd').'-'.rand(10,99):$find_batch;
 		$data['Keterangan']	=$_POST['keterangan'];
 		$data['Bulan']		=substr($_POST['tanggal'],3,2);	
 		$data['Tahun']		=substr($_POST['tanggal'],6,4);	
