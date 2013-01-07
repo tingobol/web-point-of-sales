@@ -66,7 +66,7 @@ class Inventory extends CI_Controller {
 		$data=array();$n=0;
 		$nm_jenis=ucwords($_POST['nm_jenis']);
 		$induk=$_POST['induk'];
-		$data['JenisBarang']=strtoupper($nm_jenis);
+		$data['JenisBarang']=addslashes(strtoupper($nm_jenis));
 		//$data['created_by']=$this->session->userdata("userid");
 		$this->Admin_model->replace_data('inv_barang_jenis',$data);
 		$this->zetro_auth->tab_select('tambahdata');
@@ -114,7 +114,7 @@ class Inventory extends CI_Controller {
 		$data=array();
 		$nm_jenis=($_POST['nm_kategori']);
 		$induk=$_POST['induk'];
-		$data['Kategori']=strtoupper($nm_jenis);
+		$data['Kategori']=addslashes(strtoupper($nm_jenis));
 		//$data['created_by']=$this->session->userdata("userid");
 		$this->Admin_model->replace_data('inv_barang_kategori',$data);
 		if($induk==''){
@@ -133,7 +133,7 @@ class Inventory extends CI_Controller {
 		$data=array();
 		$nm_jenis=strtoupper($_POST['nm_golongan']);
 		$induk=$_POST['induk'];
-		$data['nm_golongan']=strtoupper($nm_jenis);
+		$data['nm_golongan']=addslashes(strtoupper($nm_jenis));
 		//$data['created_by']=$this->session->userdata("userid");
 		$this->Admin_model->replace_data('inv_golongan',$data);
 		if($induk==''){
@@ -169,17 +169,17 @@ class Inventory extends CI_Controller {
 	function simpan_barang(){
 		$data=array();$kat=array();$jen=array();$sat=array();
 		$data['ID_Jenis']	=empty($_POST['id_jenis'])?'':$_POST['id_jenis'];
-		$data['Kode']		=empty($_POST['id_barang'])?rand(1000,9999):strtoupper($_POST['id_barang']);
-		$data['ID_Kategori']=empty($_POST['id_kategori'])?'':$_POST['id_kategori'];
+		$data['Kode']		=empty($_POST['id_barang'])?rand(1000,9999):addslashes(strtoupper($_POST['id_barang']));
+		$data['ID_Kategori']=empty($_POST['id_kategori'])?'':addslashes($_POST['id_kategori']);
 		$data['Nama_Barang']=addslashes(strtoupper($_POST['nm_barang']));
 		$data['ID_Satuan']	=empty($_POST['id_satuan'])?'1':$_POST['id_satuan'];
 		$data['Status']		=ucwords($_POST['status_barang']);
 		$data['Harga_Beli']	=empty($_POST['stokmin'])?'0':$_POST['stokmin'];
 		$data['Harga_Jual']	=empty($_POST['stokmax'])?'0':$_POST['stokmax'];
 		$data['minstok']	=empty($_POST['minstok'])?'0':$_POST['minstok'];
-		$kat['Kategori']	=empty($_POST['nm_kategori'])?'':strtoupper($_POST['nm_kategori']);
-		$jen['JenisBarang']	=empty($_POST['nm_kategori'])?'':strtoupper($_POST['nm_jenis']);
-		$sat['Satuan']		=empty($_POST['nm_kategori'])?'':strtoupper($_POST['nm_satuan']);
+		$kat['Kategori']	=empty($_POST['nm_kategori'])?'':addslashes(strtoupper($_POST['nm_kategori']));
+		$jen['JenisBarang']	=empty($_POST['nm_kategori'])?'':addslashes(strtoupper($_POST['nm_jenis']));
+		$sat['Satuan']		=empty($_POST['nm_kategori'])?'':addslashes(strtoupper($_POST['nm_satuan']));
 		if(rdb('inv_barang_kategori','Kategori','Kategori',"where Kategori='".strtoupper($_POST['nm_kategori'])."'")==''){
 			$this->Admin_model->replace_data('inv_barang_kategori',$kat);
 		}
@@ -194,17 +194,17 @@ class Inventory extends CI_Controller {
 	}
 	function simpan_barang_detail(){
 		$data=array();
-/**/	$data['nama']		=$_POST['nama'];
-		$sn			=empty($_POST['sn'])?''		:$_POST['sn'];	
+/**/	$data['nama']		=addslashes($_POST['nama']);
+		$sn			=empty($_POST['sn'])?''		:addslashes($_POST['sn']);	
 		$hpp		=empty($_POST['hpp'])?''	:$_POST['hpp'];	
 		$htk		=empty($_POST['htk'])?'0'	:$_POST['htk'];	
 		$htp		=empty($_POST['htp'])?'0'	:$_POST['htp'];	
 		$htc		=empty($_POST['htc'])?'0'	:$_POST['htc'];	
 		$mata_uang	=empty($_POST['idr'])?'IDR'	:$_POST['idr'];	
 		$garansi	=empty($_POST['garansi'])?'':$_POST['garansi'];	
-		$ukuran		=empty($_POST['ukuran'])?''	:$_POST['ukuran'];	
+		$ukuran		=empty($_POST['ukuran'])?''	:addslashes($_POST['ukuran']);	
 		$berat		=empty($_POST['berat'])?''	:$_POST['berat'];	
-		$warna		=empty($_POST['warna'])?''	:$_POST['warna'];	
+		$warna		=empty($_POST['warna'])?''	:addslashes($_POST['warna']);	
 
 	$set ="set sn='".$sn."', ";
 	$set.="hpp='".$hpp."', ";
@@ -357,7 +357,7 @@ class Inventory extends CI_Controller {
 				 td(number_format($r->stock,2),'right').
 				 td(number_format($r->harga_beli,2),'right').
 				 td(number_format($r->Harga_Jual,2),'right').td($r->minstok,'center');
-			echo ($this->zetro_auth->cek_oto('e','list')!='')?
+			echo ($this->zetro_auth->cek_oto('e','listbarang')!='')?
 				($this->session->userdata('menus')=='QWNjb3VudGluZw==')?'':
 				 td(aksi('asset/images/clipboard_16.png','edit','Click for edit detail',"upd_det_barang('".$r->Nama_Barang."');").'&nbsp;'.
 				    aksi('asset/images/editor.png','edit','Click for edit',"upd_barang('".$r->ID."');").'&nbsp;'.

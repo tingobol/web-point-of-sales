@@ -239,10 +239,11 @@ class Gudang extends CI_Controller {
 		echo json_encode($datax);
 	}
 	function get_stock(){
-		$data=array();
+		$data=array();$kosong=array();
 		$ID=$_POST['ID'];
 		$data=$this->Admin_model->show_list('inv_material_stok',"where id_barang='".$ID."' and stock >'0' group by batch order by doc_date asc");	
-		echo empty($data)?json_encode("{'batch':'','stock':''}"):json_encode($data[0]);
+		if(empty($data)){$kosong[]=array('batch'=>'','stock'=>'0');}else{$kosong=$data;}
+		echo json_encode($kosong[0]);
 	}
 	function terima_mutasi(){
 		$this->zetro_auth->menu_id(array('penerimaanmutasi'));
