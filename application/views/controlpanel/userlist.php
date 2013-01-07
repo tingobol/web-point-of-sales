@@ -72,9 +72,9 @@ popup_start('edituser','Edit User profile');
 	$zfm->BuildForm('userlist',$btn,'90%');
 	if($btn==true) $zfm->BuildFormButton('Simpan','edited');
 popup_end();
-(($c_authorisation==''||$e_authorisation=='') && $this->session->userdata('idlevel')!='1')? $view='disabled':$view='';
+$viewe=($c_authorisation!=''|| $this->session->userdata('idlevel')!='1')? '':'disabled';
 ?>
-<input type='hidden' id='otor' value='<?=$view;?>' />
+<input type='hidden' id='otor' value='<?=$viewe;?>' />
 <input type='hidden' id='uea' value='<?=$this->session->userdata('idlevel');?>' />
 
 

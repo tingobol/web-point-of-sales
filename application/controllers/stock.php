@@ -205,7 +205,7 @@ class Stock extends CI_Controller{
 		$ID		=$_POST['id'];
 		$batch	=$_POST['batch'];
 		$stock	=$_POST['stock'];
-		$lokasi	=$_POST['lokasi'];
+		$lokasi	=empty($_POST['lokasi'])?'1':$_POST['lokasi'];
 		$cek=rdb('inv_material_stok','id_barang','id_barang',"where id_barang='".$ID."' and batch='".$batch."' and id_lokasi='".$lokasi."'");
 		if($cek!=''){
 			$this->Admin_model->upd_data('inv_material_stok',"set stock='".$stock."'","where id_barang='".$ID."' and batch='".$batch."' and id_lokasi='".$lokasi."'");

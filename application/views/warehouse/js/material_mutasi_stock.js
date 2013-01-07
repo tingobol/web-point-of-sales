@@ -122,15 +122,17 @@ $(document).ready(function(e) {
 			if(parseInt(this.value) > parseInt($('#frm2 #1__stok').val())){
 				alert('Jumlah yng diinput melebihi stock\nSisanya silahkan gunakan Batch lain')
 				$(this).val($('#1__stok').val())
-			}
+				$('#frm2 img.edit').hide();
+			}else{
 			$('#frm2 img.edit').show();
+			}
 		})
 		.focusout(function(){
 			$('#terbilang').hide();
 		})
 		.keypress(function(e){
 			if(e.keyCode==13){
-				 $('#terbilang').hide();
+				 $(this).focusout();
 				 $('#frm2 img.edit').trigger('click');
 			}
 		})

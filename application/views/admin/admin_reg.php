@@ -23,6 +23,7 @@ panel_multi_end();
 panel_end();
 ?>
 <script language="javascript">
+var path=$('#path').val();
 $(document).ready(function(e) {
 		$('#popup_message #popup_prompt').keyup(function(e){
 			var l=$(this).val().length;
