@@ -1,6 +1,6 @@
 // JavaScript Document
+var path=$('#path').val();
 $(document).ready(function(e) {
-    var path=$('#path').val();
 	if($('#aksine').val()=='2'){
 		$('#listbarangrusak').removeClass('tab_button');
 		$('#listbarangrusak').addClass('tab_select');

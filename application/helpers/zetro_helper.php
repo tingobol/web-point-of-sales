@@ -371,5 +371,9 @@
 		ucwords(strtolower($text)):
 		strtoupper($text);	
 	}
-
+	function frm_config($filename){
+		$zfm=new zetro_frmBuilder('asset/bin/zetro_'.$filename.'.frm');
+		$zlb=new zetro_buildlist();
+		$zlb->config_file('asset/bin/zetro_'.$filename.'.frm');
+	}
 //}
