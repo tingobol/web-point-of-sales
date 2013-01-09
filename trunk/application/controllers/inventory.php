@@ -206,17 +206,17 @@ class Inventory extends CI_Controller {
 		$berat		=empty($_POST['berat'])?''	:$_POST['berat'];	
 		$warna		=empty($_POST['warna'])?''	:addslashes($_POST['warna']);	
 
-	$set ="set sn='".$sn."', ";
-	$set.="hpp='".$hpp."', ";
-	$set.="harga_toko='".$htk."', ";
-	$set.="harga_partai='".$htp."', ";
-	$set.="harga_cabang='".$htc."', ";
-	$set.="mata_uang='".$mata_uang."', ";
-	$set.="garansi='".$garansi."', ";
-	$set.="ukuran='".$ukuran."', ";
-	$set.="berat='".$berat."', ";
-	$set.="warna='".$warna."' ";
-	$where="where nama ='".$_POST['nama']."'";
+			$set ="set sn='".$sn."', ";
+			$set.="hpp='".$hpp."', ";
+			$set.="harga_toko='".$htk."', ";
+			$set.="harga_partai='".$htp."', ";
+			$set.="harga_cabang='".$htc."', ";
+			$set.="mata_uang='".$mata_uang."', ";
+			$set.="garansi='".$garansi."', ";
+			$set.="ukuran='".$ukuran."', ";
+			$set.="berat='".$berat."', ";
+			$set.="warna='".$warna."' ";
+			$where="where nama ='".$_POST['nama']."'";
 	
 		if($this->Admin_model->upd_data('barang',$set,$where)){
 			echo "Data berhasil di simpan....";
