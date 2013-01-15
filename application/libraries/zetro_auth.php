@@ -87,7 +87,7 @@ class Zetro_auth extends CI_model
 		$data=array();$area='';$n=0;
 		$data=($this->session->userdata('idlevel')!=1)?
 		$this->Admin_model->show_list('user_oto_area',"where userid='".$this->session->userdata('userid')."' and c='Y'"):
-		$this->Admin_model->show_list('user_lokasi','', "ID as lokasi");
+		$this->Admin_model->show_list('user_lokasi','order by ID', "ID as lokasi");
 		
 		foreach($data as $r){
 			$n++;
@@ -95,7 +95,7 @@ class Zetro_auth extends CI_model
 			$area .="'".$r->lokasi."'".$koma."";	
 		}
 		return $area;
-		print_r($area);
+		echo $area;
 	}
 // get data read variable form zetro_*.frm
    public function get_data_field($section,$table){
