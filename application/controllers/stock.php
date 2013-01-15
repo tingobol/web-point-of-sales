@@ -45,7 +45,7 @@ class Stock extends CI_Controller{
 	function list_stock(){
 		$data=array();$n=0;$jml=0;$harga=0;$datax=array();$x=0;
 		$id=$_POST['nm_barang'];
-		$datax=$this->Admin_model->show_list('user_lokasi','order by ID');
+		$datax=$this->Admin_model->show_list('user_lokasi',"where ID in(".$this->zetro_auth->cek_area().") order by ID");
 		foreach($datax as $rw){
 			$x++;
 			echo tr('list_genap').td('&nbsp;&nbsp;<b>Lokasi :</b>&nbsp;&nbsp;'.$x.'. '.$rw->lokasi,'left\' colspan=\'5')._tr();
@@ -117,7 +117,7 @@ class Stock extends CI_Controller{
 		foreach($data as $r){
 			$stok	=$r->stock;
 			$sat	=$r->satuan;
-			$datax[]=array('stock'=>$r->stock,
+			$datax=array('stock'=>$r->stock,
 						   'satuan'=>$r->satuan);
 			
 		}
@@ -158,12 +158,13 @@ class Stock extends CI_Controller{
 	function get_stock(){
 		$data=array();$n=0;$where='';
 		$where=empty($_POST['kategori'])?'':"where im.ID_Kategori='".$_POST['kategori']."'/* and ms.Stock<>'0'*/";
-		$where.=($where=='' && !empty($_POST['lokasi']))?"where ms.id_lokasi='".$_POST['lokasi']."' and ms.Stock!='0'":
-				"and ms.id_lokasi='".$_POST['lokasi']."' and ms.Stock!='0'";
+		$where.=($where=='' && !empty($_POST['lokasi']))?"where ms.id_lokasi='".$_POST['lokasi']."' and ms.Stock<>'0'":
+				"and ms.id_lokasi='".$_POST['lokasi']."' and ms.Stock<>'0'";
 		$orderby=empty($_POST['orderby'])?'':" order by ".str_replace('-',',',$_POST['orderby'])." ";
 		$orderby.=empty($_POST['urutan'])?'':strtoupper($_POST['urutan']);
 		$sesi=$this->session->userdata('menus');
-		$edit_true=empty($_POST['edited'])?'':$_POST['edited'];	
+		$edit_true=empty($_POST['edited'])?'':$_POST['edited'];
+		$oto	=$this->zetro_auth->cek_oto('e','liststock');
 		$data=$this->report_model->stock_list($where,'stock',$orderby);
 		foreach($data as $r){
 			$n++;
@@ -175,7 +176,8 @@ class Stock extends CI_Controller{
 					  td(rdb('inv_barang_satuan','Satuan','Satuan',"where ID='".$r->ID_Satuan."'")).
 					  td(number_format($r->harga_beli,2),'right').
 					  td($r->Status);
-				 if($sesi=='SW52ZW50b3J5' && $edit_true!='' ){echo td(img_aksi($r->ID.':'.$r->batch.':'.$r->id_lokasi),'center');}
+				 if($sesi=='SW52ZW50b3J5' && $edit_true!='' ){
+					 	echo td(($oto!='')?img_aksi($r->ID.':'.$r->batch.':'.$r->id_lokasi):'','center');}
 				echo  _tr();	 
 		}
 	}

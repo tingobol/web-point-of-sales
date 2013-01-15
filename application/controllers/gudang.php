@@ -318,7 +318,7 @@ class Gudang extends CI_Controller {
 			$exist_stock=rdb('inv_material_stok','stock','stock',
 							"where id_barang='".$r->ID_Barang."' and batch='".$r->Batch."' and id_lokasi='".$r->ID_Lokasi_kirim."'"); 
 			$hasil_konv=rdb('inv_konversi','isi_konversi','isi_konversi',"where id_barang='".$r->ID_Barang."' and sat_beli='".
-						rdb('inv_mutasi_stock','ID_Satuan','ID_Satuan',"where ID='".$r->Satuan."'")."'");
+						rdb('inv_mutasi_stock','ID_Satuan','ID_Satuan',"where ID='".$r->ID_Satuan."'")."'");
 			$datax['id_lokasi']	=$r->ID_Lokasi_kirim;
 			$datax['id_barang']	=$r->ID_Barang;
 			$datax['batch']		=$r->Batch;
