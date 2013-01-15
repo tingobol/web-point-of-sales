@@ -222,7 +222,7 @@
 	4|Laporan Mutasi|report/mutasi||
 	
 		[List Stock]
-		1|List Stock|liststock|y|zvp
+		1|List Stock|liststock|y|zevp
 		
 		[Stock Opname]
 		1|Count Sheet|countsheet|y|zvp
