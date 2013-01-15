@@ -46,6 +46,12 @@ $(document).ready(function(e) {
 	$('#id_jenis').html("<option value='' selected>Semua</option><? dropdown('inv_penjualan_jenis','ID','Jenis_Jual','','');?>");
     $('#rekappenjualan').removeClass('tab_button');
 	$('#rekappenjualan').addClass('tab_select');
-
+	$('#id_lok').val($('#lok').val()).select()
+	if($('#jml_area').val()=='1')
+	{
+		lock('#id_lok');
+	}else{
+		unlok('#id_lok');
+	}
 });
 </script>

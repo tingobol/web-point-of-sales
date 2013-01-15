@@ -28,8 +28,8 @@ $(document).ready(function(e) {
 	$('#1__stok').attr('readonly','readonly');
 	_generate_nomor('GI','#no_trans');
 	$('#dari_lokasi')
-		.val('1').select()
-		.attr('disabled','disabled')
+		.val($('#lok').val()).select();
+	($('#jml_area').val()=='1')? lock('#dari_lokasi') :unlock('#dari_lokasi')
 	$('#no_trans')
 		.keypress(function(e){
 			if(e.keyCode==13){

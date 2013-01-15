@@ -14,7 +14,8 @@ $(document).ready(function(e) {
 				$('span:not(#v_'+id+')').hide();
 			}
 	})
-*/	$('table#stoked').hide()
+*/
+	$('table#stoked').hide()
 	$('#dari_tgl').dynDateTime();
 	$('#okelah').click(function(){
 		$('table#stoked').show()

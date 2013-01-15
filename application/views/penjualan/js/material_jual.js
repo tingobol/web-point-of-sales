@@ -84,8 +84,8 @@ $(document).ready(function(e) {
 										$.post(path+'stock/get_material_stock',{
 											'id_material'	:result.id_barang,
 											'lokasi'		:$('#id_lok').val()},
-											function(data){
-												//var jm=$.parseJSON(data);
+											function(dat){
+												var data=$.parseJSON(dat);
 												if($.trim(data.stock)=='0'||data.stock==null){
 /*													if(confirm('Stock '+result.data+' = 0 (Kosong)\nTransaksi akan dilanjutkan?')){
 														$('table#inform tr td#ist').html((jm.satuan==null)?'0 '+result.nm_satuan:'0 '+jm.satuan)
@@ -612,7 +612,7 @@ $(document).ready(function(e) {
 			'no_transaksi':id,
 			'tanggal'	  :tgl},
 			function(result){
-				//document.location.href=path+'penjualan/index';
+				document.location.href=path+'penjualan/index';
 			})
 	}
 	//membuat nomor transaksi otomatis berdasarkan jenis transaksi

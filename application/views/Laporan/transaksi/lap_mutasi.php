@@ -17,7 +17,7 @@ if($all_listmutasistock!=''){
 		  			<input type='hidden' value='1' id='jenis_beli' name='jenis_beli'/>"));
 	addText(array('Order by'.nbs(2)),array("<select id='orderby' name='orderby'>".selectTxt('lapmutasiurutan',false,'asset/bin/zetro_inv.frm')."</select>"));
 	addText(array('Sort by '.nbs(2)),array("<select id='urutan' name='urutan'>".selectTxt('Urutan',false)."</select>"));
-	addText(array(($modul=='S2FzaXI=')?'Show Detail Transaksi':'',''),array(($modul=='S2FzaXI=')? "<input type='checkbox' id='show_de' name='show_de' value='detail'>":"",
+	addText(array(($modul=='S2FzaXI=')?'Show Detail Transaksi':nbs(3),''),array(($modul=='S2FzaXI=')? "<input type='checkbox' id='show_de' name='show_de' value='detail'>":"",
 					"<input type='button' value='Proses' id='okelah'/>"));
 /*	addText(array('Cari by Nama Pelangan :',''),
 			array("<input type='text' class='cari w100' id='cariya' value=''>",
@@ -35,6 +35,12 @@ $lokasi=$this->zetro_auth->cek_area();
 ?>
 <script language="javascript">
 $(document).ready(function(e) {
-	$('#id_lok').html("<option value='' selected>Semua</option><? dropdown('user_lokasi','ID','Lokasi',"where ID in(".$lokasi.") order by ID",'');?>");
+	$('#id_lok').html("<option value=''>Semua Lokasi</option><? dropdown('user_lokasi','ID','Lokasi',"where ID in(".$lokasi.") order by ID",'');?>");
+	$('#id_lok').val($('#lok').val()).select()
+	if($('#jml_area').val()=='1'){
+		lock('#id_lok');
+	}else{
+		unlock('#id_lok')
+	}
 });
 </script>
