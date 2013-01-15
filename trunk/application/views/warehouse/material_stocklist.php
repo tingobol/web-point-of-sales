@@ -32,7 +32,6 @@ if($all_liststock!='' || $all_stockadjustment!=''){
 }else{
 	 no_auth();
 }
-
 panel_multi_end();
 panel_end();
 popup_start('stocklist','Stock Adjustment',550);
@@ -47,10 +46,18 @@ popup_end();
 ?>
 <input type='hidden' value='<?=$e_stockadjustment;?>' id='edited' />
 <input type='hidden' value='' id='lokasi' />
+<input type='hidden' value='<?=count(explode(',',$this->zetro_auth->cek_area()));?>' id='jml_gudang' />
 <script language="javascript">
 $(document).ready(function(e) {
-    $('#Kategori').html("<? dropdown('inv_barang_kategori','ID','Kategori','order by Kategori','28');?>")
-    $('#id_lokasi').html("<? dropdown('user_lokasi','ID','lokasi','order by id',$this->session->userdata('gudang'));?>")
+    $('#Kategori').html("<? dropdown('inv_barang_kategori','ID','Kategori','order by Kategori','');?>")
+    $('#id_lokasi').html("<? dropdown('user_lokasi','ID','lokasi',"where id in(".$this->zetro_auth->cek_area().") order by id",$this->session->userdata('gudang'));?>")
+	$('#id_lokasi').val($('#lok').val()).select()
+		if($('#jml_gudang').val()=='1')
+		{
+			lock('#id_lokasi');
+		}else{
+			unlock('#id_lokasi');
+		}
 	$('#okelah').click();
     $('#stockadjustment').removeClass('tab_button');
 	$('#stockadjustment').addClass('tab_select');

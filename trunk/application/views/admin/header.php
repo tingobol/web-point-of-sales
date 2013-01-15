@@ -82,4 +82,5 @@ link_js('jquery.alerts.js','asset/js');
     </div>
   <input type='hidden' value='<?=base_url();?>index.php/' id='path' />
   <input type='hidden' value=<?=current($lokasi);?> id='lok' />
+  <input type="hidden" value='<?=count(explode(',',$this->zetro_auth->cek_area()));?>' id='jml_area' />
 </div>
