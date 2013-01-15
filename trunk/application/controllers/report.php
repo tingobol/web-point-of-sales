@@ -10,8 +10,6 @@ class Report extends CI_Controller
 		$this->load->model("purch_model");
 		$this->load->helper("print_report");
 		$this->load->library("zetro_auth");
-		$this->load->library("printer");
-		$this->load->library("ThreeCore_Output_CLI");
 		$this->userid=$this->session->userdata('idlevel');
 	  }
 	
