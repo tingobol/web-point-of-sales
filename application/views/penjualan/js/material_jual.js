@@ -69,24 +69,26 @@ $(document).ready(function(e) {
 				//autosuggest nama barang
 					$('#frm2 input#'+id[0]+'__nm_barang')
 							.coolautosuggest({
-									url:path+'inventory/data_material?fld=Nama_Barang&limit=8&str=',
-									width:350,
-									showDescription	:true,
-									onSelected:function(result)
-									{
-										if(result){
+								url:path+'inventory/data_material?fld=Nama_Barang&limit=8&str=',
+								width:350,
+								showDescription	:true,
+								onSelected:function(result)
+								{
+									if(result){
 										$('#frm2 input#'+id[0]+'__nm_satuan').val(result.nm_satuan)
 										$('#frm2 input#'+id[0]+'__harga_jual').val(result.hargajual)
 										$('#'+id[0]+'__harga_total').val(result.hargajual);
 										total_harga();
 										$('#max_input').val('0')
 										//dapatkan total stock
+									   if(result.jenis!='33'){
 										$.post(path+'stock/get_material_stock',{
 											'id_material'	:result.id_barang,
 											'lokasi'		:$('#id_lok').val()},
 											function(dat){
 												var data=$.parseJSON(dat);
-												if($.trim(data.stock)=='0'||data.stock==null){
+												if($.trim(data.stock)=='0'||
+													data.stock==null  ){
 /*													if(confirm('Stock '+result.data+' = 0 (Kosong)\nTransaksi akan dilanjutkan?')){
 														$('table#inform tr td#ist').html((jm.satuan==null)?'0 '+result.nm_satuan:'0 '+jm.satuan)
 													}else{
@@ -110,8 +112,13 @@ $(document).ready(function(e) {
 														$('table#inform tr td#mdl').html(format_number(bt.harga_beli))
 													})
 											})
-										}
-									}
+									   }else{
+										$('#frm2 input#'+id[0]+'__jml_transaksi')
+											.val('1')
+											.focus().select()	
+										$('#max_input').val('10')								   }//end if jenis
+									}//end if result
+								}//end if autosuggest
 							})
 					//jml_transaksi otomatis adalah satu
 					//jika di tulis akan merubah subtotal

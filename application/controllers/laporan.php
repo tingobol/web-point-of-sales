@@ -147,7 +147,12 @@ class Laporan extends CI_Controller{
 		$this->list_data($data);
 		$this->View("laporan/lap_".$this->input->post('lap')."_print");
 	}
-	
+  function rekapabsensi()
+  {
+		$this->zetro_auth->menu_id(array('laporan__rekapabsensi'));
+		$this->list_data($this->zetro_auth->auth());
+		$this->View('laporan/lap_absensi');
+  }
 }
 
 
