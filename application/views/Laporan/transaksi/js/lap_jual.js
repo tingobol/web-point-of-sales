@@ -120,17 +120,21 @@ $(document).ready(function(e) {
 			}
 		})
 	$('#okelah').click(function(){
+		show_indicator('xx',1);
+		unlock('#id_lok')
 		$('#frm1').attr('action','lap_penjualan');
 		document.frm1.submit();
 	})
  // penjualan detail
 	$("#okedech").click(function(){
 		show_indicator('xx',1);
+		unlock('#id_lok')
 		$('#frm1').attr('action','lap_penjualan_detail');
 		document.frm1.submit();
 	})
 	$("#okedechya").click(function(){
 		show_indicator('xx',1);
+		unlock('#id_lok')
 		$('#frm1').attr('action','penjualan_per_konsumen');
 		document.frm1.submit();
 	})

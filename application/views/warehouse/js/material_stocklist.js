@@ -39,6 +39,7 @@ $(document).ready(function(e) {
 		})
 	})
 	$('#frm1 #prt').click(function(){
+		unlock('#frm1 #id_lokasi');
 		$('#frm1').attr('action','print_stock');
 		document.frm1.submit();
 	})

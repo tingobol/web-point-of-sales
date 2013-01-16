@@ -182,19 +182,23 @@ class Stock extends CI_Controller{
 		}
 	}
 	function print_stock(){
-		$data=array();$n=0;
-		$where=($this->input->post('Kategori')=='')?'':"where im.ID_Kategori='".$this->input->post('Kategori')."' and ms.Stock!='0'";
-		$where.=($this->input->post('Stat')=='')?'':" and Status='".$this->input->post('Stat')."' and ms.Stock!='0'";
+		$data=array();$n=0; $where='';
+		$where=($this->input->post('Kategori')=='')?'':"where im.ID_Kategori='".$this->input->post('Kategori')."' and ms.Stock<>'0'";
+		$where.=($where=='' && $this->input->post('id_lokasi')!='')?
+				"where ms.id_lokasi='".$this->input->post('id_lokasi')."' and ms.Stock<>'0'":
+				"  and ms.id_lokasi='".$this->input->post('id_lokasi')."' and ms.Stock<>'0'";
+		//$where.=($this->input->post('Stat')=='')?'':" and Status='".$this->input->post('Stat')."'";
 		$orderby=($this->input->post('orderby')=='')?'':" order by ".str_replace('-',',',$this->input->post('orderby'))." ";
 		$orderby.=($this->input->post('urutan')=='')?'':strtoupper($this->input->post('urutan'));
-		echo $where.'/'.$orderby;
 		$data['kategori']=rdb('inv_barang_kategori','Kategori','Kategori',"where ID='".$this->input->post('Kategori')."'");
 		$data['status']	=$this->input->post('Stat');
 		$data['temp_rec']=$this->report_model->stock_list($where,'stock',$orderby);
 			$this->zetro_auth->menu_id(array('trans_beli'));
 			$this->list_data($data);
-			$this->View("laporan/transaksi/lap_stock_print");
-/**/	}
+		    $this->View("laporan/transaksi/lap_stock_print");
+	/*	echo $where."<br>";
+		print_r($data);
+*/	}
 	function edit_stock(){
 		$data=array();
 		$id=explode(':',$_POST['ID']);

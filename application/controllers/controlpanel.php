@@ -241,5 +241,64 @@ class Controlpanel extends CI_Controller {
 		$data['c']		=$_POST['stat'];	
 		$this->Admin_model->replace_data('user_oto_area',$data);
 	}
+	//karywan
+	function karyawan()
+	{
+		$this->zetro_auth->menu_id(array('controlpanel__karyawan'));
+		$this->list_data($this->zetro_auth->auth());
+		$this->View('controlpanel/karyawan');
+	}
+	
+	function set_karyawan()
+	{
+		$data=array();
+		$data['ID']		=empty($_POST['ID'])?'0':$_POST['ID'];
+		$data['Nama']	=strtoupper(addslashes($_POST['Nama']));
+		$data['ID_Dept']=empty($_POST['ID_Dept'])?'1':$_POST['ID_Dept'];
+		$data['NIP']	=empty($_POST['NoUrut'])?'':$_POST['NoUrut'];
+		$data['ID_Kelamin']=empty($_POST['ID_Kelamin'])?'':$_POST['ID_Kelamin'];
+		$data['ID_Jenis']='1';
+		$data['Kota']	=' ';
+		$data['Propinsi']=' ';
+		$this->Admin_model->replace_data('mst_anggota',$data);
+	}
+	
+	function get_detail_karyawan()
+	{
+		$data=array();
+		$id=$_POST['id'];
+		$data=$this->control_model->detail_karyawan($id);
+		echo json_encode($data);
+	}
+	function get_list_karyawan()
+	{
+		$file='asset/bin/zetro_master.frm';
+		$data=array();$n=0;
+		$where=empty($_POST['id_lokasi'])?'':"where ID_Dept='".$_POST['id_lokasi']."' and ID_Jenis='1'";
+		$data=$this->Admin_model->show_list('mst_anggota',$where);
+		$oto=$this->zetro_auth->cek_oto('e','controlpanel__karyawan');
+		if($data){
+			foreach($data as $r)
+			{
+				$n++;$sex='';
+				$sex=explode(',',$this->zetro_manager->rContent('Sex',$r->ID_Kelamin,$file));
+				echo tr().td($n,'center').
+					 td($r->NIP,'center').
+					 td($r->Nama).
+					 td($sex[1],'center').
+					 td(rdb('user_lokasi','lokasi','lokasi',"where ID='".$r->ID_Dept."'")).
+					 td(($oto!='')?img_aksi($r->ID,true):'','center').
+					_tr();
+			}
+		}else{
+			echo tr().td('Belum ada data karyawan','left\' colspan=\'6')._tr();	
+		}
+		echo $where;
+	}
+	function del_karyawan()
+	{
+		$id=$_POST['id'];
+		$this->Admin_model->hps_data('mst_anggota',"where ID='".$id."'");
+	}
 }
 ?>

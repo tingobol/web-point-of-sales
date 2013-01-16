@@ -2,7 +2,9 @@
 1|Kasir||y|kasir.png|Kasir
 2|Inventory||y|inventory.png|Inventory
 3|Laporan||y|laporan.png|Laporan
-4|Setup||y|setup.png|Setup
+4|Absensi||y|absensi.png|Absensi
+5|Setup||y|setup.png|Setup
+
 
 [Setup]
 1|Home|admin/index||
@@ -309,7 +311,22 @@
 	[Lap.Pelanggan]
 	1|Rekap Pembelian||||
 	
+	[Absensi]
+	1|Home|admin/index|||
+	2|Karyawan||y||
+	3|Kehadiran||y||
+	4|Lap.Absensi||y||
+	5|Help|||
 	
+		[Karyawan]
+		1|List Karyawan|controlpanel/karyawan|y|zcev
+		
+		[Kehadiran]
+		1|Absen Harian|controlpanel/absensi|y|zcev
+		
+		[Lap.Absensi]
+		1|Rekap Absensi|laporan/rekapabsensi|y|zvp
+		2|Detail Absensi|laporan/detailabsensi||
 	
 	
 	
