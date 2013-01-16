@@ -123,5 +123,5 @@
 4|Lokasi,select,text,ID_Dept,s70,,20%,
 
 [Absensi]
-1|Nama Karyawan,,,,,,,30%,,,12
+1|Nama Karyawan,,,,,,30%,,,12
 2|Absensi,,,,,,10%,,,12

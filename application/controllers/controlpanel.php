@@ -300,5 +300,74 @@ class Controlpanel extends CI_Controller {
 		$id=$_POST['id'];
 		$this->Admin_model->hps_data('mst_anggota',"where ID='".$id."'");
 	}
+	
+	//absensi
+	
+	function absensi()
+	{
+		$this->zetro_auth->menu_id(array('controlpanel__absensi'));
+		$this->list_data($this->zetro_auth->auth());
+		$this->View('controlpanel/absensi');
+	}
+	function get_daily_absen()
+	{
+		$data=array();$n=0;
+		$where=empty($_POST['id_lokasi'])?'':"where ID_Dept='".$_POST['id_lokasi']."'";
+		$data=$this->Admin_model->show_list('mst_anggota',$where." order by Nama");
+		foreach($data as $r)
+		{
+			$n++;
+			$cekAbsen='';$stato="";
+			$cekAbsen=rdb('absensi','on_absen','on_absen',"where id_karyawan='".$r->ID."' and tgl_absen='".date('Ymd')."'");
+			$stato=($cekAbsen=='Y')?"checked='checked'":'';
+			echo tr().td($n,'center').
+				 td($r->Nama).
+				 td("<input type='checkbox' style='cursor:pointer' id='r-".$r->ID."' name='r-".$r->ID."' $stato><label> Hadir</label>",'center').
+				 _tr();
+		}
+		
+	}
+	function set_absensi()
+	{
+		$data=array();
+		$data['id_karyawan']=$_POST['id_karyawan'];
+		$data['tgl_absen']	=tgltoSql($_POST['tgl_absen']);
+		$data['on_absen']	=empty($_POST['on_absen'])?'N':$_POST['on_absen'];
+		$data['id_lokasi']	=empty($_POST['id_lokasi'])?'1':$_POST['id_lokasi'];
+		echo($this->Admin_model->replace_data('absensi',$data))?
+			img_aksi('',true,'info')." Data berhasil di simpan":
+			img_aksi('',true,'warning').' '.mysql_error();
+	}
+	function get_detail_absensi()
+	{
+		$data=array();
+		$id=$_POST['id'];
+		$bln=empty($_POST['bln'])?date('m'):$_POST['bln'];
+		$thn=empty($_POST['thn'])?date('Y'):$_POST['thn'];
+		$where="where id='".$id."' month(tgl_absen)='".$bln."' and year(tgl_absen)='".$thn."'";
+		$data=$this->Admin_model->show_list('absensi',$where);
+		$data=(is_array($data))?$data[0]:array('id_karyawan'=>'','tgl_absen'=>'');
+		echo json_encode($data);
+	}
+	
+	function get_list_absensi()
+	{	
+		$data=array();$n=0;
+		$lok=empty($_POST['id_lokasi'])?'':$_POST['id_lokasi'];
+		$bln=empty($_POST['bln'])?date('m'):$_POST['bln'];
+		$thn=empty($_POST['thn'])?date('Y'):$_POST['thn'];
+		$where="where month(tgl_absen)='".$bln."' and year(tgl_absen)='".$thn."'";
+		$where.=($lok=='')?'':" and id_lokasi='".$lok."'";
+		$data=$this->Admin_model->show_list('absensi',$where." order by tgl");
+		foreach($data as $r)
+		{
+			$n++;
+			echo tr().td($n,'center').
+				 td(rdb('mst_anggota','Nama','Nama',"where ID='".$r->id_karyawan."'")).
+				 td().
+				 td().
+				_tr();	
+		}
+	}
 }
 ?>
