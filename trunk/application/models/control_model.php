@@ -43,5 +43,21 @@ class Control_model extends CI_Model{
 		$this->db->where($field,$isi);
 		$this->db->delete($tabel);	
 	}
-
+	function detail_karyawan($id)
+	{
+		$data=array();
+		$sql="select * from mst_anggota where ID='".$id."'";
+		$rs=mysql_query($sql) or die(mysql_error());
+		while($r=mysql_fetch_object($rs)){
+				$data=array('ID'		=>$r->ID,
+							'NIP'		=>$r->NIP,
+							'Nama'		=>$r->Nama,
+							'ID_Dept'	=>$r->ID_Dept,
+							'Lokasi'	=>rdb('user_lokasi','lokasi','lokasi',"where ID='".$r->ID_Dept."'"),
+							'ID_Kelamin'=>$r->ID_Kelamin
+							);
+							
+		}
+		return $data;
+	}
 }	

@@ -167,6 +167,7 @@ class Report extends CI_Controller
 		$where.=($this->input->post('kategori')=='')?'':" and b.ID_Kategori='".$this->input->post('kategori')."'";
 		$where.=($this->input->post('id_jenis')=='')?'':" and p.ID_Jenis='".$this->input->post('id_jenis')."'";
 		$where.=" and p.ID_Jenis!='5' and Jumlah !='0'";
+		$where.=($this->input->post('id_lok')=='')?'':" and p.ID_Lokasi='".$this->input->post('id_lok')."'";
 		$group="group by concat(dt.harga,dt.ID_Barang)";
 		$ordby="order by ".$this->input->post('orderby');
 		$ordby.=($this->input->post('urutan')=='')?'':" ".$this->input->post('urutan');
@@ -177,6 +178,7 @@ class Report extends CI_Controller
 		$data['judul']		=rdb('inv_penjualan_jenis','Jenis_Jual','Jenis_Jual',"where ID='".$this->input->post('id_jenis')."'");
 		$tampilan= $this->input->post('show_de');
 		$data['where']=$where;
+		$data['lokasi']=($this->input->post('id_lok')=='')?'':rdb('user_lokasi','lokasi','lokasi',"where ID='".$this->input->post('id_lok')."'");
 		$data['orderby']=$ordby;
 		$data['temp_rec']=($tampilan=='')?
 		$this->kasir_model->rekap_trans_jual($where,$group,$ordby):

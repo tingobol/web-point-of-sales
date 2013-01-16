@@ -95,16 +95,17 @@ function Header()
 {
 	$zn=new zetro_manager();
 	$nfile='asset/bin/zetro_config.dll';
+	$lokasi=empty($this->lokasi)?'InfoCo':$this->lokasi;
   if($this->kriteria=="transkip"){
-	$co		=$zn->rContent('InfoCo','subtitle',$nfile);
-	$address=$zn->rContent('InfoCo','Address',$nfile);
-	$kota	=$zn->rContent('InfoCo','Kota',$nfile);
-	$prop	=$zn->rContent('InfoCo','Propinsi',$nfile);
-	$telp	=$zn->rContent('InfoCo','Telp',$nfile);
-	$fax	=$zn->rContent('InfoCo','Fax',$nfile);
-	$BH		=$zn->rContent('InfoCo','BH',$nfile);
+	$co		=$zn->rContent($lokasi,'subtitle',$nfile);
+	$address=$zn->rContent($lokasi,'Address',$nfile);
+	$kota	=$zn->rContent($lokasi,'Kota',$nfile);
+	$prop	=$zn->rContent($lokasi,'Propinsi',$nfile);
+	$telp	=$zn->rContent($lokasi,'Telp',$nfile);
+	$fax	=$zn->rContent($lokasi,'Fax',$nfile);
+	$BH		=$zn->rContent($lokasi,'BH',$nfile);
 	   $this->Ln(2);
-	   $this->Image(base_url().'asset/img/about.jpg',10,6,50,15);
+	   $this->Image(base_url().'asset/img/about.jpg',10,6,70,12);
 	   $this->Ln(2);
 	   //$this->SetFont('Arial','B',15);
 	  // $this->Cell(5);
@@ -148,13 +149,13 @@ function Header()
 	
   }
   if($this->kriteria=='faktur'){
-		$co		=$zn->rContent('InfoCo','Name',$nfile);
-		$address=$zn->rContent('InfoCo','Address',$nfile);
-		$kota	=$zn->rContent('InfoCo','Kota',$nfile);
-		$telp	=$zn->rContent('InfoCo','Telp',$nfile);
-		$fax	=$zn->rContent('InfoCo','Fax',$nfile);
-		$npwp	=$zn->rContent('InfoCo','NPWP',$nfile);
-		$nppkp	=$zn->rContent('InfoCo','NPPKP',$nfile);
+		$co		=$zn->rContent($lokasi,'Name',$nfile);
+		$address=$zn->rContent($lokasi,'Address',$nfile);
+		$kota	=$zn->rContent($lokasi,'Kota',$nfile);
+		$telp	=$zn->rContent($lokasi,'Telp',$nfile);
+		$fax	=$zn->rContent($lokasi,'Fax',$nfile);
+		$npwp	=$zn->rContent($lokasi,'NPWP',$nfile);
+		$nppkp	=$zn->rContent($lokasi,'NPPKP',$nfile);
 		
 		   $this->SetFont('Arial','B',14);
 		   $this->Cell(110,4,$co,0,0,'L');
@@ -310,7 +311,14 @@ public function getFilename(){
 public function getDataset(){
   return $this->dataset;
 }
-
+public function setLokasi($n)
+{
+	$this->lokasi=$n;
+}
+public function getLokasi()
+{
+	return $this->lokasi;
+}
 }
 
 ?>

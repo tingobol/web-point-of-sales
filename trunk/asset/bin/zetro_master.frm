@@ -103,6 +103,10 @@
 1|Client,Bukan
 2|Server,YA
 
+[Sex]
+1|1,Laki-Laki
+2|2,Perempuan
+
 [Profile]
 1|Company Name,input,text n,nm_company,w90 upper,,
 2|Address,textarea,text n,ad_company,T90,,
@@ -112,4 +116,12 @@
 6|Phone,input,text n,tl_company,w70,,
 7|Fax,input,text,fx_company,w70,,
 
+[Karyawan]
+1|ID Karyawan,input,text n,NoUrut,w35 upper,,10%
+2|Nama Karyawan,input,text n,Nama,w90 upper,,30%,
+3|Jenis Kelamin,select,text,ID_Kelamin,s70,,20%,RS,Sex
+4|Lokasi,select,text,ID_Dept,s70,,20%,
 
+[Absensi]
+1|Nama Karyawan,,,,,,,30%,,,12
+2|Absensi,,,,,,10%,,,12

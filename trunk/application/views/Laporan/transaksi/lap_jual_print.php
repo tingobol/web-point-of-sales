@@ -3,6 +3,7 @@
 		  $zn=new zetro_manager();
 		  $nfile='asset/bin/zetro_neraca.frm';
 		  //$a->Header();
+		  $a->setLokasi($lokasi);
 		  $a->setKriteria("transkip");
 		  $a->setNama("REKAP PENJUALAN ".strtoupper($judul));
 		  $a->setSection(($orient=='P')?"rekapjualtunai":"detailjual");
