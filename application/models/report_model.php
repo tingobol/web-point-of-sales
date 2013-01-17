@@ -167,7 +167,7 @@ class Report_model extends CI_Model {
 			where t.Tanggal between '".tglToSql($dari)."' and '".tglToSql($sd)."'
 			and t.ID_CC='$ID_CC' $lokasi
 			group by t.ID_CC";
-			echo $sql;
+			//echo $sql;
 			$data=$this->db->query($sql);	
 			return $data->result();
 		
