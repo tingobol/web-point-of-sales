@@ -1,8 +1,8 @@
 <?php
 //define('FPDF_FONTPATH', 'font/');
-require('fpdf.php');
+require('fpdf2.php');
 
-class reportProduct extends FPDF 
+class reportProduct2 extends FPDF2 
 {
   var $widths;
   var $aligns;
@@ -204,73 +204,22 @@ function Header()
 	$fax	=$zn->rContent($lokasi,'Fax',$nfile);
 	$BH		=$zn->rContent($lokasi,'BH',$nfile);
 	   $this->Ln(2);
-	   $this->Image(base_url().'asset/img/about.jpg',11,8,35,5);
+	   $this->Image(base_url().'asset/img/about.jpg',10,8,30,5);
 	   $this->Ln(1);
-	   $this->SetFont('Arial','',9);
-	   $this->Cell(100,5,$address." ". $kota." ". $prop,0,0,'L');
+	   $this->SetFont('Arial','',8);
+	   $this->Cell(65,5,$address." ". $kota." ". $prop,0,0,'L');
 	   $this->Cell(50,5,'Tanggal :',0,0,'R');
 	   $this->Cell(30,5,$this->refer,0,1,'L');
-	   $this->Cell(100,5,$telp." ". $fax,0,0,'L');
+	   $this->Cell(65,5,$telp." ". $fax,0,0,'L');
 	   $this->Cell(50,5,'No. Faktur :',0,0,'R');
 	   $this->Cell(30,5,$this->filter,0,1,'L');
-	   $this->SetFont('Arial','',11);
-	  // $this->Cell(180,0,'',1,1,'C');
 	   $this->Ln();
-	   $this->SetFont('Arial','',9);
-	   $this->SetWidths(array('12','80','20','30','30'));
+	   $this->SetFont('Arial','',8);
+	   $this->SetWidths(array('10','55','18','25','25'));
 	   $this->SetAligns(array('C','C','C','C','C'));
 	   $this->Row(array('No','Nama Barang','Jumlah','Harga Satuan','Total Harga'));
 	   
  }
- if($this->kriteria=='neraca'){
-	$co		=$zn->rContent('InfoCo','subtitle',$nfile);
-	$address=$zn->rContent('InfoCo','Address',$nfile);
-	$kota	=$zn->rContent('InfoCo','Kota',$nfile);
-	$prop	=$zn->rContent('InfoCo','Propinsi',$nfile);
-	$telp	=$zn->rContent('InfoCo','Telp',$nfile);
-	$fax	=$zn->rContent('InfoCo','Fax',$nfile);
-	$BH		=$zn->rContent('InfoCo','BH',$nfile);
-	   $this->Ln(2);
-	   $this->Image(base_url().'asset/img/about.jpg',10,6,50,15);
-	   $this->Ln(2);
-	   //$this->SetFont('Arial','B',15);
-	  // $this->Cell(5);
-	  // $this->MultiCell(120,5,$co,0,1,'L');
-	   //$this->Cell(5);
-	   $this->SetFont('Arial','B',11);
-	   //$this->MultiCell(100,5,$BH,0,1,'C');
-	   $this->SetFont('Arial','',10);
-	   //$this->Cell(3);
-	   $this->MultiCell(0,6,"",0,1,'C');
-	   $this->SetFont('Arial','',10);
-	   //$this->Cell(5);
-	   $this->MultiCell(0,6,$address." ". $kota." ". $prop,0,1,'C');
-	   $this->MultiCell(0,4,$telp." ". $fax,0,1,'C');
-	   $this->Ln(5);
-	   $this->SetFont('Arial','B',10);
-	   ($this->CurOrientation=='P')?
-	   $this->MultiCell(0,4,str_repeat("_",95),0,1,'C'):
-	   $this->MultiCell(0,4,str_repeat("_",140),0,1,'C');
-	   $this->SetFont('Arial','B',14);
-	   $this->Cell(0,10,$this->nama,2,1,'L');
-	   $this->SetFont('Arial','B',10);
-			  //$this->Ln(1); // spasi enter
-			  $this->SetFont('Arial','B',11); // set font,size,dan properti (B=Bold)
-			  $n=0;
-			  if(!empty($this->refer)){
-				  foreach($this->refer as $rr){
-					  $this->Cell(30,6,$rr,0,0,'L');
-					  $this->Cell(100,6,': '.$this->filter[$n],0,1,'L');
-					$n++;
-				  }
-			  }
-			  $this->Ln(1);
-	   $this->SetFont('Arial','B',10);
-		   ($this->CurOrientation=='P')?
-		   $this->MultiCell(0,4,str_repeat("_",95),0,1,'C'):
-		   $this->MultiCell(0,4,str_repeat("_",140),0,1,'C');
- }
- 
 }
 
 function Footer(){

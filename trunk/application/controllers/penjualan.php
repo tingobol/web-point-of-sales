@@ -14,6 +14,7 @@ class Penjualan extends CI_Controller{
 		$this->load->library('zetro_slip');
 		$this->load->model("report_model");
 		$this->load->helper("print_report");
+		$this->load->helper("print_report2");
 	}
 	
 	function Header(){ 
@@ -552,6 +553,21 @@ class Penjualan extends CI_Controller{
 		$fld	=rdb('mst_anggota','Nama','Nama',"where ID='".$_GET['fld']."'");
 		$data=$this->inv_model->get_bank($str);
 		echo json_encode($data);	
+	}
+	function print_slip_pdf()
+	{
+		$this->no_transaksi($_POST['notrans']);
+		$this->tanggal(tgltoSql($_POST['tanggal']));
+		$data['lokasi']=rdb('user_lokasi','lokasi','lokasi',"where ID='".$_POST['lokasi']."'");
+		$data['no_faktur']=$_POST['faktur'];
+		$this->inv_model->tabel('inv_penjualan_rekap');
+		$data['temp_rec']=$this->kasir_model->get_trans_jual($this->no_trans,$this->tgl);
+		//send data to pdf
+		$data['cash']=rdb('inv_pembayaran','jml_dibayar','jml_dibayar',"where no_transaksi='".$_POST['notrans']."'");
+		print_r($data);
+		$this->zetro_auth->menu_id(array('trans_beli'));
+		$this->list_data($data);
+		$this->View("penjualan/penjualan_slip");
 	}
 }
 ?>

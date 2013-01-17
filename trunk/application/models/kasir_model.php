@@ -8,10 +8,15 @@ class Kasir_model extends CI_Model {
 	}
 	
 	function get_trans_jual($no_trans,$tanggal){
-		$sql="select dt.* from inv_penjualan as p
+		$sql="select dt.*,b.*,bs.* from inv_penjualan as p
 			 left join inv_penjualan_detail as dt
 			 on dt.ID_Jual=p.ID
-			 where p.NoUrut='$no_trans' and p.Tanggal='$tanggal' order by dt.ID";
+			 left join inv_barang as b
+			 on b.ID=dt.ID_Barang
+			 left join inv_barang_satuan as bs
+			 on bs.ID=b.ID_Satuan
+			 where p.NoUrut='$no_trans' and p.Tanggal='$tanggal' and dt.ID_Barang<>'0' order by dt.ID";
+		//echo $sql;
 		$data=$this->db->query($sql);
 		return $data->result();
 	}
