@@ -145,7 +145,7 @@ class Report_model extends CI_Model {
 			 on b.ID=pd.ID_Barang
 			 left join inv_barang_satuan as s
 			 on s.ID=pd.ID_Satuan
-			 where p.NoUrut='$no_trans' and p.Tahun='".date('Y')."' order by pd.ID";
+			 where p.NoUrut='$no_trans' and p.Tahun='".date('Y')."' and pd.ID_Barang<>'0' order by pd.ID";
 		return $this->db->query($sql);	
 	}
 	function lap_cash_flow(){

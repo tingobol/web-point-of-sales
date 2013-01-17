@@ -9,7 +9,7 @@
 * You may use, modify and redistribute this software as you wish.              *
 *******************************************************************************/
 
-class FPDF
+class FPDF2
 {
 //Private properties
 var $page;               //current page number
@@ -71,7 +71,7 @@ var $PDFVersion;         //PDF version number
 *                               Public methods                                 *
 *                                                                              *
 *******************************************************************************/
-function FPDF($orientation='P',$format='A4',$unit='mm')
+function FPDF2($orientation='P',$format='A5',$unit='mm')
 {
 	//Some checks
 	$this->_dochecks();

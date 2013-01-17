@@ -32,12 +32,13 @@ $(document).ready(function(e) {
 		_generate_nomor('GI','#frm1 input#no_transaksi');
 		
 	}
-	lock('#no_transaksi,#kredit,#bayar');
+	lock('#kredit,#bayar');
+	$('#no_transaksi').attr('readonly','readonly');
 	//lock tanggal jika user bukan level adminstrator /superuser
 	if($('#aktif_user').val()>2){
-		lock('#tgl_transaksi');
+		$('#tgl_transaksi').attr('readonly','readonly');
 	}else{
-		unlock('#tgl_transaksi')
+		$('#tgl_transaksi').removeAttr('readonly')
 		$('#tgl_transaksi').dynDateTime();
 	}
 	$('#tgl_giro').dynDateTime();
@@ -614,13 +615,31 @@ $(document).ready(function(e) {
 	//print struk
 	//setelah proses print selesai lakukan refresh halaman
 	function _print_struk(id,tgl){
-		var path=$('#path').val();
+/*		var path=$('#path').val();
 		$.post('print_slip',{
 			'no_transaksi':id,
 			'tanggal'	  :tgl},
 			function(result){
 				document.location.href=path+'penjualan/index';
 			})
+*//*		unlock('#no_transaksi')
+		unlock('#tgl_transaksi');
+		$.post('print_slip_pdf',{
+			'notrans'	:$('#no_transaksi').val(),
+			'tanggal'	:$('#tgl_transaksi').val(),
+			'faktur'	:$('#faktur_transaksi').val(),
+			'lokasi'	:$('#lok').val()
+			},function(result){
+				$('#pp-preview').css({'left':'10%','top':'10%','max-height':'550px'})
+				$('#tbl-preview').css({'height':'500px'});
+				$('#tbl-preview').html(result)
+				$('#pp-preview').show();
+				$('#lock').show()
+			})
+			$('#pp-preview img#preview').live('click',function(){
+			document.location.reload();
+			})
+*/ print_slip()
 	}
 	//membuat nomor transaksi otomatis berdasarkan jenis transaksi
 	function _generate_nomor(tipe,field){

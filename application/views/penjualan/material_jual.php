@@ -124,8 +124,8 @@ popup_start('canceltrans','Edit Transaksi',850);
 		$zlb->Header('100%');
 	echo "</tbody></table>";
 popup_end();
-popup_start('tranresep','Komposisi Resep',800,600);
-	//$this->load->view('penjualan/material_jual_resep');
+popup_start('preview','Print Preview',800,600);
+	//menampilkan slip penjualan
 popup_end();
 auto_sugest();
 tab_select('prs');
@@ -150,4 +150,25 @@ $(document).ready(function(e) {
     $('#cbayare').html("<? dropdown('inv_penjualan_jenis','ID','Jenis_Jual',"where ID not in ('3','5') order by ID",'1');?>");
 	//$('#frm2 table#ListTable').fixedHeader({width:(screen.width-300),height:(screen.height-450)})
 });
+	function print_slip(){
+		unlock('#no_transaksi')
+		unlock('#tgl_transaksi');
+		$.post('print_slip_pdf',{
+			'notrans'	:$('#no_transaksi').val(),
+			'tanggal'	:$('#tgl_transaksi').val(),
+			'faktur'	:$('#faktur_transaksi').val(),
+			'lokasi'	:$('#lok').val()
+			},function(result){
+				$('#pp-preview').css({'left':'10%','top':'10%','max-height':'550px'})
+				$('#tbl-preview').css({'height':'500px'});
+				$('#tbl-preview').html('<iframe src="<?=base_url();?>application/logs/<?=$this->session->userdata('userid');?>_slip_penjualan.pdf" height="100%" width="100%" frameborder="0" allowtransparency="1"></iframe>')
+				$('#pp-preview').show();
+				$('#lock').show()
+				
+			})
+			$('#pp-preview img#preview').live('click',function(){
+			document.location.href='<?=base_url();?>index.php/penjualan/index';
+			})
+	}
+
 </script>
