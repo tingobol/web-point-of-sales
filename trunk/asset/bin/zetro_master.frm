@@ -125,3 +125,13 @@
 [Absensi]
 1|Nama Karyawan,,,,,,30%,,,12
 2|Absensi,,,,,,10%,,,12
+
+[lapabsen]
+1|Tanggal,,,,,,,30%,,,12
+2|Nama Karyawan,,,,,,30%,,,12
+3|Status,,,,,,30%,,,12
+
+[lapabsenrekap]
+
+
+

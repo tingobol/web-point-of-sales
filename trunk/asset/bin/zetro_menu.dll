@@ -322,11 +322,12 @@
 		1|List Karyawan|controlpanel/karyawan|y|zcev
 		
 		[Kehadiran]
-		1|Absen Harian|controlpanel/absensi|y|zcev
+		1|Absensi Harian|controlpanel/absensi|y|zcev
 		
 		[Lap.Absensi]
 		1|Rekap Absensi|laporan/rekapabsensi|y|zvp
 		2|Detail Absensi|laporan/detailabsensi||
 	
-	
+		[Detail Absensi]
+		1|Detail Absensi|detailabsensi|y|zvp|
 	

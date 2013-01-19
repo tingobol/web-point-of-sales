@@ -60,4 +60,11 @@ class Control_model extends CI_Model{
 		}
 		return $data;
 	}
+	function get_bulan($tabel,$text,$field)
+	{
+		$data=array();
+		$sql="select distinct ".$text."(".$field.") as $text from $tabel";
+		$data=$this->db->query($sql);
+		return $data->result();
+	}
 }	

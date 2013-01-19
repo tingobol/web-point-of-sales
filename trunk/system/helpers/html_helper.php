@@ -489,6 +489,12 @@ if (! function_exists('tabel')){
 	function tabel($width='100%',$id='newTable',$style="border-collapse:collapse"){
 		return "<table id='$id' style='$style' width='$width'>";	
 	}
+	function _thead($thead=true,$tbody=false)
+	{
+		return ($thead==true && $tbody==false)?
+				"<thead>":
+				"</thead><tbody>";	
+	}
 	function _tabel($tbody=false){
 		return ($tbody==true)?"</tbody></table>":"</table>";	
 	}
@@ -502,8 +508,8 @@ if (! function_exists('tr')){
 	}
 }
 if (! function_exists('td')){
-	function th($content='',$width='',$class='judule'){
-		return "<th class='kotak $class' width='$width'>$content</th>\n";
+	function th($content='',$width='',$class='judule',$addinfo=''){
+		return "<th class='kotak $class' width='$width' $addinfo>$content</th>\n";
 	}
 	function td($content='', $align='',$class='kotak'){
 		return "<td class='$class' align='$align'>$content</td>\n";
@@ -514,18 +520,6 @@ if (! function_exists('aksi')){
 		return "<img src='".base_url().$img_name."' title='$title' onclick=\"".$onClick."\"/>";	
 	}
 }
-if (! function_exists('submite')){
-	function submit($field,$kosong=false){
-		$data= '$this->input->post("'.$field.'")';
-		return $data;
-	}
 
-	function post($field,$kosong=false){
-		return $_POST[$field];
-	}
-	function get($field,$kosong=false){
-		return $_GET[$field];
-	}
-}
 /* End of file html_helper.php */
 /* Location: ./system/helpers/html_helper.php */
