@@ -5,6 +5,7 @@
 2|User Name,input,text n,username,w90,,25%
 3|User Level,select,text n,idlevel,S50,,15%,RD,user_level-idlevel-nmlevel-where idlevel!='1' order by nmlevel,AB
 4|Password,input,password n,password,w70,,
+5|Default user location,select,text,lokasi,s50,,,RD,user_lokasi-ID-lokasi-
 
 [username]
 1|User ID,select,text n,id_user,S70,,,RD,users-userid-userid+username-where idlevel!='1' order by username

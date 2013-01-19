@@ -155,10 +155,11 @@ class Controlpanel extends CI_Controller {
 	function simpan_newuser(){
 		$data=array();
 		$data['userid']=$_POST['userid'];
-		$data['username']=$_POST['username'];	
+		$data['username']=addslashes($_POST['username']);	
 		$data['idlevel']=$_POST['idlevel'];	
 		$data['password']=md5($_POST['password']);	
 		$data['active']='Y';
+		$data['lokasi']=empty($_POST['lokasi'])?'1':$_POST['lokasi'];
 		$this->Admin_model->replace_data('users',$data); //insert data mode replace if exists
 		//add new user to list 
 		$this->get_userlist();
@@ -193,12 +194,14 @@ class Controlpanel extends CI_Controller {
 		$userid=$_POST['userid'];
 		$data['username']=$this->Admin_model->show_single_field('users','username',"where userid='$userid'");
 		$data['idlevel'] =$this->Admin_model->show_single_field('users','idlevel',"where userid='$userid'");
+		$data['lokasi'] =$this->Admin_model->show_single_field('users','lokasi',"where userid='$userid'");
 		echo json_encode($data);
 	}
 	function set_userupdate(){
 		$data=array();
-		$data['username']=$_POST["username"];
-		$data['idlevel']=$_POST["idlevel"];
+		$data['username']	=addslashes($_POST["username"]);
+		$data['idlevel']	=$_POST["idlevel"];
+		$data['lokasi']		=$_POST["lokasi"];
 			$this->Admin_model->update_table('users','userid',$_POST["userid"],$data);
 			$this->get_userlist();
 	}
