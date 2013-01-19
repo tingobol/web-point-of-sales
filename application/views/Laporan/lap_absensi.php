@@ -22,9 +22,9 @@ if($all_detailabsensi!='')
 		 _thead().
 		 tr().th('No.','10%','headere',"rowspan='2'").
 		 th('Nama Karyawan','40%','headere',"rowspan='2'").
-		 th('Keterangan','20%','headere',"colspan='2'").
+		 th('Keterangan','16%','headere',"colspan='2'").
 		 _tr().
-		 tr().th('Hadir','10%','headere').th('Absen','10%','headere')._tr().
+		 tr().th('Hadir','8%','headere').th('Absen','8%','headere')._tr().
 		 _thead(false,true).
 		 _tabel(true);
 }

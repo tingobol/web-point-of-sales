@@ -58,14 +58,17 @@ $(document).ready(function(e) {
 				var username	=$('#frm1 #username').val();
 				var userlevel	=$('#frm1 #idlevel').val();
 				var userpwd		=$('#frm1 #password').val();
+				var lokasi		=$('#frm1 #lokasi').val();
 				$.post('simpan_newuser',{
 					'userid'	:userid,
 					'username'	:username,
 					'idlevel'	:userlevel,
-					'password'	:userpwd
+					'password'	:userpwd,
+					'lokasi'	:lokasi
 					},function(result){
 						$('#v_listuser table#ListTable tbody').html(result);
 						$(':reset').click();
+						document.location.reload();
 						})
 				break;
 			case 'add-idlevel':
@@ -94,15 +97,18 @@ $(document).ready(function(e) {
 				var username	=$('#frm4 #username').val();
 				var userlevel	=$('#frm4 #idlevel').val();
 				var userpwd		=$('#frm4 #password').val();
+				var lokasi		=$('#frm4 #lokasi').val();
 				$.post('set_userupdate',{
 					'userid'	:userid,
 					'username'	:username,
 					'idlevel'	:userlevel,
-					'password'	:userpwd
+					'password'	:userpwd,
+					'lokasi'	:lokasi
 					},function(result){
 						$('#v_listuser table#ListTable tbody').html(result);
 						$('#frm4 :reset').click();
 						keluar();
+						document.location.reload();
 						})
 			break;
 		}
@@ -182,6 +188,7 @@ function image_click(id,cl){
 						var obj=$.parseJSON(result);
 						$('#frm4 #username').val(obj.username);
 						$('#frm4 #idlevel').val(obj.idlevel).select();
+						$('#frm4 #lokasi').val(obj.lokasi).select();
 						$('#frm4 #password')
 							.val(obj.password)
 							.attr('disabled','disabled');
