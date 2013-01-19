@@ -93,6 +93,11 @@
 					'Oktober','November','Desember');
 		return $bulan[(int)$bln];	
 	}
+	function nHari($hari)
+	{
+		$mhari=array('','Senin','Selasa','Rabu','Kamis','Jum\'at','Sabtu','Minggu');
+		return $mhari[$hari];	
+	}
 	function penomoran($table,$fieldnomor){
 		$nom=rdb($table,$fieldnomor,$fieldnomor,"order by $fieldnomor desc limit 1");
 		if ($nom==""){

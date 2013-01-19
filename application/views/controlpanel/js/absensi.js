@@ -2,8 +2,8 @@
 
 $(document).ready(function(e) {
 	var path=$('#path').val();
-    $('#listkaryawan').removeClass('tab_button');
-	$('#listkaryawan').addClass('tab_select');
+    $('#absensiharian').removeClass('tab_button');
+	$('#absensiharian').addClass('tab_select');
 	$('table#panel tr td').click(function(){
 		var id=$(this).attr('id');
 			$('#'+id).removeClass('tab_button');

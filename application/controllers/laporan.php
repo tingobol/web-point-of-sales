@@ -151,8 +151,99 @@ class Laporan extends CI_Controller{
   {
 		$this->zetro_auth->menu_id(array('laporan__rekapabsensi'));
 		$this->list_data($this->zetro_auth->auth());
+		$this->View('laporan/lap_rekap_absensi');
+  }
+  
+  function detailabsensi()
+  {
+		$this->zetro_auth->menu_id(array('detailabsensi'));
+		$this->list_data($this->zetro_auth->auth());
 		$this->View('laporan/lap_absensi');
   }
+  
+  function get_rekap_list()
+  {
+	$data=array();$n=0;$data1=array();$data2=array();
+	$bulan=empty($_POST['bulan'])?date('m'):$_POST['bulan'];
+	$tahun=empty($_POST['tahun'])?date('Y'):$_POST['tahun'];
+	$where=empty($_POST['id_lokasi'])?"":" where id='".$_POST['id_lokasi']."'";
+	$jmlhari=cal_days_in_month(CAL_GREGORIAN, $bulan, $tahun);
+		$totaH=0;$totalA=0;
+		for($i=1;$i<=$jmlhari;$i++)
+		{
+			$x=0; $totaK=0;
+			$Hari=mktime(0,0,0,$bulan,$i,$tahun);
+			$nHari=date('N',$Hari);
+			echo tr(($nHari==7)?'xx list_ganjil':'xx list_genap').td(nbs(3).nHari($nHari).', '.$i.' '.nBulan($bulan).' '.$tahun,'left\'colspan=\'5')._tr();
+			$data=$this->Admin_model->show_list('user_lokasi',$where.'order by id');
+			foreach($data as $r)
+			{
+			 $x++; $hadir=0;$jmlKar=0;
+			 $jmlKar=rdb('mst_anggota','jml','count(id) as jml',"where ID_Jenis='5' and ID_Dept='".$r->ID."'");
+			 $hadir=rdb('absensi','jml','count(on_absen) as jml',"where tgl_absen='".$tgl."' and on_absen='Y'");
+			 echo tr().td($x.nbs(2),'right').
+			 	  td(nbs(2).$r->lokasi).
+				  td($jmlKar,'center').
+				  td($hadir,'center').
+				  td(($jmlKar-$hadir),'center').
+				 _tr();
+				 $totalK +=$jmlKar;
+				 $totalH +=$hadir;
+				 $totalA =($jmlhari-$totaH);
+			}
+		}
+		//echo tr('xx list_genap').td('Total',
+  }
+  function get_list_absen()
+  {
+	$data=array();$n=0;$data1=array();$data2=array();
+	$bulan=empty($_POST['bulan'])?date('m'):$_POST['bulan'];
+	$tahun=empty($_POST['tahun'])?date('Y'):$_POST['tahun'];
+	$where=empty($_POST['id_lokasi'])?" where id='1'":" where id='".$_POST['id_lokasi']."'";
+	$data=$this->Admin_model->show_list('user_lokasi',$where.'order by id');
+	$jmlhari=cal_days_in_month(CAL_GREGORIAN, $bulan, $tahun);
+	foreach($data as $r)
+	{
+		$n++;
+		echo tr('xx list_genap').td('Tanggal','center').
+			 td(strtoupper($r->lokasi),'left\'colspan=\'3').
+		    _tr();
+		for($i=1;$i<=$jmlhari;$i++)
+		{
+			$x=0; 
+			$Hari=mktime(0,0,0,$bulan,$i,$tahun);
+			$nHari=date('N',$Hari);
+			echo tr(($nHari==7)?'xx list_ganjil':'xx').td(nbs(3).nHari($nHari).', '.$i.' '.nBulan($bulan).' '.$tahun,'left\'colspan=\'4')._tr();
+			$data1=$this->Admin_model->show_list('mst_anggota',"where ID_Jenis='5' and ID_Dept='".$r->ID."' order by Nama");
+			foreach($data1 as $row)
+			{
+				$x++;$absen='';
+				$absen=rdb('absensi','on_absen','on_absen',"where id_karyawan='".$row->ID."' and tgl_absen='".$tahun.'-'.$bulan.'-'.$i."'");
+				echo tr().td().
+					 td(nbs(5).$x.'.'.nbs().$row->Nama).
+					 td(($absen=='Y')?'X':'','center').
+					 td(($absen!='Y')?'X':'','center').
+					_tr();	
+			}
+		}
+	}
+  }
+  	function get_tahun()
+	{
+		$data=array();
+		$data=$this->control_model->get_bulan('absensi','year','tgl_absen');
+				echo "<option value=''></option>";	
+		if($data){
+			foreach($data as $r)
+			{
+				echo "<option value='".$r->year."'>".$r->year."</option>";	
+			}
+		}else{
+				echo "<option value='".date('Y')."'>".date('Y')."</option>";	
+		}
+	}
+	//end of class laporan
+
 }
 
 

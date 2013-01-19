@@ -257,7 +257,7 @@ class Controlpanel extends CI_Controller {
 		$data['ID_Dept']=empty($_POST['ID_Dept'])?'1':$_POST['ID_Dept'];
 		$data['NIP']	=empty($_POST['NoUrut'])?'':$_POST['NoUrut'];
 		$data['ID_Kelamin']=empty($_POST['ID_Kelamin'])?'':$_POST['ID_Kelamin'];
-		$data['ID_Jenis']='1';
+		$data['ID_Jenis']='5';
 		$data['Kota']	=' ';
 		$data['Propinsi']=' ';
 		$this->Admin_model->replace_data('mst_anggota',$data);
