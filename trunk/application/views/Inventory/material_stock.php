@@ -48,6 +48,6 @@ auto_sugest();
 <script language="javascript">
 	$(document).ready(function(e) {
     //$('#v_liststock table#ListTable').fixedHeader({width:700,height:350})
-	$('#id_kategori').html("<? dropdown('inv_barang_kategori','ID','Kategori','order by Kategori');?>");
+	$('#id_kategori').html("<? dropdown('inv_barang_kategori','ID','Kategori','order by Kategori','2');?>");
     });
 </script>

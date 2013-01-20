@@ -64,12 +64,21 @@ function _simpan_data(){
 }
 
 function images_click(id,aksi){
-	if(confirm('Yakin data ini akan dihapus?')){
-		$.post('hapus_vendor',{'ID':id},
-		function(result){
-			_show_data();
+ var idd=id.split(':');
+ switch(aksi)
+ {
+	 case 'edit':
+	 _show_detail(idd[0],idd[1])
+	 break;
+	 case 'del':
+		jConfirm('Yakin data ini akan dihapus?','Alert',function(){
+			$.post('hapus_vendor',{'ID':idd[0]},
+			function(result){
+				_show_data();
+			})
 		})
-	}
+		break;
+ }
 }
 
 function _show_detail(id,nama){

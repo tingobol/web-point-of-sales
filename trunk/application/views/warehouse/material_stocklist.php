@@ -49,7 +49,7 @@ popup_end();
 <input type='hidden' value='<?=count(explode(',',$this->zetro_auth->cek_area()));?>' id='jml_gudang' />
 <script language="javascript">
 $(document).ready(function(e) {
-    $('#Kategori').html("<? dropdown('inv_barang_kategori','ID','Kategori','order by Kategori','');?>")
+    $('#Kategori').html("<? dropdown('inv_barang_kategori','ID','Kategori','order by Kategori','3');?>")
     $('#id_lokasi').html("<? dropdown('user_lokasi','ID','lokasi',"where id in(".$this->zetro_auth->cek_area().") order by id",$this->session->userdata('gudang'));?>")
 	$('#id_lokasi').val($('#lok').val()).select()
 		if($('#jml_gudang').val()=='1')

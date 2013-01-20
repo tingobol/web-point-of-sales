@@ -14,9 +14,9 @@
 3|Alamat,input,text n,Alamat,w70,,25%
 4|Kota,input,text n,Kota,w70,,10%
 5|Propinsi,input,text n,Propinsi,w50,,10%
-6|Contact Person,input,text n,cp_nama,w90,,12%
-7|No. Telp,input,text n,Telepon,w50,,10%
-;6|Hutang,input,text d,hutang_produsen,w35 angka,0,10%
+;6|Contact Person,input,text n,cp_nama,w90,,12%
+;7|No. Telp,input,text n,Telepon,w50,,10%
+6|Hutang,input,text d,saldo_piutang,w35 angka,0,10%
 
 [Kas]
 1|ID Akun,input,text n,id_kas,w35 upper,,10%
