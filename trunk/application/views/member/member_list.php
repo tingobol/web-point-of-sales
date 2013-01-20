@@ -13,7 +13,6 @@ $stat="<select id='stat' name='stat'>
 		<option Value='3'>Keluar</option>
 		</select>";
 link_css('style.css','asset/js');
-link_js('jquery.fcbkcomplete.js','asset/js');
 link_js('jquery.fixedheader.js,member_list.js','asset/js,'.$path.'/js');
 panel_begin('Pelanggan');//,'','Department :,'.$dept.', &nbsp;&nbsp;Keaktifan :'.$stat,",Total Data : <span id='td'></span>");
 panel_multi('daftaranggota','block');
@@ -32,17 +31,16 @@ addText(array('Cari Berdasarkan Nama'),
 	no_auth();
 }
 panel_multi_end();
-loading_ajax();
 popup_full();
 terbilang();
 ?>
 <input type='hidden' id='ordby' value='' class='w100'/>
 <input type='hidden' id='totdata' value='<?=(!empty($list))?count($list):0;?>' />
-<input type='hidden' id='otor' value='<?=$all_daftaranggota;?>' />
+<input type='hidden' id='otor' value='<?=$all_member__member_list;?>' />
 <script language="javascript">
 	$(document).ready(function(e) {
-		$('#dept').html("<option value='all'>Semua</option>");
-        $('#dept').append("<? dropdown('mst_departemen','id','departemen',"order by Kode");?>")
-		$('#dept').val('').select();
+		//$('#dept').html("<option value='all'>Semua</option>");
+        //$('#dept').append("<? dropdown('mst_departemen','id','departemen',"order by Kode");?>")
+		//$('#dept').val('').select();
     });
 </script>
