@@ -57,9 +57,11 @@
 	1|Penjualan|penjualan/index|y|zce
 	2|Return Penjualan|penjualan/return_jual||zce
 	3|<hr>|x||
-	4|Kas Harian Toko|master/kas_harian||
+	4|Service|penjualan/service||
 	5|<hr>|x||
-	6|Print Faktur Penjualan|laporan/faktur||zp
+	6|Kas Harian Toko|master/kas_harian||
+	7|<hr>|x||
+	8|Print Faktur Penjualan|laporan/faktur||zp
 
 		[Kas Harian Toko]
 		1|Setup Saldo Kas|kas_harian|y|zce
@@ -70,7 +72,11 @@
 		
 		[Return Penjualan]
 		1|Return Jual|return_jual|y|zce
-
+		
+	[Service]
+	1|List Service|listservice|y|zcevp
+	
+	
 	[Inventori]
 	1|List Stock|stock/stock_barang||
 	2|List Barang Terjual|report/penjualan||

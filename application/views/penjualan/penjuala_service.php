@@ -1,19 +1,23 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-$zfm=new zetro_frmBuilder('asset/bin/zetro_master.frm');
-$section='Barang';
+$file='asset/bin/zetro_beli.frm';
+$zfm=new zetro_frmBuilder($file);
 $zlb=new zetro_buildlist();
-$zlb->config_file('asset/bin/zetro_master.frm');
-$path='application/views/controlpanel';
-link_js('jquery.fixedheader.js,karyawan.js','asset/js,'.$path.'/js');
+$zlb->config_file($file);
+$path='application/views/penjualan';
+calender();
+AutoCompleted();
+link_js('jquery.fixedheader.js,penjualan_service.js','asset/js,'.$path.'/js');
 tab_select('');
-panel_begin('Karyawan');
-panel_multi('listkaryawan','block',false);
-if($all_controlpanel__karyawan!=''){
-	   ($c_controlpanel__karyawan!='')?addText(array("<input type='button' id='addkaryawan' value='Tambah Karyawan Baru'/>"),array('')):'';
+panel_begin('Service');
+panel_multi('listservice','block',false);
+if($all_listservice!=''){
+	   ($c_listservice!='')?addText(array("<input type='button' id='addservice' value='Service Baru'/>"),array('')):'';
+	  echo "<form id='frm1' name='frm1' action='' method='post'>";
 	   addText(array('Lokasi',''),
 	   		   array("<select id='userlok' name='userlok'></select>",
 			   		 "<input type='button' id='ok' value='OK'>"));
-		$zlb->section('Karyawan');
+	  echo "</form>";
+		$zlb->section('service');
 		$zlb->aksi(true);
 		$zlb->icon();
 		$zlb->Header('100%');
@@ -22,12 +26,12 @@ if($all_controlpanel__karyawan!=''){
 	no_auth();
 }
 panel_multi_end();
-popup_start('addnew','Tambah Karyawan Baru');
+popup_start('addnew','Penerimaan Service Baru');
 	$zfm->Addinput("<input type='hidden' id='ID' name='ID' value=''/>");
 	$zfm->AddBarisKosong(true);
 	$zfm->Start_form(true,'frm3');
-	$zfm->BuildForm('Karyawan',true,'100%');
-	$zfm->BuildFormButton('Simpan','person');
+	$zfm->BuildForm('service',true,'100%');
+	$zfm->BuildFormButton('Simpan','service');
 popup_end();
 panel_end();
 ?>
@@ -52,3 +56,4 @@ panel_end();
     });
 
 </script>
+<input type='hidden' id='stat' val='1' />
