@@ -564,10 +564,77 @@ class Penjualan extends CI_Controller{
 		$data['temp_rec']=$this->kasir_model->get_trans_jual($this->no_trans,$this->tgl);
 		//send data to pdf
 		$data['cash']=rdb('inv_pembayaran','jml_dibayar','jml_dibayar',"where no_transaksi='".$_POST['notrans']."'");
-		print_r($data);
 		$this->zetro_auth->menu_id(array('trans_beli'));
 		$this->list_data($data);
 		$this->View("penjualan/penjualan_slip");
+	}
+	//penerimaan service
+	function service()
+	{
+		$this->zetro_auth->menu_id(array('listservice'));
+		$this->list_data($this->zetro_auth->auth());
+		$this->View('penjualan/penjuala_service');
+	}
+	
+	function set_service()
+	{
+		$data=array();$datax=array();
+		$data['no_trans']		=$_POST['no_trans'];
+		$data['tgl_service']	=tgltoSql($_POST['tgl_service']);
+		$data['nm_pelanggan']	=addslashes(strtoupper($_POST['nm_pelanggan']));
+		$data['alm_pelanggan']	=empty($_POST['alm_pelanggan'])?'':addslashes(ucwords($_POST['alm_pelanggan']));
+		$data['nm_barang']		=addslashes(strtoupper($_POST['nm_barang']));
+		$data['ket_service']	=addslashes(ucwords($_POST['ket_service']));
+		$data['gr_service']		=empty($_POST['gr_service'])?'N':$_POST['gr_service'];
+		$data['id_lokasi']		=empty($_POST['id_lokasi'])?'1':$_POST['id_lokasi'];
+		$data['created_by']		=$this->session->userdata('username');
+		
+		SimpanData($this->Admin_model->replace_data('inv_penjualan_service',$data));
+		
+		$datax['nomor']			=$_POST['no_trans'];
+		$datax['jenis_transaksi']='GI';
+		$datax['created_by']	=$this->session->userdata('username');
+		$this->Admin_model->replace_data('nomor_transaksi',$datax);
+	}
+	
+	function get_detail_service()
+	{
+		$data=array();
+		$where="where no_trans='".$_POST['no_trans']."'";
+		$data=$this->Admin_model->show_list('inv_penjualan_service',$where);
+		echo json_encode($data[0]);
+	}
+	
+	function get_list_service()
+	{
+		$data=array();$n=0;
+		$where="Where stat_service='N'";
+		$where.=empty($_POST['userlok'])?'':" and id_lokasi='".$_POST['userlok']."'";
+		$orderby='';
+		$data=$this->Admin_model->show_list('inv_penjualan_service',$where.$orderby);
+		$cek_oto=$this->zetro_auth->cek_oto('e','listservice');
+		foreach($data as $r)
+		{
+			$n++;
+			echo tr().td($n,'center').
+				 td($r->no_trans,'center').
+				 td(tglfromSql($r->tgl_service),'center').
+				 td($r->nm_pelanggan).
+				 td($r->alm_pelanggan).
+				 td($r->nm_barang).
+				 /*td($r->ket_service).*/
+				 td($r->gr_service,'center').
+				 td(rdb('user_lokasi','lokasi','lokasi',"where ID='".$r->id_lokasi."'")).
+				 td(($cek_oto!='' && $r->stat_service=='N')?img_aksi($r->no_trans,true):'','center').
+				_tr();	
+		}
+		dataNotFound($data,9);
+	}
+	
+	function del_service()
+	{
+		$no_trans=$_POST['id'];
+		$this->Admin_model->hps_data('inv_penjualan_service',"where no_trans='".$no_trans."'");	
 	}
 }
 ?>

@@ -1,5 +1,4 @@
 // JavaScript Document
-
 $(document).ready(function(e) {
 	var path=$('#path').val();
     $('#listkaryawan').removeClass('tab_button');

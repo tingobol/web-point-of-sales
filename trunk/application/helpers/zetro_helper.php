@@ -381,4 +381,21 @@
 		$zlb=new zetro_buildlist();
 		$zlb->config_file('asset/bin/zetro_'.$filename.'.frm');
 	}
+	function msg_db($sql=''){
+	return	(ENVIRONMENT=='development')?$sql."<br>".mysql_error():mysql_error();	
+	}
+	function AutoCompleted(){
+		link_css('jquery.coolautosuggest.css','asset/css');
+		link_js('jquery.coolautosuggest.js','asset/js');
+	}
+	function dataNotfound($data,$col=2)
+	{
+		echo (!$data)?
+			tr().td(img_aksi('',true,'warning').' Data not found....','left\' colspan=\''.$col.'')._tr():'';
+	}
+	function SimpanData($text){
+			echo ($text)?
+			 img_aksi('',true,'info').'  Data saved succesfully':
+			 img_aksi('',true,'warning').' '.die(mysql_error());
+	}
 //}
