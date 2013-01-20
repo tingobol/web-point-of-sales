@@ -344,8 +344,8 @@ class Master extends CI_Controller {
 				 td($row->No_Agt,'center').
 				 td($row->Nama,'xx\' onClick="_show_detail(\''.$row->ID.'\',\''.$row->Nama.'\');" attr=\'ax').
 				 td($row->Alamat).td($row->Kota).td($row->Propinsi).
-				 td($row->Telepon).td($row->Faksimili).
-				 td(($cek=='')? img_aksi($row->ID,true,'del'):'','center').
+				 td(number_format($row->saldo_piutang,2),'right').
+				 td(($cek=='')? img_aksi($row->ID.':'.$row->Nama,true):'','center').
 				 _tr();
 		}
 	}
