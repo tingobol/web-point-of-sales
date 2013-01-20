@@ -91,7 +91,7 @@ class Member extends CI_Controller{
 	}
 	
 	function get_nomor_anggota(){
-		echo $this->member_model->nomor_anggota();	
+		echo 'PL--'.$this->member_model->nomor_anggota();	
 	}
 	
 	function get_anggota(){

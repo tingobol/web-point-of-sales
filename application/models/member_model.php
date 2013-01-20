@@ -19,10 +19,10 @@ class Member_model extends CI_Model{
 	
 	function nomor_anggota(){
 		$nom=0;$data=array();
-		$sql="select NoUrut from mst_anggota order by NoUrut desc limit 1";
+		$sql="select ID from mst_anggota order by ID desc limit 1";
 		$data=$this->db->query($sql);
 		foreach ($data->result() as $rst){
-			$nom=$rst->NoUrut;
+			$nom=$rst->ID;
 		}
 		//print_r($data->result());
 		($nom==0||trim($nom)=='')?$nom=1:$nom=((int)$nom+1);

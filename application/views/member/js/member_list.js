@@ -29,42 +29,14 @@ $(document).ready(function(e) {
 	unlock('#carix')
 	$('#cari').css('opacity','1');
 	$('span#td').html(format_number($('#totdata').val(),0));
-	find_by('');
+	//find_by('');
 	
 	//add new member
 	
-/*
-not used in this version
-	$('#dept').change(function(){
-		
-		ajax_start();
-		$.post('filter_by',{
-			'id_dept':$(this).val(),
-			'ordby':$('#ordby').val().substr(1,$('#ordby').val().length),
-			'stat':$('#stat').val(),'searchby':$('#carix').val()},
-			function(result){
-				$('#v_daftaranggota table#ListTable tbody').html('');	
-				$('#v_daftaranggota table#ListTable tbody').html(result);
-				$('span#td').html(format_number($('#v_daftaranggota table#ListTable tbody tr').length));
-				$('#ListTable').fixedHeader({width:(screen.width-50),height:(screen.height-320)})
-				ajax_stop();
-				unlock('#carix');
-			$('#cari').css('opacity','1');
-				$('#carix').focus().select();
-			})
-	})
-	$('#stat').change(function(){
-		$('#dept').change();
-	})
-	$('#gon').click(function(){
-		var id=$('#ordby').val().replace('undefined,','');
-		$('#dept').change();
-	})
-*/
 	$('#cari').click(function(){
 		if($('#carix').val().length>0)	find_by($('#carix').val());
 	})
-	$('#urutan')
+/*	$('#urutan')
 		.fcbkcomplete({
 		cache: true,
 		newel: true,
@@ -75,7 +47,7 @@ not used in this version
 		
 	})
 	$("#urutan").trigger("addItem",[{"title": "No Anggota", "value": "no_Agt"}]);	
-	//$('#ListTable').fixedHeader({width:(screen.width-50),height:(screen.height-320)})
+*/	//$('#ListTable').fixedHeader({width:(screen.width-50),height:(screen.height-320)})
 })
 function show_member_detail(id){
 	ajax_start();
@@ -92,7 +64,7 @@ function show_member_detail(id){
 }
 
 function find_by(nama){
-		show_indicator('#ListTable',7);
+		show_indicator('ListTable',7);
 		$.post('filter_by',{
 			'id_dept'	:'',
 			'ordby'		:'',
@@ -101,8 +73,8 @@ function find_by(nama){
 			function(result){
 				$('#v_daftaranggota table#ListTable tbody').html('');	
 				$('#v_daftaranggota table#ListTable tbody').html(result);
-				$('span#td').html(format_number($('#v_daftaranggota table#ListTable tbody tr').length));
-				$('#ListTable').fixedHeader({width:(screen.width-30),height:(screen.height-320)})
+				//$('span#td').html(format_number($('#v_daftaranggota table#ListTable tbody tr').length));
+				$('table#ListTable').fixedHeader({width:(screen.width-30),height:(screen.height-340)})
 				//ajax_stop();
 			})
 }
