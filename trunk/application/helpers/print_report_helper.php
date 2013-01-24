@@ -217,7 +217,7 @@ function Header()
 	  // $this->Cell(180,0,'',1,1,'C');
 	   $this->Ln();
 	   $this->SetFont('Arial','',9);
-	   $this->SetWidths(array('12','80','20','30','30'));
+	   $this->SetWidths(array('12','90','20','30','30'));
 	   $this->SetAligns(array('C','C','C','C','C'));
 	   $this->Row(array('No','Nama Barang','Jumlah','Harga Satuan','Total Harga'));
 	   

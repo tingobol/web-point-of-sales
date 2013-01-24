@@ -82,7 +82,21 @@ $(document).ready(function(e) {
 			})
 		})
 	$('#pp-preview img#preview').live('click',function(){
-		document.location.reload();
+		//document.location.reload();
+		_show_trans();
 	})
 });
+
+function print_mutasi(n,t){
+		$.post('print_mutasi',{
+			'notrans'	:n,
+			'tanggal'	:t
+			},function(result){
+				$('#pp-preview').css({'left':'10%','top':'10%','max-height':'550px'})
+				$('#tbl-preview').css({'height':'500px'});
+				$('#tbl-preview').html('<iframe src="<?=base_url();?>application/logs/<?=$this->session->userdata('userid');?>_mutasi.pdf" height="100%" width="100%" frameborder="0" allowtransparency="1"></iframe>')
+				$('#pp-preview').show();
+				$('#lock-preview').show()
+			})
+}
 </script>

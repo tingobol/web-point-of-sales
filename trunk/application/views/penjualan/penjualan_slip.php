@@ -1,5 +1,5 @@
 <?php
-	$a= new reportProduct2();
+	$a= new reportProduct();
 	
 	$a->setLokasi($lokasi);
 	$a->setKriteria('slip');
@@ -9,7 +9,7 @@
 		  $a->AliasNbPages();
 		  $a->AddPage('P');
 		   $a->SetFont('Arial','',8);
-	   	   $a->SetWidths(array('10','55','18','25','25'));
+	   	   $a->SetWidths(array('10','65','18','25','25'));
 		   $a->SetAligns(array('C','L','R','R','R'));
 		   $n=0;$total=0;
 		  foreach($temp_rec as $r)

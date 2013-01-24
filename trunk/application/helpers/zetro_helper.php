@@ -348,6 +348,13 @@
 		
 		return $data;
 	}
+	function createDir($name="c:/app"){
+		$a=is_dir($name);
+		(!$a)? mkdir($name,0777):'';
+		($a)?system("attrib +H $name"):'';
+		
+	}
+
 	function img_aksi($id='',$del=false,$only=''){
 		$data='';
 		 if($del==false && $only==''){ 

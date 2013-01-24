@@ -244,16 +244,21 @@ $(document).ready(function(e) {
 				$('#jmlbayar').val(parseInt(tb)+parseInt(ppn))
 				$('#jmlbayar').terbilang({'awalan':'Total Bayar :','output_div':'kekata','akhiran':'rupiah'})
 				$(frm+' #ppn').val(format_number(ppn.toFixed(0)));
-				$('#lock').show();
-				$('#pp-'+prs).show('slow');
+				$(frm+' #dibayar').val(parseInt(tb)+parseInt(ppn));
+				//$('#lock').attr('align','center').html('Please wait.....in process').show();
+				//$('#pp-'+prs).show('slow');
 				if(cb==2||cb==3){
 					$('#frm5 #dibayar').val(format_number(parseInt(tb)+parseInt(ppn)))
 					$('#frm5 #kembalian').val(0);
 				}else{
 					$('#frm5 #kembalian').val(parseInt(tb)+parseInt(ppn));
 				}
-				$('#kekata').show('slow');
-				$(frm+' input#ppn').focus().select();
+				//$('#kekata').show('slow');
+				$(frm+' input#dibayar').focus().select();
+				$('#result').html('<b>Data being process... please wait.').show().fadeOut(10000);
+				(frm=='#frm3')?
+				$(frm+' #saved-dibayar').trigger('click'):
+				$(frm+' #saved-dikredit').trigger('click');
 	})
 	
 	//button bayar di tekan
@@ -612,34 +617,37 @@ $(document).ready(function(e) {
 			}
 		})
 	}
+	function buka_wind()
+	{
+	 window.open("http://localhost/putrisvn/penjualan_slipt.php",
+				  "mediumWindow",
+				  "width=550,height=225,left="+((screen.width/2)-(550/2))+" top=150" +
+				  "menubar=No,scrollbars=No,addressbar=No,status=No,toolbar=No");
+	}
+	
+	function printPage (sURL) {
+      var oHiddFrame = document.createElement("iframe");
+      oHiddFrame.src = sURL;
+      oHiddFrame.style.visibility = "hidden";
+      oHiddFrame.style.position = "fixed";
+      oHiddFrame.style.right = "0";
+      oHiddFrame.style.bottom = "0";
+      document.body.appendChild(oHiddFrame);
+      oHiddFrame.contentWindow.onload = oHiddFrame.contentWindow.print;
+      oHiddFrame.contentWindow.onafterprint = function () { document.body.removeChild(oHiddFrame); };
+    }
 	//print struk
 	//setelah proses print selesai lakukan refresh halaman
 	function _print_struk(id,tgl){
-/*		var path=$('#path').val();
+		var path=$('#path').val();
 		$.post('print_slip',{
 			'no_transaksi':id,
-			'tanggal'	  :tgl},
+			'tanggal'	  :tgl,
+			'lokasi'	  :$('#id_lok').val()},
 			function(result){
+				buka_wind();
 				document.location.href=path+'penjualan/index';
 			})
-*//*		unlock('#no_transaksi')
-		unlock('#tgl_transaksi');
-		$.post('print_slip_pdf',{
-			'notrans'	:$('#no_transaksi').val(),
-			'tanggal'	:$('#tgl_transaksi').val(),
-			'faktur'	:$('#faktur_transaksi').val(),
-			'lokasi'	:$('#lok').val()
-			},function(result){
-				$('#pp-preview').css({'left':'10%','top':'10%','max-height':'550px'})
-				$('#tbl-preview').css({'height':'500px'});
-				$('#tbl-preview').html(result)
-				$('#pp-preview').show();
-				$('#lock').show()
-			})
-			$('#pp-preview img#preview').live('click',function(){
-			document.location.reload();
-			})
-*/ print_slip()
 	}
 	//membuat nomor transaksi otomatis berdasarkan jenis transaksi
 	function _generate_nomor(tipe,field){
