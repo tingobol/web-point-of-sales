@@ -222,12 +222,8 @@ function image_click(id,cl){
 		var idd=id.split('-');
 		jConfirm("Yakin data ini akan dikirim sekarang??","Confirm",function(e){
 			if(e){
-				$.post('print_mutasi',{
-					'notrans' : idd[0],
-					'tanggal' : idd[1]
-				},function(result){
-					_show_trans();
-				})
+				print_mutasi(idd[0],idd[1]);
+				_show_trans();
 			}
 		})
 	}

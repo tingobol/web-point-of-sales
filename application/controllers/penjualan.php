@@ -298,26 +298,34 @@ class Penjualan extends CI_Controller{
 		redirect('penjualan/index');
 	}
 	function print_slip(){
-		$this->zetro_slip->sessi=$this->session->userdata('userid');
+		$this->zetro_slip->path=$this->session->userdata('userid');
+		//$this->zetro_slip->sessi=$this->session->userdata('userid');
 		$this->zetro_slip->modele('wb');
 		$this->zetro_slip->newline();
 		$this->no_transaksi($_POST['no_transaksi']);
 		$this->tanggal(tgltoSql($_POST['tanggal']));
-		$this->zetro_slip->content($this->struk_header());
+/*		$this->zetro_slip->content($this->struk_header());
 		$this->zetro_slip->create_file(true,"Bullzip PDF Printer");
 		//$this->zetro_slip->print_to_printer('');
 		//$this->index();
+*/
+		$this->zetro_slip->content($this->struk_header());
+		$this->zetro_slip->create_file();
+		//$this->re_print();
+		//$this->print_slip_pdf();
 	}
 	function struk_header(){
 		$data=array();
 		$slip="S L I P  P E N J U A L A N";
 		$no_trans=$this->no_trans;
 		$nfile	='asset/bin/zetro_config.dll';
-		$coy	=$this->zetro_manager->rContent('InfoCo','Name',$nfile);	
-		$address=$this->zetro_manager->rContent('InfoCo','Address',$nfile);
-		$city	=$this->zetro_manager->rContent('InfoCo','Kota',$nfile);
-		$phone	=$this->zetro_manager->rContent('InfoCo','Telp',$nfile);
-		$fax	=$this->zetro_manager->rContent('InfoCo','Fax',$nfile);
+		$lokasi	=empty($_POST['lokasi'])?'1':$_POST['lokasi'];
+		$gudang=rdb('user_lokasi','lokasi','lokasi',"where id='".$lokasi."'");
+		$coy	=$this->zetro_manager->rContent($gudang,'Name',$nfile);	
+		$address=$this->zetro_manager->rContent($gudang,'Address',$nfile);
+		$city	=$this->zetro_manager->rContent($gudang,'Kota',$nfile);
+		$phone	=$this->zetro_manager->rContent($gudang,'Telp',$nfile);
+		$fax	=$this->zetro_manager->rContent($gudang,'Fax',$nfile);
 		$tgl	=rdb('inv_penjualan','Tanggal','Tanggal',"where NoUrut='".$no_trans."' and Tanggal='".$this->tgl."'");
 		$Jenis	=rdb('inv_penjualan','ID_Jenis','ID_Jenis',"where NoUrut='".$no_trans."' and Tanggal='".$this->tgl."'");
 		$nJenis	=rdb('inv_penjualan_jenis','Jenis_Jual','Jenis_Jual',"where ID='".$Jenis."'");
@@ -348,9 +356,12 @@ class Penjualan extends CI_Controller{
 			 $satuan=rdb('inv_barang_satuan','Satuan','Satuan',"where ID='".
 			 		 rdb('inv_barang','ID_Satuan','ID_Satuan',"where ID='".$row->ID_Barang."'")."'");
 			$nama_barang=rdb('inv_barang','Nama_Barang','Nama_Barang',"where ID='".$row->ID_Barang."'");
-			$content .=sepasi(((6-strlen($n))/2)).$n.sepasi(3).substr(ucwords(strtolower($nama_barang)),0,31).sepasi((32-strlen($nama_barang))).
-					 sepasi((11-strlen($row->Jumlah)-strlen($satuan))).round($row->Jumlah,0).sepasi(1).$satuan.
-					 sepasi((13-strlen(number_format($row->Harga)))).number_format($row->Harga).
+			$kategori=rdb('inv_barang_kategori','Kategori','Kategori',"where ID='".
+					 rdb('inv_barang','ID_Kategori','ID_Kategori',"where ID='".$row->ID_Barang."'")."'");
+			$content .=sepasi(((6-strlen($n))/2)).$n.sepasi(3).substr($kategori,0,10).sepasi().substr(ucwords(($nama_barang)),0,31).
+					 sepasi(((30-strlen($kategori))-strlen($nama_barang))).
+					 sepasi((10-strlen($row->Jumlah)-strlen($satuan)-2)).round($row->Jumlah,0).sepasi(1).$satuan.
+					 sepasi((14-strlen(number_format($row->Harga)))).number_format($row->Harga).
 					 sepasi((16-strlen(number_format(($row->Jumlah *$row->Harga),2)))).number_format(($row->Jumlah *$row->Harga),2).newline();
 		 }
 		 if($n<8){
@@ -377,7 +388,7 @@ class Penjualan extends CI_Controller{
 				sepasi((61-strlen('Cash'))).'Cash :'.sepasi((14-strlen(number_format($row->jml_dibayar,2)))).number_format($row->jml_dibayar,2).newline(2).
 				sepasi(61).str_repeat('-',17).'-'.newline().
 				sepasi((61-strlen('Kembali'))).'Kembali :'.sepasi((14-strlen(number_format($row->kembalian,2)))).number_format($row->kembalian,2).newline(2).
-				str_repeat('-',79).newline().'Terima Kasih.'.newline();
+				str_repeat('-',79).newline().'Terima Kasih.   doc :'.$this->no_trans.' '.date('d-m-Y H:i').newline();
 				
 /*				'No. Anggota'.sepasi((14-strlen('No.Anggota'))).':'.$urut.newline().
 				'Nama Anggota'.sepasi((14-strlen('Nama Anggota'))).':'.$nama.newline().
@@ -409,7 +420,8 @@ class Penjualan extends CI_Controller{
 				str_repeat('-',79).newline().
 				'Pembayaran '.sepasi((15-strlen('Pembayaran :'))).':'.$ncby.' No.:'.$rek.' '.$bank .' [ '.tglfromSql($tgir).' ]'.newline().
 				'Nama Konsumen'.sepasi((15-strlen('Nama Konsumen :'))).' :'.$nama.'[ '.$urut.' ]'.newline().
-				'Alamat'.sepasi((15-strlen('Alamat :'))).' :'.$alm.newline(1);
+				'Alamat'.sepasi((15-strlen('Alamat :'))).' :'.$alm.newline().
+				'Terima Kasih.   doc :'.$this->no_trans.' '.date('d-m-Y H:i').newline();
 			}
 		return $bawah;
 	}
@@ -556,17 +568,17 @@ class Penjualan extends CI_Controller{
 	}
 	function print_slip_pdf()
 	{
-		$this->no_transaksi($_POST['notrans']);
+/*		$this->no_transaksi($_POST['notrans']);
 		$this->tanggal(tgltoSql($_POST['tanggal']));
-		$data['lokasi']=rdb('user_lokasi','lokasi','lokasi',"where ID='".$_POST['lokasi']."'");
-		$data['no_faktur']=$_POST['faktur'];
-		$this->inv_model->tabel('inv_penjualan_rekap');
+		*/$data['lokasi']=rdb('user_lokasi','lokasi','lokasi',"where ID='1'");
+		$data['no_faktur']='124';//$_POST['faktur'];
+/*		$this->inv_model->tabel('inv_penjualan_rekap');
 		$data['temp_rec']=$this->kasir_model->get_trans_jual($this->no_trans,$this->tgl);
 		//send data to pdf
 		$data['cash']=rdb('inv_pembayaran','jml_dibayar','jml_dibayar',"where no_transaksi='".$_POST['notrans']."'");
-		$this->zetro_auth->menu_id(array('trans_beli'));
+*/		$this->zetro_auth->menu_id(array('trans_beli'));
 		$this->list_data($data);
-		$this->View("penjualan/penjualan_slip");
+		$this->View("penjualan/penjualan_slip_t");
 	}
 	//penerimaan service
 	function service()

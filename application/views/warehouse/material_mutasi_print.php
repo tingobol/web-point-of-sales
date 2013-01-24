@@ -32,10 +32,20 @@
 		  	 $n++; 
 			  $a->Row(array($n,
 			  				rdb('inv_barang','Kode','Kode',"where ID='".$r->ID_Barang."'"),
+							rdb('inv_barang_kategori','Kategori','Kategori',"where ID='".
+							rdb('inv_barang','ID_Kategori','ID_Kategori',"where ID='".$r->ID_Barang."'")."'").' '.
 							rdb('inv_barang','Nama_Barang','Nama_Barang',"where ID='".$r->ID_Barang."'"),
-							rdb('inv_barang_satuan','Satuan','Satuan',"where ID='".$r->ID_Barang."'"),
+							rdb('inv_barang_satuan','Satuan','Satuan',"where ID='".
+							rdb('inv_barang','ID_Satuan','ID_Satuan',"where ID='".$r->ID_Barang."'")."'"),
 							number_format($r->Jumlah,2),
 							$r->Batch));
+		  }
+		  //buat kolom kosong jika tidak melebihi 10 barus
+		  if($n<10){
+			  for($i=1;$i<=(10-$n);$i++)
+			  {
+				$a->Row(array('','','','','',''));  
+			  }
 		  }
 			  //grand total
 		  $a->Ln(5);
