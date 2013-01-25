@@ -247,7 +247,7 @@ class Master extends CI_Controller {
 			$kredit=($kredit+$r->jumlah);
 			$saldo_kas=rdb('mst_kas_trans','saldo_kas','saldo_kas',"where uraian_trans='Saldo Awal hari ini' and tgl_trans='".$tanggal."'");
 			$saldo_akhir=($r->uraian_trans!='Saldo Awal hari ini')?
-						($saldo_kas-$kredit):$saldo_kas;
+						 ($saldo_kas-$kredit):$saldo_kas;
 						
 			echo tr().td($n,'center').td($r->id_trans,'center').
 				 td(tglfromSql($r->tgl_trans),'center').

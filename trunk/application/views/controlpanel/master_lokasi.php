@@ -15,7 +15,7 @@ if($all_lokasigudang!=''){
 	$zfm->BuildFormButton('Simpan','lokasi');
 	echo "<hr>";
 		$zlb->section('gudang');
-		$zlb->aksi(($e_lokasigudang=='')?false:true);
+		$zlb->aksi(true);
 		$zlb->icon('delete');
 		$zlb->Header('100%');
 		echo "</tbody></table>";

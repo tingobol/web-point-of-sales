@@ -193,7 +193,12 @@
 2|Tanggal,input,text n,tgl_service,w35,,9%
 3|Nama Pelanggan,input,text n,nm_pelanggan,w90 upper ,,18%
 4|Alamat Pelanggan,textarea,text,alm_pelanggan,t90,,20%
-5|Nama Barang,input,text,nm_barang,w70 upper,,15%
-6|Kerusakan/Masalah,textarea,text,ket_service,t90,,
-7|Garansi,select,text,gr_service,s25,,8%,RS,ok
-8|Lokasi,select,text,id_lokasi,s50,,10%,RD,user_lokasi-ID-lokasi-
+5|Telepon Pelanggan,input,text,tlp_pelanggan,w50,,
+6|Identitas Barang Service,,,,,,,,
+7|&nbsp;&nbsp;&bull;&nbsp;Nama Barang,input,text,nm_barang,w70 upper,,15%
+8|&nbsp;&nbsp;&bull;&nbsp;Type/Merk,input,text,tp_barang,w70 upper,,
+9|&nbsp;&nbsp;&bull;&nbsp;No.Seri,input,text,no_seri_barang,w70 upper,,
+10|Kelengkapan Barang,textarea,text,ket_barang,t90,,
+11|Kerusakan/Masalah,textarea,text,ket_service,t90,,
+12|Garansi,select,text,gr_service,s25,,8%,RS,ok
+13|Lokasi,select,text,id_lokasi,s50,,10%,RD,user_lokasi-ID-lokasi-

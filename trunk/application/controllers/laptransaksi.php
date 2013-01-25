@@ -62,6 +62,7 @@ class Laptransaksi extends CI_Controller{
 		$data['lokasi'] =($this->input->post('id_lokasi')=='')?'All':rdb('user_lokasi','lokasi','lokasi',"where ID='".$this->input->post('id_lokasi')."'"); 
  		$data['lokasine']=($this->input->post('id_lokasi')=='')?'':"and t.ID_Unit='".$this->input->post('id_lokasi')."'";
 		$data['where']	=$where;
+		$data['area']	=($this->input->post('id_lokasi')=='')?'':$this->input->post('id_lokasi');
 		$data['dari']	=$this->input->post('dari_tgl');
 		$data['sampai']	=$this->input->post('sampai_tgl');	
 		$data['temp_rec']=$this->report_model->lap_cash_flow();

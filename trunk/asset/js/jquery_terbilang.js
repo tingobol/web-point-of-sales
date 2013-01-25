@@ -33,7 +33,7 @@
 					$( this ).bind( "keyup", function( e ) {
 							_tobilang( this );
 					} );
-				}
+				};
 		} );
 		var _tobilang = function( self ) {
 			var hasil ="";
@@ -41,12 +41,12 @@
 				var angka=$(self).val();
 			}else{
 				var angka=$(self).text();
-			}
+			};
 			if(self<0) {
 				hasil = opt.awalan + " minus "+ _bilang(angka) + " " + opt.akhiran;
 			} else {
 				hasil = opt.awalan + " " + _bilang(angka) + " " + opt.akhiran;
-			}      
+			} ;     
 			switch (opt.style) {
 				case 1:
 					hasil = hasil.toUpperCase();
@@ -60,7 +60,7 @@
 				default:
 					hasil = _ucfirst(_ltrim(hasil));
 					break;
-			}		
+			};		
 			$('#'+opt.output_div).html(hasil);
 		}
 		var _bilang = function( self ) {
@@ -87,22 +87,22 @@
 				temp = _bilang(x/1000000000) + " milyar" + _bilang(x % 1000000000);
 			} else if (x <1000000000000000) {
 				temp = _bilang(x/1000000000000) +" trilyun" + _bilang(x % 1000000000000);
-			}      
+			} ;     
 			return temp;
-		}
+		};
 		var _ltrim = function (str, chars) {
 			chars = chars || "\\s";
 			return str.replace(new RegExp("^[" + chars + "]+", "g"), "");
-		}
+		};
 		var _ucwords = function( str ) {
 		 	return (str + '').replace(/^([a-z])|\s+([a-z])/g, function ($1) {
 				return $1.toUpperCase();
 			});
-		}
+		};
 		var _ucfirst = function( str ) {
 			var f = str.charAt(0).toUpperCase();
 			return f + str.substr(1).toLowerCase();
-		}
+		};
 		_tobilang( this );
     };
 })( jQuery );

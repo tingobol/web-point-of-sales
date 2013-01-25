@@ -13,24 +13,7 @@ link_css('jquery.alerts.css','asset/css');
 link_js('jquery.1.7.1.min.js,zetro_number.js,dropdown.js','asset/js,asset/js,asset/js');
 link_js('jquery.alerts.js','asset/js');
 ?>
-<script language="javascript">
-	$(document).ready(function(e) {
-        $('.sample_attach').css('z-index','10000');
-		$('a').click(function(){
-						$('#ajax_display').show();
-		})
-	 $(document).keypress(function(e){
-		if(e.keyCode==122){
-			//return false;
-		}else if(e.keyCode==121){
-			return false;
-		}else if(e.keyCode==114){
-			return false;
-		}
-	 })
-	
-    });
-</script>
+<script language="javascript">$(document).ready(function(e){$('.sample_attach').css('z-index','10000');$('a').click(function(){$('#ajax_display').show();});$(document).keypress(function(e){if(e.keyCode==122){}else if(e.keyCode==121){return false;}else if(e.keyCode==114){return false;};});});</script>
 <title><?=$zz->rContent("WebPage","Title",$z_config)."-".$zz->rContent("WebPage","subtitle",$z_config);?></title>
 </head>
 <body>

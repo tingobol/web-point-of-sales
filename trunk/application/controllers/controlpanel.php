@@ -277,7 +277,7 @@ class Controlpanel extends CI_Controller {
 	{
 		$file='asset/bin/zetro_master.frm';
 		$data=array();$n=0;
-		$where=empty($_POST['id_lokasi'])?'':"where ID_Dept='".$_POST['id_lokasi']."' and ID_Jenis='1'";
+		$where=empty($_POST['id_lokasi'])?'':"where ID_Dept='".$_POST['id_lokasi']."' and ID_Jenis='5'";
 		$data=$this->Admin_model->show_list('mst_anggota',$where);
 		$oto=$this->zetro_auth->cek_oto('e','controlpanel__karyawan');
 		if($data){

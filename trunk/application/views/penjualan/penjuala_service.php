@@ -26,7 +26,7 @@ if($all_listservice!=''){
 	no_auth();
 }
 panel_multi_end();
-popup_start('addnew','Penerimaan Service Baru');
+popup_start('addnew','Penerimaan Service Baru',500,800);
 	$zfm->Addinput("<input type='hidden' id='ID' name='ID' value=''/>");
 	$zfm->AddBarisKosong(true);
 	$zfm->Start_form(true,'frm3');
@@ -36,24 +36,8 @@ popup_end();
 panel_end();
 ?>
 <script language="javascript">
-	$(document).ready(function(e) {
-    $('#userlok')
-		.html("<? dropdown('user_lokasi','ID','lokasi',"where id in(".$this->zetro_auth->cek_area().") order by id",$this->session->userdata('gudang'));?>")
-  		.val($('#lok').val()).select()
-    $('#ID_Dept')
-		.html("<? dropdown('user_lokasi','ID','lokasi',"where id in(".$this->zetro_auth->cek_area().") order by id",$this->session->userdata('gudang'));?>")
-  		
-	//disabled jika satu lokasi
-	 if($('#jml_area').val()=='1')
-	 { 
-	 	lock('#userlok');
-		lock('#ID_Dept')
-	 }else{
-		 unlock('#userlok');
-		 unlock('#ID_Dept')
-	 }
-	  $('#ok').click();
-    });
 
+$(document).ready(function(e){$('#userlok').html("<? dropdown('user_lokasi','ID','lokasi',"where id in(".$this->zetro_auth->cek_area().")order by id",$this->session->userdata('gudang'));?>").val($('#lok').val()).select();$('#ID_Dept').html("<? dropdown('user_lokasi','ID','lokasi',"where id in(".$this->zetro_auth->cek_area().")order by id",$this->session->userdata('gudang'));?>");if($('#jml_area').val()=='1'){lock('#userlok');lock('#ID_Dept');}else{unlock('#userlok');unlock('#ID_Dept');};$('#ok').click();});
 </script>
 <input type='hidden' id='stat' val='1' />
+<input type='hidden' id='id_member' value='' />

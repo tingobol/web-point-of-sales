@@ -14,7 +14,7 @@
 #popup_title {
 	font-size: 14px;
 	font-weight: bold;
-	text-align: center;
+	text-align: left;
 	line-height: 1.75em;
 	color: #666;
 	background: #CCC url(../img/title.gif) top repeat-x;

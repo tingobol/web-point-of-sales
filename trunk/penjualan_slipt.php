@@ -1,11 +1,12 @@
 <?
-$file=fopen('c:\app\superuser_slip_putri.txt','r');
+$user=$_GET['userid'];
+$file=fopen("c:\\app\\".$user."_slip_putri.txt",'r');
 $data=fread($file,1000000);
 fclose($file);
 echo "<pre>";
 echo $data;
 echo "</pre>";
-unlink('c:\app\superuser_slip_putri.txt');
+unlink("c:\\app\\".$user."_slip_putri.txt");
 ?>
 <script language="javascript">
 window.print(true) ;
