@@ -125,10 +125,11 @@ class Laporan extends CI_Controller{
 		$where=(empty($_POST['sampai_tgl']))? 
 			"where Tanggal='".tglToSql($_POST['dari_tgl'])."'":
 			"where Tanggal between '".tglToSql($_POST['dari_tgl'])."' and '".tglToSql($_POST['sampai_tgl'])."'";
-		$where.=empty($_POST['id_anggota'])?'':" and a.Nama like '%".$_POST['id_anggota']."%'";
+		$where=empty($_POST['id_anggota'])?$where:" where (a.Nama like '%".$_POST['id_anggota']."%' or p.NoUrut='".$_POST['id_anggota']."')";
+		$where.=empty($_POST['lokasi'])?"and id_lokasi='1'":"and id_lokasi='".$_POST['lokasi']."'";
 		$data=$this->report_model->get_no_trans($where);
 		foreach($data as $r){
-			echo "<option value='".$r->NoUrut."'>".$r->NoUrut."-".$r->Nama." [".$r->Catatan."]</option>";
+			echo "<option value='".$r->NoUrut.":".tglfromSql($r->Tanggal)."'>".$r->NoUrut."-".$r->Nama." [".$r->Alamat."]</option>";
 		}
 			
 	}
