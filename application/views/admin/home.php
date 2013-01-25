@@ -3,8 +3,8 @@
 	$zz= new zetro_manager;
 	$file='asset/bin/zetro_menu.dll';
 	$z_config='asset/bin/zetro_config.dll';
-	link_css('jquery.alerts.css','asset/css');
-	link_js('jquery.alerts.js','asset/js');
+	//link_css('jquery.alerts.css','asset/css');
+	//link_js('jquery.alerts.js','asset/js');
 ?>
 <table width="100%" border='0'>
 <tr><td colspan="" align="center"></td><td>&nbsp;</td></td></tr>
@@ -58,40 +58,4 @@
 <input type='hidden' id='lcs' value='<?=empty($serial)?'x2cdg':$serial;?>' />
 <input type='hidden' id='vers' value="<?=encode_php();?>" class='w100'/>
 </div>
-<script language="javascript">
-	$(document).ready(function(e) {
-		///($('#lcs').val()!='x2cdg')?
-       // $('div.menu').show():
-	   var path=$('#path').val();
-		$('div.menu').hide();
-		$('#popup_message #popup_prompt').keyup(function(e){
-			var l=$(this).val().length;
-			alert(l)
-		})
-		$('#reg').click(function(){
-			jPrompt('Masukan Serial Number','','Registrasi',function(r){
-				if(r){
-					//alert(r);
-					$.post('validity',{'ns':r},
-					function(result){
-						$('table#x tr td#result').html(result);
-						($.trim(result)!=$.trim('Serial Number yang ada masukan salah Salah'))?
-						 $.post('validity_ok',{'id':r},
-						 function(res){
-							document.location.href=path+'admin/index'
-						 }):""
-						//document.location.reload();
-					})
-/**/				}
-			})
-		})
-    });
-		function kliked(id){
-			var path=$('#path').val();
-			document.location.href=path+'admin/masuk?id='+id;
-		}
-     function logout(){
-			var path=$('#path').val();
-			document.location.href=path+'admin/logout';
-	 }
-</script>
+<script language="javascript">$(document).ready(function(e){var path=$('#path').val();$('div.menu').hide();$('#popup_message #popup_prompt').keyup(function(e){var l=$(this).val().length;alert(l);});$('#reg').click(function(){jPrompt('Masukan Serial Number','','Registrasi',function(r){if(r){$.post('validity',{'ns':r},function(result){$('table#x tr td#result').html(result);($.trim(result)!=$.trim('Serial Number yang ada masukan salah Salah'))?$.post('validity_ok',{'id':r},function(res){document.location.href=path+'admin/index';}):"";})}})})});function kliked(id){var path=$('#path').val();document.location.href=path+'admin/masuk?id='+id;};function logout(){var path=$('#path').val();document.location.href=path+'admin/logout';};</script>

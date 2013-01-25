@@ -336,6 +336,7 @@
 		};
 		$.extend(settings, options);
 
+
 		return this.each(function() {
 			var obj = new autosuggest(settings.url, $(this));
 

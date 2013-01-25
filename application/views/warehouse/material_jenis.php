@@ -18,7 +18,7 @@ if($all_jenisbarang!=''){
 	$zfm->BuildFormButton('Simpan','jenis');
 	echo "<hr/>";
 		$zlb->section('Jenis');
-		$zlb->aksi(($e_jenisbarang!='')?true:false);
+		$zlb->aksi(true);
 		$zlb->icon('deleted');
 		$zlb->Header('100%','Jenis');
 		echo "</tbody></table>";

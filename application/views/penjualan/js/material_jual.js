@@ -95,7 +95,7 @@ $(document).ready(function(e) {
 													}else{
 														_kosongkan_field(id[0]);
 													}
-*/												alert('Stock '+result.data+' kosong (nol). tidak bisa dilakukan trasaksi\nSilahkan update dulu stocknya');
+*/												jAlert('Stock '+result.data+' kosong (nol). tidak bisa dilakukan trasaksi\nSilahkan update dulu stocknya','Alert Stock Null');
 												_kosongkan_field(id[0]);
 												}else{
 												$('#frm2 input#'+id[0]+'__jml_transaksi')
@@ -617,11 +617,11 @@ $(document).ready(function(e) {
 			}
 		})
 	}
-	function buka_wind()
+	function buka_wind(id)
 	{
-	 window.open("http://localhost/putrisvn/penjualan_slipt.php",
+	 window.open("http://localhost/putrisvn/penjualan_slipt.php?userid="+id,
 				  "mediumWindow",
-				  "width=550,height=225,left="+((screen.width/2)-(550/2))+" top=150" +
+				  "width=550,height=225,left="+((screen.width/2)-(550/2))+", top=150" +
 				  "menubar=No,scrollbars=No,addressbar=No,status=No,toolbar=No");
 	}
 	
@@ -645,7 +645,7 @@ $(document).ready(function(e) {
 			'tanggal'	  :tgl,
 			'lokasi'	  :$('#id_lok').val()},
 			function(result){
-				buka_wind();
+				buka_wind($.trim(result));
 				document.location.href=path+'penjualan/index';
 			})
 	}

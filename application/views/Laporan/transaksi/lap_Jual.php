@@ -51,7 +51,7 @@ $(document).ready(function(e) {
 	{
 		lock('#id_lok');
 	}else{
-		unlok('#id_lok');
+		unlock('#id_lok');
 	}
 });
 </script>

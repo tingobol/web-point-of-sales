@@ -23,7 +23,7 @@ addText(array('Nama Vendor :',''),
 	   array('<input type="text" id="finde" class="cari w100">',
 	   '<input type="button" id="oke" value="Cari">'));
 		$zlb->section('produsen');
-		$zlb->aksi(($e_listvendor!='')?true:false);
+		$zlb->aksi(true);
 		$zlb->icon('deleted');
 		$zlb->Header('100%');
 		echo "</tbody></table>";

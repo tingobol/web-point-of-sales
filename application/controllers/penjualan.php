@@ -313,6 +313,7 @@ class Penjualan extends CI_Controller{
 		$this->zetro_slip->create_file();
 		//$this->re_print();
 		//$this->print_slip_pdf();
+		echo $this->session->userdata('userid');
 	}
 	function struk_header(){
 		$data=array();
@@ -331,7 +332,7 @@ class Penjualan extends CI_Controller{
 		$nJenis	=rdb('inv_penjualan_jenis','Jenis_Jual','Jenis_Jual',"where ID='".$Jenis."'");
 		$no_faktur=rdb('inv_penjualan','Nomor','Nomor',"where NoUrut='".$no_trans."' and Tanggal='".$this->tgl."'");
 		$isine	=array(
-					sepasi(((80-(strlen($slip)+6))/2)).''.newline(),
+					sepasi(((80-(strlen($slip)+6))/2)).'FAKTUR PEMBELIAN'.newline(),
 					sepasi(80).newline(),
 					$coy.sepasi((79-strlen($coy)-strlen('Tanggal :'.tglfromSql($tgl)))).'Tanggal :'.tglfromSql($tgl).newline(),
 					$address.sepasi((79-strlen($address)-strlen('No. Faktur :'.$no_faktur))).'No. Faktur :'.$no_faktur.newline(),
@@ -595,12 +596,15 @@ class Penjualan extends CI_Controller{
 		$data['tgl_service']	=tgltoSql($_POST['tgl_service']);
 		$data['nm_pelanggan']	=addslashes(strtoupper($_POST['nm_pelanggan']));
 		$data['alm_pelanggan']	=empty($_POST['alm_pelanggan'])?'':addslashes(ucwords($_POST['alm_pelanggan']));
+		$data['tlp_pelanggan']	=empty($_POST['tlp_pelanggan'])?'':$_POST['tlp_pelanggan'];
 		$data['nm_barang']		=addslashes(strtoupper($_POST['nm_barang']));
-		$data['ket_service']	=addslashes(ucwords($_POST['ket_service']));
+		$data['merk_barang']	=empty($_POST['tp_barang'])?'':$_POST['tp_barang'];
+		$data['noser_barang']	=empty($_POST['no_seri_barang'])?'':$_POST['no_seri_barang'];
+		$data['ket_service']	=empty($_POST['ket_barang'])?'':addslashes(ucwords($_POST['ket_barang']));
+		$data['masalah_service']=empty($_POST['ket_service'])?'':addslashes(ucwords($_POST['ket_service']));
 		$data['gr_service']		=empty($_POST['gr_service'])?'N':$_POST['gr_service'];
 		$data['id_lokasi']		=empty($_POST['id_lokasi'])?'1':$_POST['id_lokasi'];
 		$data['created_by']		=$this->session->userdata('username');
-		
 		SimpanData($this->Admin_model->replace_data('inv_penjualan_service',$data));
 		
 		$datax['nomor']			=$_POST['no_trans'];
@@ -632,9 +636,8 @@ class Penjualan extends CI_Controller{
 				 td($r->no_trans,'center').
 				 td(tglfromSql($r->tgl_service),'center').
 				 td($r->nm_pelanggan).
-				 td($r->alm_pelanggan).
+				 td($r->alm_pelanggan.' '.$r->tlp_pelanggan).
 				 td($r->nm_barang).
-				 /*td($r->ket_service).*/
 				 td($r->gr_service,'center').
 				 td(rdb('user_lokasi','lokasi','lokasi',"where ID='".$r->id_lokasi."'")).
 				 td(($cek_oto!='' && $r->stat_service=='N')?img_aksi($r->no_trans,true):'','center').

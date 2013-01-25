@@ -21,6 +21,7 @@
 		  $where=($sampai=='')?
 		  			"where tgl_kas='".tgltoSql($dari)."'":
 					"where tgl_kas between '".tgltoSql($dari)."' and '".tgltoSql($sampai)."'";
+		  $where.=($lokasi=='All')?'':" and id_lokasi='".$area."'";
 		  foreach($temp_rec as $r){
 			$n++;
 			$tot=0;

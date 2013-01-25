@@ -13,8 +13,8 @@ $(document).ready(function(e) {
 				$('table#panel tr td:not(#'+id+',#kosong,.flt)').addClass('tab_button');
 				$('span#v_'+id).show();
 				$('span:not(#v_'+id+')').hide();
-			}
-	})
+			};
+	});
 	//tglNow('#dari_tgl');
 	$('#frm1 #dari_tgl').dynDateTime();
 	$('#frm1 #sampai_tgl').dynDateTime();
@@ -31,7 +31,7 @@ $(document).ready(function(e) {
 			if(e.keyCode==13){
 				$('#frm1 #sampai_tgl').focus().select();
 			}
-		})
+		});
 	$('#frm1 #sampai_tgl')
 		.click(function(){
 			$(this).focus().select();
@@ -44,7 +44,7 @@ $(document).ready(function(e) {
 			if(e.keyCode==13){
 				$('#frm1 #nm_produsen').focus().select();
 			}
-		})
+		});
 	$('#frm1 #nm_produsen')
 		.coolautosuggest({
 			url		:path+'pembelian/get_pemasok?limit=10&str=',
