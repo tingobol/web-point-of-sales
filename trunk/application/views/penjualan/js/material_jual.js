@@ -636,7 +636,7 @@ $(document).ready(function(e) {
 			'lokasi'	  :$('#id_lok').val()},
 			function(result){
 				buka_wind($.trim(result));
-				//document.location.href=path+'penjualan/index';
+				document.location.href=path+'penjualan/index';
 			})
 	}
 	//membuat nomor transaksi otomatis berdasarkan jenis transaksi
