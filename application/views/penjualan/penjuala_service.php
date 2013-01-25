@@ -38,6 +38,14 @@ panel_end();
 <script language="javascript">
 
 $(document).ready(function(e){$('#userlok').html("<? dropdown('user_lokasi','ID','lokasi',"where id in(".$this->zetro_auth->cek_area().")order by id",$this->session->userdata('gudang'));?>").val($('#lok').val()).select();$('#ID_Dept').html("<? dropdown('user_lokasi','ID','lokasi',"where id in(".$this->zetro_auth->cek_area().")order by id",$this->session->userdata('gudang'));?>");if($('#jml_area').val()=='1'){lock('#userlok');lock('#ID_Dept');}else{unlock('#userlok');unlock('#ID_Dept');};$('#ok').click();});
+function buka_wind(id)
+{
+	 window.open("<?=base_url();?>penjualan_slipt.php?userid="+id,
+				  "mediumWindow",
+				  "width=550,height=225,left="+((screen.width/2)-(550/2))+", top=150" +
+				  "menubar=No,scrollbars=No,addressbar=No,status=No,toolbar=No");
+};
+
 </script>
 <input type='hidden' id='stat' val='1' />
 <input type='hidden' id='id_member' value='' />
