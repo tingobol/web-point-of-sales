@@ -55,7 +55,11 @@ function _show_data()
 	function(result){
 		$('table#ListTable tbody').html(result);
 		$('table#ListTable').fixedHeader({'width':(screen.width-40),'height':(screen.height-350)});
-		lock('select')
+		if($('#jml_area').val()=='1'){
+			lock('#userlok');
+		}else{
+			unlock('#userlok');
+		}
 	})
 };
 function _show_popup(id)
