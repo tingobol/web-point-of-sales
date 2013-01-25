@@ -50,10 +50,12 @@ $(document).ready(function(e) {
 function _show_data()
 {
 	show_indicator('ListTable',9);
+	unlock('select');
 	$.post('get_list_service',$('#frm1').serialize(),
 	function(result){
 		$('table#ListTable tbody').html(result);
 		$('table#ListTable').fixedHeader({'width':(screen.width-40),'height':(screen.height-350)});
+		lock('select')
 	})
 };
 function _show_popup(id)
@@ -71,6 +73,7 @@ function _show_popup(id)
 		$('#id_lokasi').val($('#lok').val()).select();
 		$('#no_trans').attr('readonly','readonly');
 		unlock('#nm_pelanggan');
+		$('nm_barang').removeAttr('readonly');
 	};
 	$('#pp-addnew')
 		.css({'top':'5%','left':'20%'})
@@ -130,7 +133,7 @@ function _simpan_data()
 			 })
 	};
 	if($('#stat').val()=='1'){
-		unlock('#nm_pelanggan');
+		unlock('#nm_pelanggan,#id_lokasi');
 		$.post('set_service',$('#frm3').serialize(),
 		function(result){
 			$('#result').html(result).show().fadeOut(5000);
@@ -168,5 +171,18 @@ function images_click(id,aksi)
 
 function _print_slip(id,tgl)
 {
-	jAlert('Print in progres....','Zetro');
+	$.post(path+'print_slip/print_slip_service',{
+		'no_transaksi'	:id,
+		'tanggal'		:tgl,
+		'lokasi'		:$('#lok').val()
+	},function(result){
+		buka_wind(result);
+	})
+};
+function buka_wind(id)
+{
+	 window.open("http://localhost/putrisvn/penjualan_slipt.php?userid="+id,
+				  "mediumWindow",
+				  "width=550,height=225,left="+((screen.width/2)-(550/2))+", top=150" +
+				  "menubar=No,scrollbars=No,addressbar=No,status=No,toolbar=No");
 };

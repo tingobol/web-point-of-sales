@@ -275,6 +275,7 @@ class Inv_model extends CI_Model {
 				on u.ID=p.ID_Satuan
 				where id_barang='$nm_barang' $lokasi
 				group by id_barang";
+		//echo $sql;
 		$data=$this->db->query($sql);
 		return $data->result();
 	}

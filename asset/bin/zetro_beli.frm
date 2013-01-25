@@ -2,6 +2,8 @@
 1|Cash,Cash
 2|Tempo,Tempo
 3|Transfer,Transfer
+4|Check,Check
+5|Return,Return
 
 [pembelian]
 1|No. ID,input,text n,no_transaksi,w50 upper,,10%
