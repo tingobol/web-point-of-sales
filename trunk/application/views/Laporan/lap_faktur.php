@@ -22,11 +22,8 @@ $fld3.="<input type='hidden' id='optional' name='optional' value=''>";
 	no_auth();
 }
 panel_multi_end();
+
 panel_end();
 auto_sugest();
 ?>
-<script language="javascript">
-	$(document).ready(function(e) {
-    //$('#v_stocklist table#ListTable').fixedHeader({width:700,height:350})
-    });
-</script>
+<input type='hidden' id='tgl_trans' value='' />

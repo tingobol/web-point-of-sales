@@ -128,7 +128,7 @@ class Report_model extends CI_Model {
 		return $this->db->query($sql);	
 	}
 	function get_no_trans($where){
-			$sql="select p.NoUrut,a.Nama,a.Catatan from inv_penjualan as p
+			$sql="select p.NoUrut,a.Nama,a.Alamat,p.Tanggal from inv_penjualan as p
 				left join mst_anggota as a
 				on a.ID=p.ID_Anggota
 			   $where order by p.ID desc";
