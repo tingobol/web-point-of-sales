@@ -170,5 +170,13 @@ $(document).ready(function(e) {
 			document.location.href='<?=base_url();?>index.php/penjualan/index';
 			})
 	}
+	function buka_wind(id)
+	{
+	 window.open("<?=base_url();?>penjualan_slipt.php?userid="+id,
+				  "mediumWindow",
+				  "width=550,height=225,left="+((screen.width/2)-(550/2))+", top=150" +
+				  "menubar=No,scrollbars=No,addressbar=No,status=No,toolbar=No");
+	}
+	
 
 </script>

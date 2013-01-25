@@ -615,14 +615,6 @@ $(document).ready(function(e) {
 			}
 		})
 	}
-	function buka_wind(id)
-	{
-	 window.open("http://localhost/putrisvn/penjualan_slipt.php?userid="+id,
-				  "mediumWindow",
-				  "width=550,height=225,left="+((screen.width/2)-(550/2))+", top=150" +
-				  "menubar=No,scrollbars=No,addressbar=No,status=No,toolbar=No");
-	}
-	
 	function printPage (sURL) {
       var oHiddFrame = document.createElement("iframe");
       oHiddFrame.src = sURL;
