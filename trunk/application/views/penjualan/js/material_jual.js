@@ -387,8 +387,7 @@ $(document).ready(function(e) {
 		}
 		
 		_simpan_pembayaran();//simpan data pembayaran
-/*		_print_struk($('#no_transaksi').val(),$('#tgl_transaksi').val());//print struk pembayaran
-*/		})
+		})
 		
 	$('#frm5 #saved-dikredit')
 		.click(function(){
@@ -402,8 +401,7 @@ $(document).ready(function(e) {
 		}
 		
 		_simpan_pembayaran();//simpan data pembayaran
-/*		_print_struk($('#no_transaksi').val(),$('#tgl_transaksi').val());//print struk pembayaran
-*/		})
+		})
 	//pilih cara pembayaran yang akan dilakukan	
 	$('#cbayare').change(function(){
 		if($(this).val()!=1 && $('#nm_nasabah').val()==''){
@@ -646,7 +644,7 @@ $(document).ready(function(e) {
 			'lokasi'	  :$('#id_lok').val()},
 			function(result){
 				buka_wind($.trim(result));
-				document.location.href=path+'penjualan/index';
+				//document.location.href=path+'penjualan/index';
 			})
 	}
 	//membuat nomor transaksi otomatis berdasarkan jenis transaksi

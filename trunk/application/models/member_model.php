@@ -217,7 +217,7 @@ class Member_model extends CI_Model{
 		$data=array();
 		$sql="select p.*,sum(Debet) as Debet,sum(Kredit) as Kredit,
 			 (sum(Debet)-sum(Kredit)) as Saldo,
-			  a.Nama,a.Alamat,a.Kota,a.Catatan
+			  a.Nama,a.Alamat,a.Kota,a.Telepon as Catatan
 				from pinjaman_bayar as pb 
 				left join pinjaman as p
 				on p.ID=pb.ID_pinjaman

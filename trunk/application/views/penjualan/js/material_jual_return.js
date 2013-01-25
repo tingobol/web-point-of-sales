@@ -84,7 +84,8 @@ $(document).ready(function(e) {
 										total_harga();
 										//dapatkan total stock
 										$.post(path+'stock/get_material_stock',{
-											'id_material'	:result.id_barang},
+											'id_material'	:result.id_barang,
+											'lokasi'        :$('#lok').val()},
 											function(data){
 												var jm=$.parseJSON(data);
 												if($.trim(jm.stock)=='0'||jm.stock==null){
@@ -518,7 +519,8 @@ $(document).ready(function(e) {
 		$.post('update_stock_return',{
 			'no_trans'	:id,
 			'tanggal'	:tgl,
-			'jumlah'	:jml
+			'jumlah'	:jml,
+			'lokasi'    :$('#lok').val()
 		},function(result){
 			if(parseInt(result)<0){
 				_update_stock_ret($('#no_transaksi').val(),$('#tgl_transaksi').val(),result);

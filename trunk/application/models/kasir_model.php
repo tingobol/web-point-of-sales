@@ -207,5 +207,11 @@ class Kasir_model extends CI_Model {
 		$data=$this->db->query($sql);
 		return $data->result();		
 	}
-	
+	function get_trans_service($ntran,$tgl)
+	{
+		$data=array();
+		$sql="select * from inv_penjualan_service where no_trans='".$ntran."' and tgl_service='".$tgl."'";
+		$data=$this->db->query($sql);
+		return $data->result();
+	}
 }

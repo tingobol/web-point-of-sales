@@ -330,7 +330,7 @@ class Penjualan extends CI_Controller{
 		$kasir=$this->session->userdata('username');
 		$isine	=array(
 					$coy.newline(),
-					strtoupper($address).sepasi((79-strlen($address)-strlen('FAKTUR PEMBELIAN'))).'FAKTUR PEMBELIAN'.newline(),
+					strtoupper($address).sepasi((79-strlen($address)-strlen('FAKTUR PENJUALAN'))).'FAKTUR PENJUALAN'.newline(),
 					'Tanggal :'.date('d-m-Y H:i').sepasi((79-strlen('Tanggal :'.date('d-m-Y H:i'))-strlen('Kepada Yth,'))).'Kepada Yth,'.newline(),
 					'Kasir : '.$kasir.sepasi((79-strlen($nama)-strlen('Kasir : '.$kasir))).$nama.newline(),
 					'Nota  : '.$no_faktur.sepasi((79-strlen($alm)-strlen('Nota  : '.$no_faktur))).$alm.newline(),
@@ -345,6 +345,7 @@ class Penjualan extends CI_Controller{
 					);
 		return $isine;			
 	}
+	//isi data barang dari penjualan
 	function isi_slip(){
 		$data=array();$content="";$n=0;
 		$this->inv_model->tabel('inv_penjualan_rekap');
@@ -367,6 +368,11 @@ class Penjualan extends CI_Controller{
 		 }
 		 return $content;
 		 
+	}
+	//isi data keterangan service
+	function isi_slip_service()
+	{
+		
 	}
 	function struk_data_footer(){
 		$data	=array();$bawah="";
@@ -540,12 +546,13 @@ class Penjualan extends CI_Controller{
 		$data['ID_Agt']		=$ID_Agt;
 		$data['ID_Unit']	=rdb('jenis_simpanan','ID_Unit','ID_Unit',"where ID='".$this->id_jenis."'");
 		$data['Tanggal']	=tglToSql($this->tgl);
+		$data['ID_Bulan']		=substr($this->tgl,3,2);
 		$data['Tahun']		=substr($this->tgl,6,4);
-		$data['jml_pinjaman']=rdb('inv_penjualan','Total','Total',"where NoUrut='".$this->no_trans."' and Tanggal='".tglToSql($this->tgl)."'");
+		$data['pinjaman']=rdb('inv_penjualan','Total','Total',"where NoUrut='".$this->no_trans."' and Tanggal='".tglToSql($this->tgl)."'");
 		$data['cara_bayar']	=$this->id_jenis;
 		$data['mulai_bayar']=rdb('inv_penjualan','Tgl_Cicilan','Tgl_Cicilan',"where NoUrut='".$this->no_trans."' and Tanggal='".tglToSql($this->tgl)."'");
 		$data['keterangan']	=rdb('jenis_simpanan','Jenis','Jenis',"where ID='".$this->id_jenis."'").' No: '.
-							 rdb('inv_penjualan','ID_Post',"ID_Post","where NoUrut='".$this->no_trans."' and Tanggal='".tglToSql($this->tgl)."'")."-".
+							 rdb('inv_penjualan','Nomor',"Nomor","where NoUrut='".$this->no_trans."' and Tanggal='".tglToSql($this->tgl)."'")."-".
 							 rdb('inv_penjualan','Deskripsi','Deskripsi',"where NoUrut='".$this->no_trans."' and Tanggal='".tglToSql($this->tgl)."'").
 							 '[ '.tglfromSql(rdb('inv_penjualan','Tgl_Cicilan','Tgl_Cicilan',"where NoUrut='".$this->no_trans."' and Tanggal='".tglToSql($this->tgl)."'")).' ]';
 		$this->Admin_model->replace_data('pinjaman',$data);
