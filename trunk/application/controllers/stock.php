@@ -71,8 +71,9 @@ class Stock extends CI_Controller{
 	function get_bacth(){
 		$data=array();
 		$id=$_POST['id_barang'];
-		$data=$this->inv_model->get_detail_stocked($id,'desc');	
-		echo (count($data)>0)?json_encode($data[0]):'{"batch":""}';
+		$lokasi=empty($_POST['lokasi'])?'1':$_POST['lokasi'];
+		$data=$this->inv_model->get_detail_stocked($id,'Desc','1','limit 1',$lokasi);	
+		echo (count($data)>0)?json_encode($data[0]):'{"batch":"0"}';
 	}
 	function list_filtered(){
 		$nmj=array(); $data='';$valfld='';$n=0;
@@ -117,8 +118,10 @@ class Stock extends CI_Controller{
 		foreach($data as $r){
 			$stok	=$r->stock;
 			$sat	=$r->satuan;
+			$id_barang=$r->ID;
 			$datax=array('stock'=>$r->stock,
-						   'satuan'=>$r->satuan);
+						   'satuan'=>$r->satuan,
+						   'id_barang'=>$r->ID);
 			
 		}
 		($stok=='')?'0':$stok;

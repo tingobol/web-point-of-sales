@@ -45,6 +45,11 @@ $(document).ready(function(e) {
 	$('#ket_service').keyup(function(){
 		$('#stat').val('1')
 	});
+	//bayar service
+	$('#ambilservice').click(function(e)
+	{
+		_show_popup_b('');
+	});
 });
 
 function _show_data()
@@ -54,7 +59,7 @@ function _show_data()
 	$.post('get_list_service',$('#frm1').serialize(),
 	function(result){
 		$('table#ListTable tbody').html(result);
-		$('table#ListTable').fixedHeader({'width':(screen.width-40),'height':(screen.height-350)});
+		$('table#ListTable').fixedHeader({'width':(screen.width-40),'height':(screen.height-370)});
 		if($('#jml_area').val()=='1'){
 			lock('#userlok');
 		}else{
@@ -170,6 +175,9 @@ function images_click(id,aksi)
 				}
 			});
 		break;
+		case 'pros':
+		 _show_popup_b(id);
+		break;
 	}
 };
 
@@ -183,3 +191,51 @@ function _print_slip(id,tgl)
 		buka_wind(result);
 	})
 };
+//============================bayar service===========================
+
+function _show_popup_b(id)
+{
+	if(id!='')
+	{ 
+		get_bayar_service(id)
+	}else
+	{
+		$('#frm2 #no_trans')
+		.removeAttr('readonly')	
+		.focusout(function(){
+			get_bayar_service($(this).val())
+		})
+	};
+	tglNow('#tanggal');
+	$('table#newTable tr th:nth-child(7)').hide();
+	$('table#newTable tr td:nth-child(7)').hide();
+	$('#pp-bayar')
+		.css({'top':'5%','left':'10%'})
+		.show('slow');
+	$('#nm_pelanggan').focus().select();
+	$('#lock').show();
+	
+};
+
+function get_bayar_service(id)
+{
+	$.post('get_detail_service',{
+		'no_trans'	:id
+	},function(result){
+		var r=$.parseJSON(result);
+		$.post('get_id_member',{
+			'nm_member'	:r.nm_pelanggan},
+			function(rst)
+			{
+				var nm=$.parseJSON(rst)
+				$('#id_member').val(nm.Nama);
+			})
+		$('#frm2 #no_trans').val(r.no_trans).attr('readonly','readonly');
+		$('#tglt_service').val(r.tgl_service).attr('readonly','readonly');
+		$('#nmt_pelanggan').val(r.nm_pelanggan).attr('readonly','readonly');
+		$('#almt_pelanggan').val(r.alm_pelanggan+'\n'+r.tlp_pelanggan).attr('readonly','readonly');
+		$('#nmt_barang').val(r.nm_barang).attr('readonly','readonly');
+		$('#tpt_barang').val(r.merk_barang).attr('readonly','readonly');
+		$('#kett_service').val(r.ket_service).attr('readonly','readonly');
+	})
+}
