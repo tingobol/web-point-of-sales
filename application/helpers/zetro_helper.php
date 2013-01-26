@@ -225,13 +225,7 @@
         <img src="<?=base_url();?>asset/images/no.png" id='<?=$name;?>' onclick="keluar_<?=$name;?>();" class='close' style='cursor:pointer' title="Close"/></font></td></tr>
         <input type='hidden' value='<?=$name;?>' id='nama' />
         </table>
-        <script language='javascript'>
-				function keluar_<?=$name;?>(){
-					$('#pp-<?=$name;?>').hide('slow');
-					$('#lock').hide();
-					$('#lock<?=$name;?>').hide();
-				}
-		</script>
+        <script language='javascript'>function keluar_<?=$name;?>(){$('#pp-<?=$name;?>').hide('slow');$('#lock').hide();$('#lock<?=$name;?>').hide();}</script>
         <div id='tbl-<?=$name;?>' style='padding:3px; width:95%' align="left">
         <?	
 	}

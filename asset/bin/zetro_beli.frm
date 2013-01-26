@@ -202,5 +202,26 @@
 9|&nbsp;&nbsp;&bull;&nbsp;No.Seri,input,text,no_seri_barang,w70 upper,,
 10|Kelengkapan Barang,textarea,text,ket_barang,t90,,
 11|Kerusakan/Masalah,textarea,text,ket_service,t90,,
-12|Garansi,select,text,gr_service,s25,,8%,RS,ok
+12|Garansi,select,text,gr_service,s25,,,RS,ok
 13|Lokasi,select,text,id_lokasi,s50,,10%,RD,user_lokasi-ID-lokasi-
+
+
+[BayarService]
+1|No. Service,input,text n,no_trans,w70 upper,,10%
+2|Tanggal,input,text n,tanggal,w50,,9%
+3|Nama Pelanggan,input,text n,nmt_pelanggan,w100 upper ,,18%
+4|Alamat Pelanggan,textarea,text,almt_pelanggan,t100,,20%
+;5|Telepon Pelanggan,input,text,tlpt_pelanggan,w50,,
+
+[BayarService2]
+1|Identitas Barang Service,,,,,,,,
+2|&nbsp;&nbsp;&bull;&nbsp;Nama Barang,input,text,nmt_barang,w100 upper,,15%
+3|&nbsp;&nbsp;&bull;&nbsp;Type/Merk,input,text,tpt_barang,w100 upper,,
+4|Kerusakan/Masalah,textarea,text,kett_service,t90,,
+
+[servicelist]
+1|Nama Barang,input,text n,nm_barang,w100 upper,,25%
+2|Satuan,input,text n,nm_satuan,w100 upper,,8%
+3|Jumlah,input,text d,jml_transaksi,w100 angka,,12%
+4|Harga,input,text d,harga_jual,w100 angka,,10%
+

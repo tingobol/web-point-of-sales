@@ -82,7 +82,7 @@ $(document).ready(function(e) {
 										total_harga();
 										$('#max_input').val('0')
 										//dapatkan total stock
-									   if(result.jenis!='33'){
+									   if(result.kategori!='106'){
 										$.post(path+'stock/get_material_stock',{
 											'id_material'	:result.id_barang,
 											'lokasi'		:$('#id_lok').val()},
@@ -105,7 +105,8 @@ $(document).ready(function(e) {
 												$('table#inform tr td#ist').html(data.stock+'  '+data.satuan)
 												}
 												$.post(path+'stock/get_bacth',{
-													'id_barang':result.id_barang},
+													'id_barang':result.id_barang,
+													'lokasi'	:$('#id_lok').val()},
 													function(res){
 														//alert(res);
 														var bt=$.parseJSON(res)

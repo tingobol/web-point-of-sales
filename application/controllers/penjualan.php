@@ -95,14 +95,15 @@ class Penjualan extends CI_Controller{
 		$cek_nourut	=rdb('inv_penjualan','NoUrut','NoUrut',"where NoUrut='".$_POST['no_trans']."'");
 		$data['NoUrut']		=$_POST['no_trans'];
 		$data['Tanggal']	=tgltoSql($_POST['tanggal']);
-		$data['Nomor']		=$_POST['faktur'];
+		$data['Nomor']		=empty($_POST['faktur'])? substr($_POST['no_trans'],5,10).'-'.date('Y'):$_POST['faktur'];
 		$data['ID_Anggota']	=empty($_POST['member'])?'0':$_POST['member'];
-		$data['ID_Jenis']	=$_POST['cbayar'];
+		$data['ID_Jenis']	=empty($_POST['cbayar'])?'1':$_POST['cbayar'];
 		$data['Bulan']		=substr($_POST['tanggal'],3,2);
 		$data['Tahun']		=substr($_POST['tanggal'],6,4);
 		$data['Total']		=empty($_POST['total'])?'0':$_POST['total'];
 		$data['cicilan']	=empty($_POST['cicilan'])?'0':$_POST['cicilan'];
-		$data['ID_Lokasi']		=empty($_POST['lokasi'])?'1':$_POST['lokasi'];
+		$data['ID_Lokasi']	=empty($_POST['lokasi'])?'1':$_POST['lokasi'];
+		$data['Deskripsi']	=empty($_POST['deskripsi'])?'':$_POST['deskripsi'];
 		if($cek_nourut==''){
 		$this->Admin_model->replace_data('inv_penjualan',$data);
 		}
@@ -114,7 +115,7 @@ class Penjualan extends CI_Controller{
 	function update_header_trans(){
 		$data=array();
 		$no_trans	=$_POST['no_trans'];
-		$ID_Jenis	=$_POST['id_jenis'];
+		$ID_Jenis	=empty($_POST['id_jenis'])?'':$_POST['id_jenis'];
 		$TotalHg	=empty($_POST['total'])?'0':$_POST['total'];
 		$Tanggal	=$_POST['tanggal'];
 		$id_anggota	=empty($_POST['id_anggota'])?'0':$_POST['id_anggota'];
@@ -145,9 +146,9 @@ class Penjualan extends CI_Controller{
 		$data['Keterangan']	=$_POST['no_trans'];
 		$data['ID_Jual']	=rdb('inv_penjualan','ID','ID',"where NoUrut='".$_POST['no_trans']."' and Tanggal='".tgltoSql($_POST['tanggal'])."'");
 		$data['ID_Barang']	=rdb('inv_barang','ID','ID',"where Nama_Barang='".$_POST['nm_barang']."'");
-		$data['ID_Jenis']	=$_POST['cbayar'];
-		$data['Jumlah']		=$_POST['jml_trans'];
-		$data['Harga']		=$_POST['harga_jual'];
+		$data['ID_Jenis']	=empty($_POST['cbayar'])?'1':$_POST['cbayar'];
+		$data['Jumlah']		=empty($_POST['jml_trans'])?'0':$_POST['jml_trans'];
+		$data['Harga']		=empty($_POST['harga_jual'])?'0':$_POST['harga_jual'];
 		$data['Tanggal']	=tgltoSql($_POST['tanggal']);
 		$data['Bulan']		=$_POST['no_id'];
 		$data['ID_Post']	=$_POST['id_post'];
@@ -194,27 +195,30 @@ class Penjualan extends CI_Controller{
 		$lokasi	=empty($_POST['lokasi'])?'1':$_POST['lokasi'];
 		$data=$this->Admin_model->show_list('inv_penjualan_detail',"where ID_Jual='".rdb('inv_penjualan','ID','ID',"where NoUrut='".$ntran."' and Tanggal='". $tgl."'")."'");
 		$id_br=rdb('inv_penjualan_detail','ID_Barang','ID_Barang',"where ID_Jual='".rdb('inv_penjualan','ID','ID',"where NoUrut='".$ntran."' and Tanggal='". $tgl."'")."'");
+		$kat=rdb('inv_barang','id_kategori','id_kategori',"where ID='".$id_br."'");
 		//print_r($data);
-		foreach($data as $r){
-		$bath=$this->inv_model->get_detail_stocked($r->ID_Barang,'desc');
-			foreach($bath as $w){
-				$bt=$w->batch;
+		if($kat!='106'){ //id kategori service
+			foreach($data as $r){
+			$bath=$this->inv_model->get_detail_stocked($r->ID_Barang,'desc');
+				foreach($bath as $w){
+					$bt=$w->batch;
+				}
+				$jumlah=empty($_POST['jumlah'])?$r->Jumlah:$_POST['jumlah'];
+				$hgb=rdb('inv_material_stok','harga_beli','harga_beli',"where id_barang='".$r->ID_Barang."' and batch='".$bt."' and id_lokasi='".$lokasi."'");
+				$first_stock=rdb('inv_material_stok','stock','stock',"where id_barang='".$r->ID_Barang."' and batch='".$bt."' and id_lokasi='".$lokasi."'");
+				$end_stock=($first_stock-abs($jumlah));
+				$end_stock=($end_stock<0)? 0:$end_stock;
+				$datax['id_lokasi'] =$lokasi;
+				$datax['id_barang']	=$r->ID_Barang;
+				$datax['nm_barang']	=rdb('inv_barang','Nama_Barang','Nama_Barang',"where ID='".$r->ID_Barang."'");
+				$datax['batch']		=$bt;
+				$datax['stock']		=$end_stock;
+				$datax['harga_beli']=empty($hgb)?'0':$hgb;
+				$datax['nm_satuan'] =rdb('inv_barang','ID_Satuan','ID_Satuan',"where ID='".$r->ID_Barang."'");
+				$this->Admin_model->replace_data('inv_material_stok',$datax);
 			}
-			$jumlah=empty($_POST['jumlah'])?$r->Jumlah:$_POST['jumlah'];
-			$hgb=rdb('inv_material_stok','harga_beli','harga_beli',"where id_barang='".$r->ID_Barang."' and batch='".$bt."' and id_lokasi='".$lokasi."'");
-			$first_stock=rdb('inv_material_stok','stock','stock',"where id_barang='".$r->ID_Barang."' and batch='".$bt."' and id_lokasi='".$lokasi."'");
-			$end_stock=($first_stock-abs($jumlah));
-			$end_stock=($end_stock<0)? 0:$end_stock;
-			$datax['id_lokasi'] =$lokasi;
-			$datax['id_barang']	=$r->ID_Barang;
-			$datax['nm_barang']	=rdb('inv_barang','Nama_Barang','Nama_Barang',"where ID='".$r->ID_Barang."'");
-			$datax['batch']		=$bt;
-			$datax['stock']		=$end_stock;
-			$datax['harga_beli']=empty($hgb)?'0':$hgb;
-			$datax['nm_satuan'] =rdb('inv_barang','ID_Satuan','ID_Satuan',"where ID='".$r->ID_Barang."'");
-			$this->Admin_model->replace_data('inv_material_stok',$datax);
-		}
 		 echo ($first_stock-$r->Jumlah);
+		}
 	}
 	function update_stock(){
 	//update stock new version	
@@ -614,16 +618,23 @@ class Penjualan extends CI_Controller{
 	function get_detail_service()
 	{
 		$data=array();
-		$where="where no_trans='".$_POST['no_trans']."'";
+		$where="where no_trans='".$_POST['no_trans']."' and year(tgl_service)='".date('Y')."'";
 		$data=$this->Admin_model->show_list('inv_penjualan_service',$where);
 		echo json_encode($data[0]);
 	}
-	
+	function get_id_member()
+	{
+		
+		$nm=$_POST['nm_member'];
+		$data=array('Nama'=>rdb('mst_anggota','ID','ID',"where Nama='".$nm."'"));	
+		echo json_encode($data);
+	}
 	function get_list_service()
 	{
 		$data=array();$n=0;
-		$where="Where stat_service='N'";
-		$where.=empty($_POST['userlok'])?'':" and id_lokasi='".$_POST['userlok']."'";
+		$where1 =empty($_POST['stat_service'])?'':"Where stat_service='".$_POST['stat_service']."'";
+		$where2=empty($_POST['userlok'])?'':" and id_lokasi='".$_POST['userlok']."'";
+		$where=($where1=='')?str_replace('and','where',$where2):$where1.$where2;
 		$orderby='';
 		$data=$this->Admin_model->show_list('inv_penjualan_service',$where.$orderby);
 		$cek_oto=$this->zetro_auth->cek_oto('e','listservice');
@@ -636,14 +647,18 @@ class Penjualan extends CI_Controller{
 				 td($r->nm_pelanggan).
 				 td($r->alm_pelanggan.' '.$r->tlp_pelanggan).
 				 td($r->nm_barang).
-				 td($r->gr_service,'center').
 				 td(rdb('user_lokasi','lokasi','lokasi',"where ID='".$r->id_lokasi."'")).
-				 td(($cek_oto!='' && $r->stat_service=='N')?img_aksi($r->no_trans,true):'','center').
+				 td(($cek_oto!='' && $r->stat_service=='N')?img_aksi($r->no_trans,false,'pros').'&nbsp;'.img_aksi($r->no_trans,true):'','center').
 				_tr();	
 		}
 		dataNotFound($data,9);
 	}
 	
+	function update_status_service()
+	{
+		$id=$_POST['no_trans'];
+		$this->Admin_model->upd_data('inv_penjualan_service',"set stat_service='Y'","where no_trans='".$id."' and year(tgl_service)='".date('Y')."'");	
+	}
 	function del_service()
 	{
 		$no_trans=$_POST['id'];

@@ -110,6 +110,7 @@ class Print_slip extends CI_Controller{
 				'INFORMASI '.$phone.sepasi((61-strlen('INFORMASI '.$phone)-strlen('Tunai (DP) :'))).'Tunai (DP) :'.newline().
 				'Doc. No.'.$this->no_trans.' '.tglfromSql($tgl).sepasi((61-strlen('Doc. No.'.$this->no_trans.' '.tglfromSql($tgl))-strlen('Kembali Rp. :'))).'Kembali Rp. :'.newline().
 				str_repeat('-',79).newline().
+				'***Barang yang lebih dari 1 bulan tidak diambil dianggap hangus***'.newline().
 				'Penerima                Gudang                Hormat Kami'.newline(1);
 		return $bawah;
 	}
