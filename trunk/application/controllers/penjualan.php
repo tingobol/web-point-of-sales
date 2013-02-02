@@ -150,8 +150,8 @@ class Penjualan extends CI_Controller{
 		$data['Jumlah']		=empty($_POST['jml_trans'])?'0':$_POST['jml_trans'];
 		$data['Harga']		=empty($_POST['harga_jual'])?'0':$_POST['harga_jual'];
 		$data['Tanggal']	=tgltoSql($_POST['tanggal']);
-		$data['Bulan']		=$_POST['no_id'];
-		$data['ID_Post']	=$_POST['id_post'];
+		$data['Bulan']		=empty($_POST['no_id'])?'1':$_POST['no_id'];
+		$data['ID_Post']	=empty($_POST['id_post'])?'0':$_POST['id_post'];
 		$data['batch']		=empty($_POST['batch'])?'0':$_POST['batch'];
 		$data['ID_Satuan']	=rdb('inv_barang','ID_Satuan','ID_Satuan',"where Nama_Barang='".$_POST['nm_barang']."'");
 		$countdata=rdb('inv_penjualan_detail','ID','ID',"where Bulan='".$_POST['no_id']."' and Keterangan='".$_POST['no_trans']."' and Tanggal='".tgltoSql($_POST['tanggal'])."'");
