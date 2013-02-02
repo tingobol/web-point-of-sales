@@ -98,7 +98,7 @@ class Purch_model extends CI_Model {
 			fwrite($xml,"<dataset seriesName='".$w_lok->lokasi."' color='".$color[$ul]."'>\r\n");
 			for($x=1;$x<=$t_days;$x++){
 				$ii=(strlen($x)==1)?"0".$x:$x;
-				$val=rdb('inv_penjualan','Total',"sum(Total) as Total","where ID_Lokasi='".$w_lok->ID."' and Tanggal='".$thn.$bln.$ii."' order by Tanggal");	
+				$val=rdb('inv_penjualan','Total',"sum(Total) as Total","where ID_Lokasi='".$w_lok->ID."' and Tanggal='".$thn."-".$bln."-".$ii."' order by Tanggal");	
 				$val=($val=='')?'0':$val;
 				fwrite($xml,"<set name='".$ii."'  value='".$val."'/>\r\n");
 			$ii='';
@@ -137,10 +137,10 @@ class Purch_model extends CI_Model {
 					from transaksi_temp as t
 					left join kas_sub as k
 					on k.ID_CC=t.ID_CC
-					where t.Tanggal='".$thn.$bln.$ii."' and ID_Unit='".$w_lok->ID_Unit."'
+					where t.Tanggal='".$thn."-".$bln."-".$ii."' and ID_Unit='".$w_lok->ID_Unit."'
 					group by Tanggal";
 				echo $cat1;
-				$val=rdb('mst_kas_harian','sa_kas',"sa_kas","where tgl_kas='".$thn.$bln.$ii."' order by tgl_kas");	
+				$val=rdb('mst_kas_harian','sa_kas',"sa_kas","where tgl_kas='".$thn."-".$bln."-".$ii."' order by tgl_kas");	
 				$rcat1=mysql_query($cat1) or die(mysql_error());
 				while($rw1=mysql_fetch_object($rcat1)){
 						$valu=($val=='' && $rw1->Total=='')? '':($rw1->Total+$val);
@@ -182,11 +182,11 @@ class Purch_model extends CI_Model {
 						left join inv_penjualan as p
 						left join inv_material_stok as b
 						on b.id_barang=dt.ID_Barang and b.batch=dt.Batch
-						where dt.Tanggal ='".$thn.$bln.$ii."' and dt.ID_Jenis!='5'
+						where dt.Tanggal ='".$thn."-".$bln."-".$ii."' and dt.ID_Jenis!='5'
 						and p.ID_Lokasi='".$w_lok->ID_Unit."'
 						group by concat(dt.Tanggal)
 						order by dt.Tanggal";
-				$val=rdb('mst_kas_trans','jumlah',"sum(jumlah) as jumlah","where tgl_trans='".$thn.$bln.$ii."' and id_lokasi='".$w_lok->ID_Unit."' group by tgl_trans order by tgl_trans");	
+				$val=rdb('mst_kas_trans','jumlah',"sum(jumlah) as jumlah","where tgl_trans='".$thn."-".$bln."-".$ii."' and id_lokasi='".$w_lok->ID_Unit."' group by tgl_trans order by tgl_trans");	
 				$rcat1=mysql_query($cat1) or die(mysql_error());
 				while($rw1=mysql_fetch_object($rcat1)){
 					$laba=($rw1->Jual-$rw1->Harga_Beli);
