@@ -421,8 +421,8 @@ class Report extends CI_Controller
 	}
 	
 	function graph_cash_data(){
-		$thn=$_POST['thn'];
-		$bln=$_POST['bln'];
+		$thn=empty($_POST['thn'])?date('Y'):$_POST['thn'];
+		$bln=empty($_POST['bln'])?date('m'):$_POST['bln'];
 		$pos=$_POST['pos'];
 	   ($pos=='cashflow')?
 	    $this->purch_model->cash_graph($thn,$bln):
