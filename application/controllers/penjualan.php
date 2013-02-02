@@ -389,7 +389,7 @@ class Penjualan extends CI_Controller{
 		$data=$this->inv_model->show_list_1where('no_transaksi',$this->no_trans);
 			foreach($data->result() as $row){
 				$bawah=str_repeat('-',79).newline().
-				'*** TERIMA KASIH ***'.sepasi((67-strlen('000 TERIMA KASIH 000')-strlen('JUMLAH RP. :'))).'Jumlah Rp. :'.sepasi((15-strlen(number_format($row->total_belanja,2)))).number_format($row->total_belanja,2).newline().
+				'*** TERIMA KASIH ***'.sepasi((75-strlen('000 TERIMA KASIH 000')-strlen('JUMLAH RP. :'))).'Jumlah Rp. :'.sepasi((15-strlen(number_format($row->total_belanja,2)))).number_format($row->total_belanja,2).newline().
 				'INFORMASI '.$phone.sepasi((61-strlen('INFORMASI '.$phone)-strlen('TUNAI (DP) :'))).'Tunai (DP) :'./*sepasi((15-strlen(number_format($row->jml_dibayar,2)))).number_format($row->jml_dibayar,2).*/newline().
 				'DOC. NO.'.$this->no_trans.' '.tglfromSql($tgl).sepasi((65-strlen('DOC. NO.'.$this->no_trans.' '.tglfromSql($tgl))-strlen('KEMBALI RP. :'))).'Kembali Rp. :'./*sepasi((15-strlen(number_format($row->kembalian,2)))).number_format($row->kembalian,2).*/newline().
 				str_repeat('-',79).newline().
