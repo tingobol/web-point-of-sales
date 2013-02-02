@@ -334,10 +334,10 @@ class Penjualan extends CI_Controller{
 		$kasir=$this->session->userdata('username');
 		$isine	=array(
 					$coy.newline(),
-					strtoupper($address).sepasi((79-strlen($address)-strlen('FAKTUR PENJUALAN'))).'FAKTUR PENJUALAN'.newline(),
+					strtoupper($address).sepasi((80-strlen($address)-strlen('FAKTUR PENJUALAN'))).'FAKTUR PENJUALAN'.newline(),
 					'Tanggal :'.date('d-m-Y H:i').sepasi((79-strlen('Tanggal :'.date('d-m-Y H:i'))-strlen('Kepada Yth,'))).'Kepada Yth,'.newline(),
 					'Kasir : '.$kasir.sepasi((79-strlen($nama)-strlen('Kasir : '.$kasir))).$nama.newline(),
-					'Nota  : '.$no_faktur.sepasi((79-strlen($alm)-strlen('Nota  : '.$no_faktur))).$alm.newline(),
+					'Nota   : '.$no_faktur.sepasi((79-strlen($alm)-strlen('Nota  : '.$no_faktur))).$alm.newline(),
 					str_repeat('-',79).newline(),
 					'| No.|'.sepasi(((32-strlen('Nama Barang'))/2)).'Nama Barang'.sepasi(((32-strlen('Nama Barang'))/2)).
 					'|'.sepasi(((10-strlen('Banyaknya'))/2)).'Banyaknya'.sepasi((((10-strlen('Banyaknya'))/2)-1)).'|'.
@@ -362,10 +362,10 @@ class Penjualan extends CI_Controller{
 			$kategori=rdb('inv_barang_kategori','Kategori','Kategori',"where ID='".
 					 rdb('inv_barang','ID_Kategori','ID_Kategori',"where ID='".$row->ID_Barang."'")."'");
 			$content .=sepasi(((6-strlen($n))/2)).$n.sepasi((4-strlen($n))).substr($kategori,0,10).sepasi().substr(ucwords(($nama_barang)),0,31).
-					 sepasi(((30-strlen($kategori))-strlen($nama_barang))).
+					 sepasi(((35-strlen($kategori))-strlen($nama_barang))).
 					 sepasi((10-strlen($row->Jumlah)-strlen($satuan)-2)).round($row->Jumlah,0).sepasi(1).$satuan.
 					 sepasi((14-strlen(number_format($row->Harga)))).number_format($row->Harga).
-					 sepasi((16-strlen(number_format(($row->Jumlah *$row->Harga),2)))).number_format(($row->Jumlah *$row->Harga),2).newline();
+					 sepasi((20-strlen(number_format(($row->Jumlah *$row->Harga),2)))).number_format(($row->Jumlah *$row->Harga),2).newline();
 		 }
 		 if($n<=10){
 			 $content .=newline((10-$n));
