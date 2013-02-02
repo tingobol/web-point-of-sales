@@ -1,4 +1,9 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+/*
+ class report
+ author : Iswan Putera S.Kom
+ 
+ */
 class Report extends CI_Controller
 {
 	 function __construct()
