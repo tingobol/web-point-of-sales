@@ -315,7 +315,7 @@ class Controlpanel extends CI_Controller {
 	function get_daily_absen()
 	{
 		$data=array();$n=0;
-		$where=empty($_POST['id_lokasi'])?'':"where ID_Dept='".$_POST['id_lokasi']."'";
+		$where=empty($_POST['id_lokasi'])?"'Where ID_Jenis='5'":"where ID_Jenis='5' and ID_Dept='".$_POST['id_lokasi']."'";
 		$data=$this->Admin_model->show_list('mst_anggota',$where." order by Nama");
 		foreach($data as $r)
 		{
