@@ -168,7 +168,7 @@ class Laporan extends CI_Controller{
 	$bulan=empty($_POST['bulan'])?date('m'):$_POST['bulan'];
 	$tahun=empty($_POST['tahun'])?date('Y'):$_POST['tahun'];
 	$where=empty($_POST['id_lokasi'])?"":" where id='".$_POST['id_lokasi']."'";
-	$jmlhari=cal_days_in_month(CAL_GREGORIAN, $bulan, $tahun);
+	$jmlhari=($bulan==date('m'))?date('d'):cal_days_in_month(CAL_GREGORIAN, $bulan, $tahun);
 		$totaH=0;$totalA=0;
 		for($i=1;$i<=$jmlhari;$i++)
 		{
@@ -202,7 +202,7 @@ class Laporan extends CI_Controller{
 	$tahun=empty($_POST['tahun'])?date('Y'):$_POST['tahun'];
 	$where=empty($_POST['id_lokasi'])?" where id='1'":" where id='".$_POST['id_lokasi']."'";
 	$data=$this->Admin_model->show_list('user_lokasi',$where.'order by id');
-	$jmlhari=cal_days_in_month(CAL_GREGORIAN, $bulan, $tahun);
+	$jmlhari=($bulan==date('m'))?date('d'):cal_days_in_month(CAL_GREGORIAN, $bulan, $tahun);
 	foreach($data as $r)
 	{
 		$n++;
