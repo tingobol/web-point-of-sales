@@ -488,7 +488,7 @@ class Penjualan extends CI_Controller{
 		$data=array();$akun='';
 		//get ID_perkiraan
 		$akun=rdb('perkiraan','ID','ID',"where ID_Agt='$id_anggota' and ID_Simpanan='".$this->id_jenis."'");
-		echo $akun;
+		//echo $akun;
 		if($akun==''){
 			//update database perkiraan
 			$this->_update_perkiraan($id_anggota,$this->id_jenis);	
