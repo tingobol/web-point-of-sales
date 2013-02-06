@@ -6,7 +6,7 @@ class Setup_model extends CI_Model{
 		parent:: __construct();	
 	}
 	
-	function show_data($table,$where='order by ID'){
+	function show_data($table,$where='order by ID,lokasi'){
 		$data=array();
 		$sql="select * from $table $where";
 		$data=$this->db->query($sql);

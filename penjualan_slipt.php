@@ -16,7 +16,7 @@ echo "<pre>$text</pre>";
 unlink("c:\\app\\".$user."_slip_putri.txt");
 ?>
 <script language="javascript">
-//window.print(true).return(false);
+window.print(true).return(false);
 window.onafterprint=function(){
 	window.close();
 }

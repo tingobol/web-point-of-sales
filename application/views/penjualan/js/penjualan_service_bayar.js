@@ -34,7 +34,7 @@ $('#total').val('0');
 										total_harga();
 										$('#max_input').val('0')
 										//dapatkan total stock
-									   if(result.kategori!='106'){
+									   if(result.kategori!='106' || result.status!='JASA'){
 										$.post(path+'stock/get_material_stock',{
 											'id_material'	:result.id_barang,
 											'lokasi'		:$('#lokasi').val()},
