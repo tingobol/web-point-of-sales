@@ -172,6 +172,7 @@ class Laporan extends CI_Controller{
 		$totaH=0;$totalA=0;
 		for($i=1;$i<=$jmlhari;$i++)
 		{
+			$tgl=$tahun.'-'.$bulan.'-'.(strlen($i)==1)?'0'.$i:$i;
 			$x=0; $totaK=0;
 			$Hari=mktime(0,0,0,$bulan,$i,$tahun);
 			$nHari=date('N',$Hari);
