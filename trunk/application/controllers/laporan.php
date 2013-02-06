@@ -172,7 +172,8 @@ class Laporan extends CI_Controller{
 		$totaH=0;$totalA=0;
 		for($i=1;$i<=$jmlhari;$i++)
 		{
-			$tgl=$tahun.'-'.$bulan.'-'.(strlen($i)==1)?'0'.$i:$i;
+			$xx=(strlen($i)==1)?'0'.$i:$i;
+			$tgl=$tahun.'-'.$bulan.'-'.$xx;
 			$x=0; $totaK=0;
 			$Hari=mktime(0,0,0,$bulan,$i,$tahun);
 			$nHari=date('N',$Hari);
@@ -182,7 +183,7 @@ class Laporan extends CI_Controller{
 			{
 			 $x++; $hadir=0;$jmlKar=0;
 			 $jmlKar=rdb('mst_anggota','jml','count(id) as jml',"where ID_Jenis='5' and ID_Dept='".$r->ID."'");
-			 $hadir=rdb('absensi','jml','count(on_absen) as jml',"where tgl_absen='".$tgl."' and on_absen='Y'");
+			 $hadir=rdb('absensi','jml','count(on_absen) as jml',"where tgl_absen='".$tgl."' and on_absen='Y' and id_lokasi='".$r->ID."'");
 			 echo tr().td($x.nbs(2),'right').
 			 	  td(nbs(2).$r->lokasi).
 				  td($jmlKar,'center').
