@@ -454,9 +454,15 @@ $(document).ready(function(e) {
 /*			($('#ppne').is(':checked'))?
 				$('#ppne').removeAttr('checked'):
 				$('#ppne').attr('checked','checked');
-*/			return false
-			//tidak di fungsikan
-			var id=focusID.split('__')
+			return false
+*/
+			$.post('re_print',{'id':''},
+			function(result){
+				$('#result').show().html(result).fadeOut(10000);
+				document.location.href=path+'penjualan/index';
+			})
+ 			//tidak di fungsikan
+/*			var id=focusID.split('__')
 			if($('#frm2 input#'+id[0]+'__nm_barang').val()=='RESEP DOKTER'){;
 				$('#nama').val('tranresep');
 				$('#pp-tranresep').css({'left':'10%','top':'8%'});
@@ -470,7 +476,7 @@ $(document).ready(function(e) {
 						tglNow('#frm5 #tgl_resep');
 					})
 			}
-			
+*/			
 		}else if(e.keyCode==116){ //mematikan tombol f5
 			return false
 		}else if(e.keyCode==122){//mematikan tombol f11
@@ -636,8 +642,18 @@ $(document).ready(function(e) {
 			'tanggal'	  :tgl,
 			'lokasi'	  :$('#id_lok').val()},
 			function(result){
-				buka_wind($.trim(result));
-				document.location.href=path+'penjualan/index';
+				//buka_wind($.trim(result));
+				jConfirm('Print Struk Pembelian','Alert',function(r){
+					if(r){
+						$.post('re_print',{'id':''},
+						function(result){
+							$('#result').show().html(result).fadeOut(10000);
+							document.location.href=path+'penjualan/index';
+						})
+					}else{
+					document.location.href=path+'penjualan/index';
+					}
+				})
 			})
 	}
 	//membuat nomor transaksi otomatis berdasarkan jenis transaksi

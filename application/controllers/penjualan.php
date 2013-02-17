@@ -304,12 +304,13 @@ class Penjualan extends CI_Controller{
 	function print_slip(){
 		$this->zetro_slip->path=$this->session->userdata('userid');
 		$this->zetro_slip->modele('wb');
-		$this->zetro_slip->newline();
+		//$this->zetro_slip->newline();
 		$this->no_transaksi($_POST['no_transaksi']);
 		$this->tanggal(tgltoSql($_POST['tanggal']));
 		$this->zetro_slip->content($this->struk_header());
 		$this->zetro_slip->create_file();
-		echo $this->session->userdata('userid');
+		//echo $this->session->userdata('userid');
+		//$this->re_print();
 	}
 	function struk_header(){
 		$data=array();
@@ -336,8 +337,8 @@ class Penjualan extends CI_Controller{
 					$coy.newline(),
 					strtoupper($address).sepasi((80-strlen($address)-strlen('FAKTUR PENJUALAN'))).'FAKTUR PENJUALAN'.newline(),
 					'Tanggal :'.date('d-m-Y H:i').sepasi((79-strlen('Tanggal :'.date('d-m-Y H:i'))-strlen('Kepada Yth,'))).'Kepada Yth,'.newline(),
-					'Kasir : '.$kasir.sepasi((79-strlen($nama)-strlen('Kasir : '.$kasir))).$nama.newline(),
-					'Nota   : '.$no_faktur.sepasi((79-strlen($alm)-strlen('Nota  : '.$no_faktur))).$alm.newline(),
+					'Kasir   :'.$kasir.sepasi((79-strlen($nama)-strlen('Kasir : '.$kasir))).$nama.newline(),
+					'Nota    :'.$no_faktur.sepasi((79-strlen($alm)-strlen('Nota  : '.$no_faktur))).$alm.newline(),
 					str_repeat('-',79).newline(),
 					'| No.|'.sepasi(((32-strlen('Nama Barang'))/2)).'Nama Barang'.sepasi(((32-strlen('Nama Barang'))/2)).
 					'|'.sepasi(((10-strlen('Banyaknya'))/2)).'Banyaknya'.sepasi((((10-strlen('Banyaknya'))/2)-1)).'|'.
@@ -362,10 +363,10 @@ class Penjualan extends CI_Controller{
 			$kategori=rdb('inv_barang_kategori','Kategori','Kategori',"where ID='".
 					 rdb('inv_barang','ID_Kategori','ID_Kategori',"where ID='".$row->ID_Barang."'")."'");
 			$content .=sepasi(((6-strlen($n))/2)).$n.sepasi((4-strlen($n))).substr($kategori,0,10).sepasi().substr(ucwords(($nama_barang)),0,31).
-					 sepasi(((35-strlen($kategori))-strlen($nama_barang))).
-					 sepasi((10-strlen($row->Jumlah)-strlen($satuan)-2)).round($row->Jumlah,0).sepasi(1).$satuan.
-					 sepasi((14-strlen(number_format($row->Harga)))).number_format($row->Harga).
-					 sepasi((20-strlen(number_format(($row->Jumlah *$row->Harga),2)))).number_format(($row->Jumlah *$row->Harga),2).newline();
+					 sepasi(((31-strlen($kategori))-strlen($nama_barang))).
+					 sepasi((11-strlen($row->Jumlah)-strlen($satuan)-2)).round($row->Jumlah,0).sepasi(1).$satuan.
+					 sepasi((13-strlen(number_format($row->Harga)))).number_format($row->Harga).
+					 sepasi((16-strlen(number_format(($row->Jumlah *$row->Harga),2)))).number_format(($row->Jumlah *$row->Harga),2).newline();
 		 }
 		 if($n<=10){
 			 $content .=newline((10-$n));
@@ -389,8 +390,8 @@ class Penjualan extends CI_Controller{
 		$data=$this->inv_model->show_list_1where('no_transaksi',$this->no_trans);
 			foreach($data->result() as $row){
 				$bawah=str_repeat('-',79).newline().
-				'*** TERIMA KASIH ***'.sepasi((73-strlen('000 TERIMA KASIH 000')-strlen('JUMLAH RP. :'))).'Jumlah Rp. :'.sepasi((15-strlen(number_format($row->total_belanja,2)))).number_format($row->total_belanja,2).newline().
-				'INFORMASI '.$phone.sepasi((61-strlen('INFORMASI '.$phone)-strlen('TUNAI (DP) :'))).'Tunai (DP) :'./*sepasi((15-strlen(number_format($row->jml_dibayar,2)))).number_format($row->jml_dibayar,2).*/newline().
+				'*** TERIMA KASIH ***'.sepasi((65-strlen('000 TERIMA KASIH 000')-strlen('JUMLAH RP. :'))).'Jumlah Rp. :'.sepasi((10-strlen(number_format($row->total_belanja,2)))).number_format($row->total_belanja,2).newline().
+				'INFORMASI '.$phone.sepasi((65-strlen('INFORMASI '.$phone)-strlen('TUNAI (DP) :'))).'Tunai (DP) :'./*sepasi((15-strlen(number_format($row->jml_dibayar,2)))).number_format($row->jml_dibayar,2).*/newline().
 				'DOC. NO.'.$this->no_trans.' '.tglfromSql($tgl).sepasi((65-strlen('DOC. NO.'.$this->no_trans.' '.tglfromSql($tgl))-strlen('KEMBALI RP. :'))).'Kembali Rp. :'./*sepasi((15-strlen(number_format($row->kembalian,2)))).number_format($row->kembalian,2).*/newline().
 				str_repeat('-',79).newline().
 				'Penerima                Gudang                Hormat Kami'.newline(1);

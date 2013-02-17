@@ -314,7 +314,7 @@
 	 echo "<table style='border-collapse:collapse' id='addtxt'><tr>\n";
 	 $n=0;
 		foreach($label as $lbl){
-			($lbl=='')?$width="5":$width=(strlen($lbl)*5+20);
+			($lbl=='')?$width="5":$width=(substr($lbl,0,1)=='<')?'5':(strlen($lbl)*5+20);
 			echo "<td id='c1-$n' width='".$width."px' align='' valign='middle' nowrap>".$lbl."</td>
 				  <td id='c2-$n'>".$field[$n]."</td>\n";
 			echo (count($label)>1 && ($n+1)<count($label))?"<td width='10px' align='center' style='background: url(".base_url()."asset/images/on_bg.png) repeat-y center' >&nbsp;</td>\n":"";

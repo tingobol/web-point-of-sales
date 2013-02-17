@@ -13,14 +13,14 @@ if($all_laporan__rekapabsensi!='')
 		$bulan.="<option value='".$i."'>".nBulan($i)."</option>\n";
 	}
 	//addText(array('Lokasi '.nbs()),array("<select id='id_lokasi' name='id_lokasi'></select>"),false);
-	addText(array('Periode Bulan','Tahun',''),
+	addText(array('Periode Bulan','Tahun','',"<input type='checkbox' id='detail' name='detail'>"),
 			array("<select id='bulan' name='bulan'>".$bulan."</select>",
 				  "<select id='tahun' name='tahun'></select>",
-				  "<input type='button' id='ok' value='OK'>"),true);
+				  "<input type='button' id='ok' value='OK'>",'&nbsp;Detail View'),true);
 	echo "</form>";
 	echo tabel().
 		 _thead().
-		 tr().th('Tanggal','10%','headere',"rowspan='2'").
+		 tr().th('No.','10%','headere',"rowspan='2'").
 		 th('Lokasi Karyawan','40%','headere',"rowspan='2'").
 		 th('Total','10%','headere',"rowspan='2'").
 		 th('Keterangan','16%','headere',"colspan='2'").

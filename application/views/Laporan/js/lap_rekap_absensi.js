@@ -42,7 +42,8 @@ function _show_data()
 	$.post('get_rekap_list',{
 		'id_lokasi'	:$('#id_lokasi').val(),
 		'bulan'		:$('#bulan').val(),
-		'tahun'		:$('#tahun').val()},
+		'tahun'		:$('#tahun').val(),
+		'detail'	:$('#detail').is(':checked')},
 	function(result){
 		$('table#newTable tbody').html(result);
 		$('table#newTable').fixedHeader({'width':(screen.width-300),'height':(screen.height-350)});	

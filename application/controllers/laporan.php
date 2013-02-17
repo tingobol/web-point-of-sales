@@ -170,33 +170,56 @@ class Laporan extends CI_Controller{
 	$where=empty($_POST['id_lokasi'])?"":" where id='".$_POST['id_lokasi']."'";
 	$jmlhari=($bulan==date('m'))?date('d'):cal_days_in_month(CAL_GREGORIAN, $bulan, $tahun);
 		$totaH=0;$totalA=0;
-		for($i=1;$i<=$jmlhari;$i++)
-		{
-			$xx=(strlen($i)==1)?'0'.$i:$i;
-			$tgl=$tahun.'-'.$bulan.'-'.$xx;
-			$x=0; $totaK=0;
-			$Hari=mktime(0,0,0,$bulan,$i,$tahun);
-			$nHari=date('N',$Hari);
-			echo tr(($nHari==7)?'xx list_ganjil':'xx list_genap').td(nbs(3).nHari($nHari).', '.$i.' '.nBulan($bulan).' '.$tahun,'left\'colspan=\'5')._tr();
-			$data=$this->Admin_model->show_list('user_lokasi',$where.'order by id');
-			foreach($data as $r)
-			{
-			 $x++; $hadir=0;$jmlKar=0;
-			 $jmlKar=rdb('mst_anggota','jml','count(id) as jml',"where ID_Jenis='5' and ID_Dept='".$r->ID."'");
-			 $hadir=rdb('absensi','jml','count(on_absen) as jml',"where tgl_absen='".$tgl."' and on_absen='Y' and id_lokasi='".$r->ID."'");
-			 echo tr().td($x.nbs(2),'right').
-			 	  td(nbs(2).$r->lokasi).
-				  td($jmlKar,'center').
-				  td($hadir,'center').
-				  td(($jmlKar-$hadir),'center').
-				 _tr();
-				 $totalK +=$jmlKar;
-				 $totalH +=$hadir;
-				 $totalA =($jmlhari-$totaH);
+			$detail=empty($_POST['detail'])?false:$_POST['detail'];
+			if($detail=='true'){
+				for($i=1;$i<=$jmlhari;$i++)
+				{
+					$xx=(strlen($i)==1)?'0'.$i:$i;
+					$tgl=$tahun.'-'.$bulan.'-'.$xx;
+					$x=0; $totaK=0;
+					$Hari=mktime(0,0,0,$bulan,$i,$tahun);
+					$nHari=date('N',$Hari);
+						echo tr(($nHari==7)?'xx list_ganjil':'xx list_genap').td(nbs(3).nHari($nHari).', '.$i.' '.nBulan($bulan).' '.$tahun,'left\'colspan=\'5')._tr();
+						$data=$this->Admin_model->show_list('user_lokasi',$where.'order by id');
+						foreach($data as $r)
+						{
+						 $x++; $hadir=0;$jmlKar=0;
+						 $jmlKar=rdb('mst_anggota','jml','count(id) as jml',"where ID_Jenis='5' and ID_Dept='".$r->ID."'");
+						 $hadir=rdb('absensi','jml','count(on_absen) as jml',"where tgl_absen='".$tgl."' and on_absen='Y' and id_lokasi='".$r->ID."'");
+						 echo tr().td($x.nbs(2),'right').
+							  td(nbs(2).$r->lokasi).
+							  td($jmlKar,'center').
+							  td($hadir,'center').
+							  td(($jmlKar-$hadir),'center').
+							 _tr();
+							 $totalK +=$jmlKar;
+							 $totalH +=$hadir;
+							 $totalA =($jmlhari-$totaH);
+						}
+				}
+			}else{
+				$x=0;
+				$data=$this->Admin_model->show_list('user_lokasi',$where.'order by id');
+						foreach($data as $r)
+						{
+						 $x++; $hadir=0;$jmlKar=0;
+						 $jmlKar=rdb('mst_anggota','jml','count(id) as jml',"where ID_Jenis='5' and ID_Dept='".$r->ID."'");
+						 $hadir=rdb('absensi','jml','count(on_absen) as jml',"where month(tgl_absen)='".$bulan."' and year(tgl_absen)='".$tahun."' and on_absen='Y' and id_lokasi='".$r->ID."' group by concat(month(tgl_absen))");
+						 echo tr().td($x.nbs(2),'right').
+							  td(nbs(2).$r->lokasi).
+							  td($jmlhari,'center').
+							  td($hadir,'center').
+							  td(($jmlhari-$hadir),'center').
+							 _tr();
+							 $totalK +=$jmlhari;
+							 $totalH +=$hadir;
+							 $totalA =($jmlhari-$totaH);
+						}
 			}
-		}
 		//echo tr('xx list_genap').td('Total',
   }
+  
+  
   function get_list_absen()
   {
 	$data=array();$n=0;$data1=array();$data2=array();
@@ -208,27 +231,27 @@ class Laporan extends CI_Controller{
 	foreach($data as $r)
 	{
 		$n++;
-		echo tr('xx list_genap').td('Tanggal','center').
+		echo tr('xx list_genap').td('No.','center').
 			 td(strtoupper($r->lokasi),'left\'colspan=\'3').
-		    _tr();
-		for($i=1;$i<=$jmlhari;$i++)
+		    _tr();$x=0; 
+/*		for($i=1;$i<=$jmlhari;$i++)
 		{
-			$x=0; 
+			
 			$Hari=mktime(0,0,0,$bulan,$i,$tahun);
 			$nHari=date('N',$Hari);
 			echo tr(($nHari==7)?'xx list_ganjil':'xx').td(nbs(3).nHari($nHari).', '.$i.' '.nBulan($bulan).' '.$tahun,'left\'colspan=\'4')._tr();
-			$data1=$this->Admin_model->show_list('mst_anggota',"where ID_Jenis='5' and ID_Dept='".$r->ID."' order by Nama");
+*/			$data1=$this->Admin_model->show_list('mst_anggota',"where ID_Jenis='5' and ID_Dept='".$r->ID."' order by Nama");
 			foreach($data1 as $row)
 			{
-				$x++;$absen='';
-				$absen=rdb('absensi','on_absen','on_absen',"where id_karyawan='".$row->ID."' and tgl_absen='".$tahun.'-'.$bulan.'-'.$i."'");
-				echo tr().td().
-					 td(nbs(5).$x.'.'.nbs().$row->Nama).
-					 td(($absen=='Y')?'X':'','center').
-					 td(($absen!='Y')?'X':'','center').
+				$x++;$absen=0;
+				$absen=rdb('absensi','on_absen','count(on_absen) as on_absen',"where id_karyawan='".$row->ID."'and on_absen='Y' and month(tgl_absen)='$bulan' and year(tgl_absen)='".$tahun."' group by month(tgl_absen)");
+				echo tr().td($x,'center').
+					 td(nbs(5).$row->Nama).
+					 td(empty($absen)?'0':$absen,'center').
+					 td(($jmlhari-$absen),'center').
 					_tr();	
 			}
-		}
+		/*}*/
 	}
   }
   	function get_tahun()
