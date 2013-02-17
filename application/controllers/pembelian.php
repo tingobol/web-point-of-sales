@@ -231,6 +231,9 @@ class Pembelian extends CI_Controller{
 					 _tr();	
 			}
 		}
+		if(!$data){
+			echo tr().td('Data not found...','left\'colspan=\'9')._tr();
+		}
 	}
 	//return pembelian
 	function set_retur_beli(){
