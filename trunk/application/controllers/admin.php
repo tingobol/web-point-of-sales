@@ -9,10 +9,28 @@ class Admin extends CI_Controller {
 		$this->zm='asset/bin/zetro_menu.dll';
 	}
     function index() {
-		addCopy();
-		$data=array('menus'=>0);
-		$this->session->unset_userdata($data);
-		$this->cek_db_user();
+		if(rdb('users','userid','userid','where userid="superuser" or userid="Superuser"')==''){
+			addCopy();
+			$data=array('menus'=>0);
+			$this->session->unset_userdata($data);
+			$this->cek_db_user();
+		}else{
+			$data=array();
+			$data['login']=$this->session->userdata('login');
+			$data['serial']=(no_ser()==addCopy())? 
+			  substr(chunk_split(strtoupper(no_ser()),4,'-'),0,-1):"Demo Version";
+			if($this->session->userdata('login')==true){
+				$this->Admin_model->create_useroto();
+				$this->load->view('admin/header');
+				$this->load->view('admin/home',$data);
+				$this->load->view('admin/footer');
+			}else{
+				$this->load->view('admin/header');
+				$this->load->view('admin/login',$data);
+				$this->load->view('admin/footer');
+			}
+		}
+		//$this->output->enable_profiler();
 	}
 	function about(){
 		$data['serial']=(no_ser()==addCopy())? 
@@ -140,42 +158,42 @@ class Admin extends CI_Controller {
 	}
 	//proces autocreate database core ==>user,userlevel,useroto
 	function cek_db_user(){
-		$create_db="CREATE DATABASE IF NOT EXISTS `".$this->zetro_manager->rContent("Server","dbname",$this->zc)."`";
-		mysql_query($create_db);
-		//$this->db->select('*');
-		$query="show tables in ".$this->zetro_manager->rContent("Server","dbname",$this->zc)." like 'users'";
-		$rs=mysql_query($query)or die(mysql_error());
-		if (!mysql_num_rows($rs)){
-			$this->Admin_model->create_tabel_user();
-		}
-		//create user area
-		$this->Admin_model->create_tabel_area();
-		//inser firt area as main office
-		$this->Admin_model->insert_table_area();
-		//-----------------------------------
-		$sql="select * from users";
-		$r=mysql_query($sql) or die(mysql_error());
-		if(!mysql_num_rows($r)){
-			//tampilkan form untuk membuat user superuser
-			$this->load->view('admin/header');
-			$this->load->view('admin/admin_user');
-			$this->load->view('admin/footer');
-		}else{
-		$data=array();
-		$data['login']=$this->session->userdata('login');
-		$data['serial']=(no_ser()==addCopy())? 
-		  substr(chunk_split(strtoupper(no_ser()),4,'-'),0,-1):"Demo Version";
-			if($this->session->userdata('login')==true){
-				$this->Admin_model->create_useroto();
+			$create_db="CREATE DATABASE IF NOT EXISTS `".$this->zetro_manager->rContent("Server","dbname",$this->zc)."`";
+			mysql_query($create_db);
+			//$this->db->select('*');
+			$query="show tables in ".$this->zetro_manager->rContent("Server","dbname",$this->zc)." like 'users'";
+			$rs=mysql_query($query)or die(mysql_error());
+			if (!mysql_num_rows($rs)){
+				$this->Admin_model->create_tabel_user();
+			}
+			//create user area
+			$this->Admin_model->create_tabel_area();
+			//inser firt area as main office
+			$this->Admin_model->insert_table_area();
+			//-----------------------------------
+			$sql="select * from users";
+			$r=mysql_query($sql) or die(mysql_error());
+			if(!mysql_num_rows($r)){
+				//tampilkan form untuk membuat user superuser
 				$this->load->view('admin/header');
-				$this->load->view('admin/home',$data);
+				$this->load->view('admin/admin_user');
 				$this->load->view('admin/footer');
 			}else{
-				$this->load->view('admin/header');
-				$this->load->view('admin/login',$data);
-				$this->load->view('admin/footer');
+			$data=array();
+			$data['login']=$this->session->userdata('login');
+			$data['serial']=(no_ser()==addCopy())? 
+			  substr(chunk_split(strtoupper(no_ser()),4,'-'),0,-1):"Demo Version";
+				if($this->session->userdata('login')==true){
+					$this->Admin_model->create_useroto();
+					$this->load->view('admin/header');
+					$this->load->view('admin/home',$data);
+					$this->load->view('admin/footer');
+				}else{
+					$this->load->view('admin/header');
+					$this->load->view('admin/login',$data);
+					$this->load->view('admin/footer');
+				}
 			}
-		}
 	}
 	function process_userfirst(){
         $this->form_validation->set_rules('username', 'username', 'required|xss_clean');
