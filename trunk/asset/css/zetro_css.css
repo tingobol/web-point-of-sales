@@ -184,6 +184,7 @@ img.menux:hover{ border:2px #FFFFFF solid;}
 		 background-color:#CCC;
 		 overflow:auto;
 }
+input:checkbox{cursor:pointer}
 .cari{background:url(../images/Search.png) no-repeat right #FFF ;
 	 height:21px;
 	 border:1px solid #666;

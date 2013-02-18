@@ -124,6 +124,11 @@
 
 													me.hide();
 												});
+												target.keyup(function(e){
+													if(e.which==27){
+														me.hide()
+													}
+												})
 											}
 
 											me.show(me.holder.find("." + suggestItem).height() * arr.length);
