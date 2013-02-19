@@ -116,7 +116,7 @@ class Penjualan extends CI_Controller{
 	function update_header_trans(){
 		$data=array();
 		$no_trans	=$_POST['no_trans'];
-		$ID_Jenis	=empty($_POST['id_jenis'])?'':$_POST['id_jenis'];
+		$ID_Jenis	=empty($_POST['id_jenis'])?'1':$_POST['id_jenis'];
 		$TotalHg	=empty($_POST['total'])?'0':$_POST['total'];
 		$Tanggal	=$_POST['tanggal'];
 		$id_anggota	=empty($_POST['id_anggota'])?'0':$_POST['id_anggota'];
@@ -131,7 +131,7 @@ class Penjualan extends CI_Controller{
 		$this->tanggal($Tanggal);
 		$this->JenisBayar($ID_Jenis);
 		if($TotalHg!='0'){
-			if(($ID_Jenis!='4' || $ID_Jenis!='5') && $id_anggota!=''){
+			if(($ID_Jenis!='5' || $ID_Jenis!='5') && $id_anggota!=''){
 				$this->process_to_jurnal($id_anggota,$TotalHg,'',$lokasi);
 			}else if($this->id_jenis=='5'){
 				$ket='Pembayaran Retur Barang tanggal $Tanggal';	
@@ -510,6 +510,7 @@ class Penjualan extends CI_Controller{
 		$data['ID_SubKlas']		=rdb('jenis_simpanan','ID_SubKlas','ID_SubKlas',"where ID='".$this->id_jenis."'");
 		$data['ID_Dept']		=($idp=='')? '0':rdb('mst_anggota','ID_Dept','ID_Dept',"where ID='".$id_anggota."'");
 		if($this->id_jenis!='5'){
+			//return material
 			$data['Kredit']		=$total;//rdb('inv_penjualan','Total','Total',"where ID_Anggota='".$id_anggota."' and NoUrut='".$this->no_trans."'");
 		}else{
 			$data['Debet']		=$total;
@@ -524,9 +525,7 @@ class Penjualan extends CI_Controller{
 		$data['created_by']		=$this->session->userdata('userid');
 		//print_r($data);
 		 $this->Admin_model->replace_data('transaksi_temp',$data);
-		($this->id_jenis=='2' ||
-		 $this->id_jenis=='3' ||
-		 $this->id_jenis=='4' )?
+		($this->id_jenis!='1')?
 		 $this->_set_pinjaman($id_anggota):'';
 	}
 	
@@ -552,16 +551,16 @@ class Penjualan extends CI_Controller{
 		$data['ID_Agt']		=$ID_Agt;
 		$data['ID_Unit']	=rdb('jenis_simpanan','ID_Unit','ID_Unit',"where ID='".$this->id_jenis."'");
 		$data['Tanggal']	=tglToSql($this->tgl);
-		$data['ID_Bulan']		=substr($this->tgl,3,2);
+		$data['ID_Bulan']	=substr($this->tgl,3,2);
 		$data['Tahun']		=substr($this->tgl,6,4);
-		$data['pinjaman']=rdb('inv_penjualan','Total','Total',"where NoUrut='".$this->no_trans."' and Tanggal='".tglToSql($this->tgl)."'");
+		$data['jml_pinjaman']	=rdb('inv_penjualan','Total','Total',"where NoUrut='".$this->no_trans."' and Tanggal='".tglToSql($this->tgl)."'");
 		$data['cara_bayar']	=$this->id_jenis;
 		$data['mulai_bayar']=rdb('inv_penjualan','Tgl_Cicilan','Tgl_Cicilan',"where NoUrut='".$this->no_trans."' and Tanggal='".tglToSql($this->tgl)."'");
 		$data['keterangan']	=rdb('jenis_simpanan','Jenis','Jenis',"where ID='".$this->id_jenis."'").' No: '.
 							 rdb('inv_penjualan','Nomor',"Nomor","where NoUrut='".$this->no_trans."' and Tanggal='".tglToSql($this->tgl)."'")."-".
 							 rdb('inv_penjualan','Deskripsi','Deskripsi',"where NoUrut='".$this->no_trans."' and Tanggal='".tglToSql($this->tgl)."'").
 							 '[ '.tglfromSql(rdb('inv_penjualan','Tgl_Cicilan','Tgl_Cicilan',"where NoUrut='".$this->no_trans."' and Tanggal='".tglToSql($this->tgl)."'")).' ]';
-		$this->Admin_model->replace_data('pinjaman',$data);
+		echo ($this->Admin_model->replace_data('pinjaman',$data))?'Kredited':'';
 	}
 	function get_bank(){
 		$data=array();
