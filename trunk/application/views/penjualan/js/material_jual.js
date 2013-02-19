@@ -615,7 +615,7 @@ $(document).ready(function(e) {
 			'jumlah'	:jml,
 			'lokasi'	:$('#id_lok').val()
 		},function(result){
-			if(parseInt(result)<0){
+			if(parseInt(result)>0){
 				_update_stock($('#no_transaksi').val(),$('#tgl_transaksi').val(),result);
 			}else{
 				_print_struk(id,tgl);//print struk pembayaran

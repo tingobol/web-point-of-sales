@@ -130,7 +130,7 @@ popup_end();
 auto_sugest();
 tab_select('prs');
 terbilang();
-$lok=explode(",",$this->zetro_auth->cek_area());
+$lok=rdb('users','lokasi','lokasi',"where userid='".$this->session->userdata('userid')."'");
 ?>
 <div id='kekata' style="display:none;padding:8px; background:#003; border:5px solid #F60;width:80%; height:50px; font-size:x-large;left:9%;top: 82%;color:#FFF; position:fixed; z-index:9997">
 	<!--terbilang jumlah yang harus di bayar-->
@@ -144,7 +144,7 @@ $lok=explode(",",$this->zetro_auth->cek_area());
 <input type='hidden' id='aktif' value=''/>
 <input type='hidden' id='stat_sim' value=''/>
 <input type='hidden' id='aktif_user' value='<?=$this->session->userdata('idlevel');?>'/>
-<input type='hidden' id='id_lok' value=<?=(count($lok)>0)?current($lok):$lok;?>/>
+<input type='hidden' id='id_lok' value='<?=$lok;?>'/>
 <script language="javascript">
 $(document).ready(function(e) {
     $('#cbayare').html("<? dropdown('inv_penjualan_jenis','ID','Jenis_Jual',"where ID not in ('3','5') order by ID",'1');?>");
