@@ -430,7 +430,7 @@ class Penjualan extends CI_Controller{
 		return $bawah;
 	}
 	function re_print(){
-		system("print c:\\app\\".$this->session->userdata('userid')."_slip_putri.txt");
+		system("print c:\\app\\".$this->session->userdata('userid')."_slip_putri.txt /d:lpt3");
 		system("close");
 		$tmpdir=sys_get_temp_dir();
 		
