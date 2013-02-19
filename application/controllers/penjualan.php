@@ -15,7 +15,7 @@ class Penjualan extends CI_Controller{
 		$this->load->model("report_model");
 		$this->load->helper("print_report");
 		$this->load->helper("print_report2");
- 		$this->output->enable_profiler();
+ 		//$this->output->enable_profiler();
  	}
 	
 	function Header(){ 
