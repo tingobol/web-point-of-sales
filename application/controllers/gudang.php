@@ -314,20 +314,22 @@ class Gudang extends CI_Controller {
 		$this->Admin_model->show_list('inv_mutasi_stock',"where NoTrans='".$no_trans."' and Tanggal='".$tanggal."'"):
 		$this->Admin_model->show_list('inv_mutasi_stock',"where ID='".$id_trans."'");
 		foreach($data as $r){
-			unset($datax);$exist_stock=0;$hasil_konv=1;
+			unset($datax);$exist_stock=0;$hasil_konv=1;$harga_beli=0;
 			$exist_stock=rdb('inv_material_stok','stock','stock',
 							"where id_barang='".$r->ID_Barang."' and batch='".$r->Batch."' and id_lokasi='".$r->ID_Lokasi_kirim."'"); 
 			$hasil_konv=rdb('inv_konversi','isi_konversi','isi_konversi',"where id_barang='".$r->ID_Barang."' and sat_beli='".
 						rdb('inv_mutasi_stock','ID_Satuan','ID_Satuan',"where ID='".$r->ID_Satuan."'")."'");
+			$hasil_konv=($hasil_konv=='')?1:$hasil_konv;
+			$harga_beli=rdb('inv_material_stok','harga_beli','harga_beli',"where id_barang='".$r->ID_Barang."' and batch='".$r->Batch."'");
 			$datax['id_lokasi']	=$r->ID_Lokasi_kirim;
 			$datax['id_barang']	=$r->ID_Barang;
 			$datax['batch']		=$r->Batch;
 			$datax['nm_barang']	=rdb('inv_barang','Nama_Barang','Nama_Barang',"where ID='".$r->ID_Barang."'");
 			$datax['stock']		=(($hasil_konv*$r->Jumlah)+$exist_stock);
 			$datax['nm_satuan']	=$r->ID_Satuan;
-			$datax['harga_beli']=rdb('inv_material_stok','harga_beli','harga_beli',"where id_barang='".$r->ID_Barang."' and batch='".$r->Batch."'");
+			$datax['harga_beli']=($harga_beli=='')?'0':$harga_beli;
 			$datax['created_by']=$this->session->userdata('userid');
-			$this->Admin_model->replace_data('inv_material_stok',$datax);
+			echo ($this->Admin_model->replace_data('inv_material_stok',$datax));
 		}
 	}
 	//pemakaian lain

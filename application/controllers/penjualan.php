@@ -15,7 +15,8 @@ class Penjualan extends CI_Controller{
 		$this->load->model("report_model");
 		$this->load->helper("print_report");
 		$this->load->helper("print_report2");
-	}
+ 		$this->output->enable_profiler();
+ 	}
 	
 	function Header(){ 
 	// load header
@@ -217,7 +218,7 @@ class Penjualan extends CI_Controller{
 				$datax['nm_satuan'] =rdb('inv_barang','ID_Satuan','ID_Satuan',"where ID='".$r->ID_Barang."'");
 				$this->Admin_model->replace_data('inv_material_stok',$datax);
 			}
-		 echo ($first_stock-$r->Jumlah);
+		 echo ($r->Jumlah-$first_stock);
 		}
 	}
 	function update_stock(){
