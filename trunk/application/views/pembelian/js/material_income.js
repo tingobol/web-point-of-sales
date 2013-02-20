@@ -1,7 +1,7 @@
 // JavaScript Document
 $(document).ready(function(e) {
 	var path=$('#path').val();
-	$('#frm2').hide();
+	//$('#frm2').hide();
 	$('#dt-1').hide();
 	if($('#trans_new').val()==''){
 		_generate_nomor('GR','#frm1 input#no_transaksi');
@@ -33,6 +33,10 @@ $(document).ready(function(e) {
 				$('span#v_'+id).show();
 				$('span:not(#v_'+id+')').hide();
 				$('#prs').val(id);
+			}
+			if(id=='inputpembelian')
+			{
+				document.location.reload()
 			}
 	});
 	tabField(); //fungsi ganti ke focus ke field berikutnya jika tombol enter di tekan

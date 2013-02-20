@@ -71,7 +71,7 @@ class Penjualan extends CI_Controller{
 	
 	function get_satuan(){
 		$data=array();
-		$nm_barang=$_POST['nm_barang'];
+		$nm_barang=addslashes($_POST['nm_barang']);
 		$rsp=$_POST['rsp'];
 		$expired=$this->Admin_model->show_single_field('inv_material_stok','expired',"where nm_barang='$nm_barang' order by min(expired)");
 		$harga=$this->Admin_model->show_single_field('inv_material_stok','harga_beli',"where nm_barang='$nm_barang' and expired='$expired'");
@@ -144,9 +144,10 @@ class Penjualan extends CI_Controller{
 		$data=array();
 		$cekstatus=array();$countdata=0;
 		//get ID from header trans
+		$id_barang=rdb('inv_barang','ID','ID',"where Nama_Barang='".addslashes($_POST['nm_barang'])."'");
 		$data['Keterangan']	=$_POST['no_trans'];
 		$data['ID_Jual']	=rdb('inv_penjualan','ID','ID',"where NoUrut='".$_POST['no_trans']."' and Tanggal='".tgltoSql($_POST['tanggal'])."'");
-		$data['ID_Barang']	=rdb('inv_barang','ID','ID',"where Nama_Barang='".$_POST['nm_barang']."'");
+		$data['ID_Barang']	=rdb('inv_barang','ID','ID',"where Nama_Barang='".addslashes($_POST['nm_barang'])."'");
 		$data['ID_Jenis']	=empty($_POST['cbayar'])?'1':$_POST['cbayar'];
 		$data['Jumlah']		=empty($_POST['jml_trans'])?'0':$_POST['jml_trans'];
 		$data['Harga']		=empty($_POST['harga_jual'])?'0':$_POST['harga_jual'];
@@ -154,10 +155,10 @@ class Penjualan extends CI_Controller{
 		$data['Bulan']		=empty($_POST['no_id'])?'1':$_POST['no_id'];
 		$data['ID_Post']	=empty($_POST['id_post'])?'0':$_POST['id_post'];
 		$data['batch']		=empty($_POST['batch'])?'0':$_POST['batch'];
-		$data['ID_Satuan']	=rdb('inv_barang','ID_Satuan','ID_Satuan',"where Nama_Barang='".$_POST['nm_barang']."'");
+		$data['ID_Satuan']	=rdb('inv_barang','ID_Satuan','ID_Satuan',"where Nama_Barang='".addslashes($_POST['nm_barang'])."'");
 		$countdata=rdb('inv_penjualan_detail','ID','ID',"where Bulan='".$_POST['no_id']."' and Keterangan='".$_POST['no_trans']."' and Tanggal='".tgltoSql($_POST['tanggal'])."'");
 		//$this->inv_model->total_record('inv_penjualan_detail',"where ID_Jual='$id_jual'",'id_jual');
-		if($countdata==''){
+		if($countdata=='' && $id_barang!='' || $id_barang!='0'){
 				$this->Admin_model->replace_data('inv_penjualan_detail',$data);
 		}else{
 			$data['ID']=$countdata;
@@ -263,7 +264,7 @@ class Penjualan extends CI_Controller{
 	}
 	//adjust stock barang di table inv_material
 	function update_adjust(){
-		$nm_barang=$_POST['nm_barang'];
+		$nm_barang=addslashes($_POST['nm_barang']);
 		$stock=$_POST['stock'];
 		$this->Admin_model->upd_data('inv_material','stock',"where nm_barang='".$nm_barang."'");
 	}
@@ -439,7 +440,7 @@ class Penjualan extends CI_Controller{
 	//simpan komposisi resep
 	function stock_resep(){
 		$data=array();
-		$data['nm_barang']=strtoupper($_POST['nm_barang']);
+		$data['nm_barang']=strtoupper(addslashes($_POST['nm_barang']));
 		$data['batch']=str_replace('-','',tgltoSql($_POST['batch']));
 		$data['expired']=tgltoSql($_POST['expired']);
 		$data['stock']=$_POST['stock'];
@@ -469,7 +470,7 @@ class Penjualan extends CI_Controller{
 	}
 	function get_detail_transaksi(){
 		$datax=array();
-		$nm_barang=$_POST['nm_barang'];
+		$nm_barang=addslashes($_POST['nm_barang']);
 		$no_transaksi=$_POST['no_transaksi'];
 		$this->inv_model->tabel('detail_transaksi');
 		$datax=$this->inv_model->detail_transaksi($no_transaksi,$nm_barang);
