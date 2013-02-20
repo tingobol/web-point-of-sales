@@ -15,7 +15,7 @@ class Kasir_model extends CI_Model {
 			 on b.ID=dt.ID_Barang
 			 left join inv_barang_satuan as bs
 			 on bs.ID=b.ID_Satuan
-			 where p.NoUrut='$no_trans' and p.Tanggal='$tanggal' and dt.ID_Barang<>'0' order by dt.ID";
+			 where p.NoUrut='$no_trans' and p.Tanggal='$tanggal' and dt.ID_Barang<>'' order by dt.ID";
 		//echo $sql;
 		$data=$this->db->query($sql);
 		return $data->result();
