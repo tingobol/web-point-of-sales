@@ -167,13 +167,14 @@ class Inventory extends CI_Controller {
 		$this->zetro_buildlist->BuildListData('Satuan');
 	}
 	function simpan_barang(){
-		$data=array();$kat=array();$jen=array();$sat=array();
+		$data=array();$kat=array();$jen=array();$sat=array();$Stat_bar='';
+		$Stat_bar=empty($_POST['id_kategori'])?'':addslashes($_POST['id_kategori']);
 		$data['ID_Jenis']	=empty($_POST['id_jenis'])?'':$_POST['id_jenis'];
 		$data['Kode']		=empty($_POST['id_barang'])?rand(1000,9999):addslashes(strtoupper($_POST['id_barang']));
 		$data['ID_Kategori']=empty($_POST['id_kategori'])?'':addslashes($_POST['id_kategori']);
 		$data['Nama_Barang']=addslashes(strtoupper($_POST['nm_barang']));
 		$data['ID_Satuan']	=empty($_POST['id_satuan'])?'1':$_POST['id_satuan'];
-		$data['Status']		=ucwords($_POST['status_barang']);
+		$data['Status']		=($Stat_bar=='106')?'JASA':'BARANG';
 		$data['Harga_Beli']	=empty($_POST['stokmin'])?'0':$_POST['stokmin'];
 		$data['Harga_Jual']	=empty($_POST['stokmax'])?'0':$_POST['stokmax'];
 		$data['minstok']	=empty($_POST['minstok'])?'0':$_POST['minstok'];

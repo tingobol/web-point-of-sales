@@ -232,7 +232,24 @@ function total_harga()
 			'tanggal'	  :tgl,
 			'lokasi'	  :$('#id_lok').val()},
 			function(result){
-				buka_wind($.trim(result));
-				document.location.href=path+'penjualan/service';
+				//buka_wind($.trim(result));
+				jConfirm('Print Slip Service','Alert',function(r){
+					if(r)
+					{
+						_re_print_slip()
+						//document.location.href=path+'penjualan/service';
+					}else{
+						document.location.href=path+'penjualan/service';
+					}
+				})
 			})
 	};
+
+function _re_print_slip()
+{
+			$.post('re_print',{'id':id},
+			function(result){
+				$('#result').show().html(result).fadeOut(10000);
+				document.location.href=path+'penjualan/service';
+			})
+}

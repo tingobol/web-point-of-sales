@@ -183,13 +183,11 @@ function images_click(id,aksi)
 
 function _print_slip(id,tgl)
 {
-	$.post(path+'print_slip/print_slip_service',{
-		'no_transaksi'	:id,
-		'tanggal'		:tgl,
-		'lokasi'		:$('#lok').val()
-	},function(result){
-		buka_wind(result);
-	})
+			$.post('re_print',{'id':id},
+			function(result){
+				$('#result').show().html(result).fadeOut(10000);
+				document.location.href=path+'penjualan/service';
+			})
 };
 //============================bayar service===========================
 
