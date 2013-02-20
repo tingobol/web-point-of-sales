@@ -145,6 +145,7 @@ class Penjualan extends CI_Controller{
 		$cekstatus=array();$countdata=0;
 		//get ID from header trans
 		$id_barang=rdb('inv_barang','ID','ID',"where Nama_Barang='".addslashes($_POST['nm_barang'])."'");
+		$countdata=rdb('inv_penjualan_detail','ID','ID',"where Bulan='".$_POST['no_id']."' and Keterangan='".$_POST['no_trans']."' and Tanggal='".tgltoSql($_POST['tanggal'])."'");
 		$data['Keterangan']	=$_POST['no_trans'];
 		$data['ID_Jual']	=rdb('inv_penjualan','ID','ID',"where NoUrut='".$_POST['no_trans']."' and Tanggal='".tgltoSql($_POST['tanggal'])."'");
 		$data['ID_Barang']	=rdb('inv_barang','ID','ID',"where Nama_Barang='".addslashes($_POST['nm_barang'])."'");
@@ -156,25 +157,26 @@ class Penjualan extends CI_Controller{
 		$data['ID_Post']	=empty($_POST['id_post'])?'0':$_POST['id_post'];
 		$data['batch']		=empty($_POST['batch'])?'0':$_POST['batch'];
 		$data['ID_Satuan']	=rdb('inv_barang','ID_Satuan','ID_Satuan',"where Nama_Barang='".addslashes($_POST['nm_barang'])."'");
-		$countdata=rdb('inv_penjualan_detail','ID','ID',"where Bulan='".$_POST['no_id']."' and Keterangan='".$_POST['no_trans']."' and Tanggal='".tgltoSql($_POST['tanggal'])."'");
 		//$this->inv_model->total_record('inv_penjualan_detail',"where ID_Jual='$id_jual'",'id_jual');
-		if($countdata=='' && $id_barang!='' || $id_barang!='0'){
+		if($countdata==0){
+			//$data['ID']			=($countdata+1);
 				$this->Admin_model->replace_data('inv_penjualan_detail',$data);
 		}else{
 			$data['ID']=$countdata;
 			$this->Admin_model->simpan_update('inv_penjualan_detail',$data,'ID');
 		}
+		echo $countdata;
 	}
 	//simpan pembayaran	
 	//simpan pembayaran	
 	function simpan_bayar(){
 		$data=array();
 		$data['no_transaksi']	=$_POST['no_transaksi'];
-		$data['total_belanja']	=$_POST['total_belanja'];
-		$data['ppn']			=$_POST['ppn'];	
-		$data['total_bayar']	=$_POST['total_bayar'];	
-		$data['jml_dibayar']	=$_POST['dibayar'];	
-		$data['kembalian']		=$_POST['kembalian'];
+		$data['total_belanja']	=empty($_POST['total_belanja'])?'0':$_POST['total_belanja'];
+		$data['ppn']			=empty($_POST['ppn'])?'0':$_POST['ppn'];	
+		$data['total_bayar']	=empty($_POST['total_bayar'])?'0':$_POST['total_bayar'];	
+		$data['jml_dibayar']	=empty($_POST['dibayar'])?'0':$_POST['dibayar'];	
+		$data['kembalian']		=empty($_POST['kembalian'])?'0':$_POST['kembalian'];
 		$data['ID_Jenis']		=$_POST['cbayar'];
 		$data['created_by']	=$this->session->userdata('userid');
 		$this->Admin_model->replace_data('inv_pembayaran',$data);
@@ -392,7 +394,7 @@ class Penjualan extends CI_Controller{
 		$data=$this->inv_model->show_list_1where('no_transaksi',$this->no_trans);
 			foreach($data->result() as $row){
 				$bawah=str_repeat('-',79).newline().
-				'*** TERIMA KASIH ***'.sepasi((65-strlen('000 TERIMA KASIH 000')-strlen('JUMLAH RP. :'))).'Jumlah Rp. :'.sepasi((10-strlen(number_format($row->total_belanja,2)))).number_format($row->total_belanja,2).newline().
+				'*** TERIMA KASIH ***'.sepasi((65-strlen('000 TERIMA KASIH 000')-strlen('JUMLAH RP. :'))).'Jumlah Rp. :'.sepasi((12-strlen(number_format($row->total_belanja,2)))).number_format($row->total_belanja,2).newline().
 				'INFORMASI '.$phone.sepasi((65-strlen('INFORMASI '.$phone)-strlen('TUNAI (DP) :'))).'Tunai (DP) :'./*sepasi((15-strlen(number_format($row->jml_dibayar,2)))).number_format($row->jml_dibayar,2).*/newline().
 				'DOC. NO.'.$this->no_trans.' '.tglfromSql($tgl).sepasi((65-strlen('DOC. NO.'.$this->no_trans.' '.tglfromSql($tgl))-strlen('KEMBALI RP. :'))).'Kembali Rp. :'./*sepasi((15-strlen(number_format($row->kembalian,2)))).number_format($row->kembalian,2).*/newline().
 				str_repeat('-',79).newline().
