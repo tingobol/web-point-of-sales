@@ -333,8 +333,8 @@ class Inventory extends CI_Controller {
 	}
 	function show_list(){
 		$data=array();$n=0; $where ="";
-		$id			=empty($_POST['id'])?'':$_POST['id'];
-		$id_jenis	=empty($_POST['id_jenis'])?'':"and id_jenis='".$_POST['id_jenis']."'";
+		$id			=empty($_POST['id'])?'123':$_POST['id'];
+		$id_jenis	=empty($_POST['id_jenis'])?"and id_jenis='2'":"and id_jenis='".$_POST['id_jenis']."'";
 		$stat		=($_POST['stat']=='all')?'':"and status='".$_POST['stat']."'";
 		$cari		=empty($_POST['cari'])?'': "and Nama_Barang like '".$_POST['cari']."%'";
 		$group		=empty($_POST['zero'])?"group by ms.batch,b.ID":"group by b.ID";
