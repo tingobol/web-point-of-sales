@@ -518,7 +518,7 @@ class Penjualan extends CI_Controller{
 		}else{
 			$data['Debet']		=$total;
 		}
-		$data['ID_CC']			='1';
+		$data['ID_CC']			=($this->id_jenis=='1' || $this->id_jenis=='5')?'1':'8';
 		$data['Keterangan']		=($this->id_jenis!='5')?
 								 'Penjualan '.rdb('jenis_simpanan','Jenis','Jenis',"where ID='".$this->id_jenis."'").' no. Faktur: '.rdb('inv_penjualan','Nomor','Nomor',"where NoUrut='".$this->no_trans."' and Tanggal='".tgltoSql($this->tgl)."'"):
 								 'Pembayaran Retur Barang tanggal '.$this->tgl;

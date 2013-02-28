@@ -50,7 +50,7 @@ class Simpanan extends CI_Controller{
 	function set_simpanan(){
 		$data=array();
 		$ID_Jenis		=$_POST['ID_Jenis'];
-		$ID_Unit		=$_POST['ID_Unit'];
+		$ID_Unit		=empty($_POST['ID_Unit'])?$this->session->userdata('gudang'):$_POST['ID_Unit'];
 		$ID_Simpanan	=$_POST['ID_Simpanan'];
 		$ID_Dept		=$_POST['ID_Dept'];
 		$ID_Perkiraan	=$_POST['ID_Perkiraan'];
@@ -202,7 +202,7 @@ class Simpanan extends CI_Controller{
 			$this->Admin_model->upd_data('pinjaman',"set lama_cicilan='".($lama+1)."'","where ID='".$_POST['ID_Pinj']."' and Tahun='".$_POST['ThnAsal']."'");
 			//simpan kredit to table transaksi_temp / jurnal temporary
 			$datax['ID_Unit']	=rdb('jenis_simpanan','ID_Unit','ID_Unit',"where ID='".$id_jenis."'");
-			$datax['ID_Dept']	='1';//rdb('jenis_simpanan','ID_Dept','ID_Dept',"where ID='".$id_jenis."'");
+			$datax['ID_Dept']	=$this->session->userdata('gudang');//rdb('jenis_simpanan','ID_Dept','ID_Dept',"where ID='".$id_jenis."'");
 			$datax['ID_Klas']	=rdb('jenis_simpanan','ID_Klasifikasi','ID_Klasifikasi',"where ID='".$id_jenis."'");
 			$datax['ID_SubKlas']=rdb('jenis_simpanan','ID_SubKlas','ID_SubKlas',"where ID='".$id_jenis."'");
 			$datax['ID_Perkiraan']=rdb('perkiraan','ID','ID',"where ID_Agt='".$_POST['ID_Agt']."' and ID_Simpanan='".$id_jenis."'");
