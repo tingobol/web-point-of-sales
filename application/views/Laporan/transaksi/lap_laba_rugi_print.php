@@ -19,15 +19,17 @@
 		  $a->SetAligns(array("C","C","R","R","R","R"));
 		  $a->SetFont('Arial','',9);
 		  //$rec = $temp_rec->result();
-		  $n=0;$harga=0;$hgb=0;
+		  $n=0;$harga=0;$hgbb=0;
 		  $hargaj=0;$ppn=0;
 		  $tppn=0;$opr=0;$lab=0;
 		  $kotor=0;
 		  foreach($temp_rec as $r)
 		  {
-			$n++;
+			$n++;$hgb=0;$harga_beli=0;
 			$opr	=rdb('mst_kas_trans','jumlah','sum(jumlah) as jumlah',"where tgl_trans='".$r->Tanggal."' $lokasine group by tgl_trans");
-			$kotor	=($pajak=='ok')?(($r->Jual-$r->Harga_Beli)-(($r->Jual-$r->Harga_Beli)*$pajake)):($r->Jual-$r->Harga_Beli);
+			$hgb	=rdb('inv_barang','harga_beli','harga_beli',"where id='".$r->ID_Barang."'");
+			$harga_beli=($r->Harga_Beli==0)?($r->jml*$hgb):$r->Harga_Beli;
+			$kotor	=($pajak=='ok')?(($r->Jual-$harga_beli)-(($r->Jual-$harga_beli)*$pajake)):($r->Jual-$harga_beli);
 			$ppn	=($pajak=='ok')?(($kotor)*10/100):0;
 			$lab	=($kotor-$opr-$ppn);
 			$a->Row(array($n,tglfromSql($r->Tanggal),
@@ -39,7 +41,7 @@
 			//sub tlot
 			$tppn	=($tppn+$ppn);
 			$harga	=($harga+(round($kotor,-2)));//($r->Jual-$r->Harga_Beli));
-			$hgb	=($hgb+$opr);
+			$hgbb	=($hgbb+$opr);
 			$hargaj	=($hargaj+$lab);
 			
 		  }
@@ -47,7 +49,7 @@
 		  $a->SetFillColor(225,225,225);
 		  $a->Cell(40,8,"TOTAL",1,0,'R',true);
 		  $a->Cell(30,8,number_format($harga,2),1,0,'R',true);
-		  $a->Cell(30,8,number_format($hgb,2),1,0,'R',true);
+		  $a->Cell(30,8,number_format($hgbb,2),1,0,'R',true);
 		  $a->Cell(25,8,number_format($tppn,2),1,0,'R',true);
 		  $a->Cell(30,8,number_format($hargaj,2),1,1,'R',true);
 /*		  $a->Cell(140,8,"SALDO",1,0,'R',true);

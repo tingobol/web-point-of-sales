@@ -138,7 +138,7 @@ class Kasir_model extends CI_Model {
 		return $data->result();
 	}
 	function laba_rugi($where,$orderby=''){
-		$sql="select dt.ID_Barang,sum(dt.Jumlah),sum(dt.jumlah*dt.harga) as Jual,
+		$sql="select dt.ID_Barang,sum(dt.Jumlah)as jml,sum(dt.jumlah*dt.harga) as Jual,
 			sum(dt.Jumlah*b.Harga_Beli) as Harga_Beli,b.harga_beli,dt.Tanggal,dt.batch 
 			from inv_penjualan_detail as dt
 			left join inv_penjualan as p
