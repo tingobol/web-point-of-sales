@@ -179,7 +179,7 @@ class Stock extends CI_Controller{
 			$n++;
 			echo tr().td($n,'center').
 					  td(strtoupper($r->Kode)).
-					  td(ucwords(strtolower($r->Nama_Barang))).
+					  td(strtoupper($r->Nama_Barang)).
 					  td(rdb('inv_barang_kategori','Kategori','Kategori',"where ID='".$r->ID_Kategori."'")).
 					  td(number_format($r->stock,2),'right').
 					  td(rdb('inv_barang_satuan','Satuan','Satuan',"where ID='".$r->ID_Satuan."'")).
