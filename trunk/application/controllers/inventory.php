@@ -169,6 +169,7 @@ class Inventory extends CI_Controller {
 	function simpan_barang(){
 		$data=array();$kat=array();$jen=array();$sat=array();$Stat_bar='';
 		$Stat_bar=empty($_POST['id_kategori'])?'':addslashes($_POST['id_kategori']);
+		$data['ID']			=empty($_POST['id_item'])?'0':$_POST['id_item'];
 		$data['ID_Jenis']	=empty($_POST['id_jenis'])?'':$_POST['id_jenis'];
 		$data['Kode']		=empty($_POST['id_barang'])?rand(1000,9999):addslashes(strtoupper($_POST['id_barang']));
 		$data['ID_Kategori']=empty($_POST['id_kategori'])?'':addslashes($_POST['id_kategori']);
@@ -334,11 +335,12 @@ class Inventory extends CI_Controller {
 	function show_list(){
 		$data=array();$n=0; $where ="";
 		$id			=empty($_POST['id'])?'123':$_POST['id'];
-		$id_jenis	=empty($_POST['id_jenis'])?"and id_jenis='2'":"and id_jenis='".$_POST['id_jenis']."'";
+		$id_jenis	=empty($_POST['id_jenis'])?"":"and id_jenis='".$_POST['id_jenis']."'";
 		$stat		=($_POST['stat']=='all')?'':"and status='".$_POST['stat']."'";
-		$cari		=empty($_POST['cari'])?'': "and Nama_Barang like '".$_POST['cari']."%'";
+		$cari		=empty($_POST['cari'])?'': "and Nama_Barang like '%".$_POST['cari']."%'";
 		$group		=empty($_POST['zero'])?"group by ms.batch,b.ID":"group by b.ID";
 		$withoutZero=empty($_POST['zero'])?'':" and ms.Stock <>'0'";
+	if($cari==''){
 		if($id!='' && $id_jenis!=''){
 			 $where="where ID_Kategori='$id' $id_jenis $stat $cari $withoutZero $group order by ID_Jenis,nama_barang";
 		}else if ($id=='' && $id_jenis!=''){
@@ -348,7 +350,10 @@ class Inventory extends CI_Controller {
 		}else if ($id!='' && $id_jenis==''){
 			 $where="where ID_Kategori='$id' $stat $withoutZero $cari $group order by ID_Jenis,nama_barang";
 		}
-		/* echo $id.'='. $where; //for debug only*/
+	}else{
+			$where="where Nama_Barang like '".$_POST['cari']."%'$group order by ID_Jenis,nama_barang";
+	}
+	//	 echo $id.'='. $where; /*//for debug only*/
 		$data=$this->inv_model->list_barang($where);
 		foreach($data as $r){
 			$n++;$stock=0;
@@ -356,7 +361,7 @@ class Inventory extends CI_Controller {
 			echo tr('xx','nm-'.$r->ID).td($n,'center').td($r->Kategori,'kotak\' nowrap=\'nowrap' ).td($r->JenisBarang). td(strtoupper($r->Kode)).
 				 td(strtoupper($r->Nama_Barang)).td($r->Satuan).
 				 td(number_format($r->stock,2),'right').
-				 td(number_format($r->harga_beli,2),'right').
+				 td((!$r->harga_beli)?number_format((int)$r->Harga_Beli,2):number_format($r->harga_beli,2),'right').
 				 td(number_format($r->Harga_Jual,2),'right').td($r->minstok,'center');
 			echo ($this->zetro_auth->cek_oto('e','listbarang')!='')?
 				($this->session->userdata('menus')=='QWNjb3VudGluZw==')?'':
@@ -386,11 +391,11 @@ class Inventory extends CI_Controller {
 	}
 	
 	function hapus_inv(){
-/*		$fld=$_POST['fld'];
+		$fld=$_POST['fld'];
 		$tbl=$_POST['tbl'];
 		$where=str_replace('_',' ',$_POST['id']);
 		$this->Admin_model->hapus_table($tbl,$fld,$where);
-*/		$this->Admin_model->hps_data('inv_material_stok',"where ID_Barang='".$_POST['id']."' and batch='".$_POST['batch']."'");
+/**/		$this->Admin_model->hps_data('inv_material_stok',"where ID_Barang='".$_POST['id']."' and batch='".$_POST['batch']."'");
 		echo $_POST['id'];
 	}
 	function hapus_konversi(){

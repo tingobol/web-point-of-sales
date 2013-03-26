@@ -509,8 +509,8 @@ class Penjualan extends CI_Controller{
 		}
 		$data['ID_Perkiraan']	=($idp!='')? $idp:rdb('perkiraan','ID','ID',"where ID_Agt='$id_anggota' and ID_Simpanan='".$this->id_jenis."'");
 		$data['ID_Unit']		=$lokasi;//rdb('jenis_simpanan','ID_Unit','ID_Unit',"where ID='".$this->id_jenis."'");
-		$data['ID_Klas']		=rdb('jenis_simpanan','ID_Klasifikasi','ID_Klasifikasi',"where ID='".$this->id_jenis."'");
-		$data['ID_SubKlas']		=rdb('jenis_simpanan','ID_SubKlas','ID_SubKlas',"where ID='".$this->id_jenis."'");
+		$data['ID_Klas']		='1';//rdb('jenis_simpanan','ID_Klasifikasi','ID_Klasifikasi',"where ID='".$this->id_jenis."'");
+		$data['ID_SubKlas']		='1';//rdb('jenis_simpanan','ID_SubKlas','ID_SubKlas',"where ID='".$this->id_jenis."'");
 		$data['ID_Dept']		=($idp=='')? '0':rdb('mst_anggota','ID_Dept','ID_Dept',"where ID='".$id_anggota."'");
 		if($this->id_jenis!='5'){
 			//return material

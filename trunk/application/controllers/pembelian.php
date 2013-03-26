@@ -74,11 +74,12 @@ class Pembelian extends CI_Controller{
 		}else if($_POST['cbayar']==3){
 			$jenis='RK';
 		}
+		$data['ID']			=empty($_POST['id_beli'])?'0':$_POST['id_beli'];
 		$data['NoUrut']		=$_POST['no_trans'];
 		$data['Tanggal']	=tgltoSql($_POST['tanggal']);
-		$data['ID_Jenis']	=$_POST['cbayar'];	
+		$data['ID_Jenis']	=empty($_POST['cbayar'])?'1':$_POST['cbayar'];	
 		$data['ID_Pemasok']	=empty($_POST['id_pemasok'])?0:$_POST['id_pemasok'];	
-		$data['Nomor']		=empty($_POST['faktur'])? $jenis.'-'.substr($_POST['no_trans'],6,4).'-'.date('y'):$_POST['faktur'];	
+		$data['Nomor']		=empty($_POST['faktur'])? $jenis.'-'.date('ymd').'-'.substr($_POST['no_trans'],6,4):$_POST['faktur'];	
 		$data['Bulan']		=substr($_POST['tanggal'],3,2);	
 		$data['Tahun']		=substr($_POST['tanggal'],6,4);	
 		$data['Deskripsi']	=addslashes($_POST['pemasok']);	
@@ -93,7 +94,7 @@ class Pembelian extends CI_Controller{
 	}
 	/*simpan data detail transaksi*/
 	function set_detail_pembelian(){
-		$data=array();$rcord=0;$tot_bel=0;$find_batch='';$ID_Jenis='';
+		$data=array();$rcord=0;$tot_bel=0;$find_batch='';
 		$id_beli=rdb('inv_pembelian','ID','ID',"where NoUrut='".$_POST['no_trans']."' and Tanggal='".tgltoSql($_POST['tanggal'])."'");
 		$id_barang=rdb('inv_barang','ID','ID',"where Nama_Barang='".addslashes($_POST['nm_barang'])."'");
 		$find_batch=rdb('inv_material_stok','batch','batch',"where id_barang='".$id_barang."' and harga_beli='".$_POST['harga_beli']."'");
@@ -106,7 +107,7 @@ class Pembelian extends CI_Controller{
 		$data['Jumlah']		=$_POST['jumlah'];
 		$data['Harga_Beli']	=$_POST['harga_beli'];
 		$data['ID_Satuan']	=$_POST['id_satuan'];
-		$data['batch']		=($find_batch=='' || $find_batch==NULL)?date('Yzd').'-'.rand(10,99):$find_batch;
+		$data['batch']		=($find_batch=='' || $find_batch==NULL)?date('ymdz').'-'.date('i'):$find_batch;
 		$data['Keterangan']	=$_POST['keterangan'];
 		$data['Bulan']		=substr($_POST['tanggal'],3,2);	
 		$data['Tahun']		=substr($_POST['tanggal'],6,4);	
@@ -114,16 +115,17 @@ class Pembelian extends CI_Controller{
 		$this->Admin_model->upd_data('inv_pembelian',"set ID_Bayar='".($tot_bel+$_POST['keterangan'])."'","where NoUrut='".$_POST['no_trans']."' and Tanggal='".tgltoSql($_POST['tanggal'])."'");
 		echo rdb('inv_pembelian_detail','ID','ID',"order by ID desc limit 1");
 		//process to jurnal temp
+		$ID_Jenis=empty($_POST['id_jenis'])?'1':$_POST['id_jenis'];
 		$TotalHg=$_POST['harga_beli'];
 		$this->no_transaksi($_POST['no_trans']);
 		$this->tanggal(($_POST['tanggal']));
 		$this->JenisBayar('6');
 		if($TotalHg!='0'){
 			if(($ID_Jenis!='4' || $ID_Jenis!='5') && $id_anggota!=''){
-				$this->process_to_jurnal($id_anggota,$TotalHg,'','1');
+				$this->process_to_jurnal($id_anggota,$TotalHg);
 			}else if($ID_Jenis=='6' && $id_anggota!=''){
 				$ket='';	
-				$this->process_to_jurnal($id_anggota,$TotalHg,$ket,'1');
+				$this->process_to_jurnal($id_anggota,$TotalHg,$ket);
 			}
 		}
 	}
@@ -285,9 +287,9 @@ class Pembelian extends CI_Controller{
 			$this->_update_perkiraan($id_anggota,$this->id_jenis);	
 		}
 		$data['ID_Perkiraan']	=rdb('perkiraan','ID','ID',"where ID_Agt='$id_anggota' and ID_Simpanan='".$this->id_jenis."'");
-		$data['ID_Unit']		=rdb('jenis_simpanan','ID_Unit','ID_Unit',"where ID='".$this->id_jenis."'");
-		$data['ID_Klas']		=rdb('jenis_simpanan','ID_Klasifikasi','ID_Klasifikasi',"where ID='".$this->id_jenis."'");
-		$data['ID_SubKlas']		=rdb('jenis_simpanan','ID_SubKlas','ID_SubKlas',"where ID='".$this->id_jenis."'");
+		$data['ID_Unit']		='1';//rdb('jenis_simpanan','ID_Unit','ID_Unit',"where ID='".$this->id_jenis."'");
+		$data['ID_Klas']		='1';//rdb('jenis_simpanan','ID_Klasifikasi','ID_Klasifikasi',"where ID='".$this->id_jenis."'");
+		$data['ID_SubKlas']		='1';//rdb('jenis_simpanan','ID_SubKlas','ID_SubKlas',"where ID='".$this->id_jenis."'");
 		$data['ID_Dept']		='0';rdb('mst_anggota','ID_Dept','ID_Dept',"where ID='".$id_anggota."'");
 		if($ket==''){
 			$data['Debet']		=$total;//rdb('inv_penjualan','Total','Total',"where ID_Anggota='".$id_anggota."' and NoUrut='".$this->no_trans."'");

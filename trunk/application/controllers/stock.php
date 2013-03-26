@@ -161,14 +161,19 @@ class Stock extends CI_Controller{
 	function get_stock(){
 		$data=array();$n=0;$where='';
 		$lks=empty($_POST['lokasi'])?'1':$_POST['lokasi'];
-		$where=empty($_POST['kategori'])?'':"where im.ID_Kategori='".$_POST['kategori']."'/* and ms.Stock<>'0'*/";
-		$where.=($where=='' && !empty($_POST['lokasi']))?"where im.ID_Kategori='123' and ms.id_lokasi='".$_POST['lokasi']."' and ms.Stock<>'0'":
-				"and ms.id_lokasi='".$lks."' and ms.Stock<>'0'";
+		$ktg=empty($_POST['kategori'])?'':$_POST['kategori'];
+		$zero=empty($_GET['zero'])?'':$_GET['zero'];
+		$sto=($zero=='y')? '':"and ms.Stok <>'0'";
+		$kat=($zero=='y')? "and im.ID_Kategori='123'":'';
+		$where="where ms.id_lokasi='".$lks."' ".$zero;
+		$where.=($ktg=='')?$kat:" and im.ID_Kategori='".$ktg."'";
+
 		$orderby=empty($_POST['orderby'])?'':" order by ".str_replace('-',',',$_POST['orderby'])." ";
 		$orderby.=empty($_POST['urutan'])?'':strtoupper($_POST['urutan']);
 		$sesi=$this->session->userdata('menus');
 		$edit_true=empty($_POST['edited'])?'':$_POST['edited'];
 		$oto	=$this->zetro_auth->cek_oto('e','liststock');
+		//echo $where;
 		$data=$this->report_model->stock_list($where,'stock',$orderby);
 		foreach($data as $r){
 			$n++;
