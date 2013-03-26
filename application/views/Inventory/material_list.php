@@ -62,6 +62,7 @@ popup_start('nm_satuan','Tambah Satuan',300);
 	$zfm->BuildFormButton('Simpan','satuan');
 popup_end();
 popup_start('edit_barang','Edit Data',550);
+	$zfm->Addinput("<input type='hidden' id='id_item' name='id_item' value=''>");
 	$zfm->AddBarisKosong(true);
 	$zfm->Start_form(true,'frm9');
 	$zfm->BuildForm($section,true,'100%');

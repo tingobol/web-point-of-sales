@@ -7,7 +7,9 @@ $(document).ready(function(e) {
 		_generate_nomor('GR','#frm1 input#no_transaksi');
 	}
 	//lock('#no_transaksi');
-	$('#no_transaksi').attr('readonly','readonly');
+	$('#no_transaksi').focusout(function(){
+		_show_list();
+	})
 	//lock tanggal jika user bukan level adminstrator /superuser
 	if($('#aktif_user').val()>2){
 		lock('#tgl_transaksi');
