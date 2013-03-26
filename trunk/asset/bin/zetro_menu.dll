@@ -169,7 +169,7 @@
 	3|<hr>|x||
 	4|Mutasi Stock|gudang/mutasi||
 	5|<hr>|x||
-	6|Stock Adjustment|stock/stock_barang||
+	6|Stock Adjustment|stock/stock_barang?zero=y||
 	
 	[Tambah Barang]
 	1|Tambah Barang|tambahbarang|y|zcev
