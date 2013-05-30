@@ -29,7 +29,10 @@ $(document).ready(function(e) {
 					$('#id_jenis').val(result.kategori);
 					$('#id_satuan').val(result.satuan);
 					$('#stokmin').val(result.hpp);
-					$('#stokmax').val(result.h_jualToko)
+					$('#harga_1').val(result.h_jualToko)
+					$('#harga_2').val(result.h_jualToko)
+					$('#harga_3').val(result.h_jualToko);
+					$('#stoklimit').val(result.stoklimit);
 				}
 		})
 		$('#frm1 input#id_barang')
@@ -45,7 +48,8 @@ $(document).ready(function(e) {
 					$('#frm1 #status_barang').val(result.status);
 					$('#id_kategori').val(result.jenis);
 					$('#id_jenis').val(result.kategori);
-					$('#id_satuan').val(result.satuan)
+					$('#id_satuan').val(result.satuan);
+					
 				}
 		})
 		
@@ -83,7 +87,17 @@ $(document).ready(function(e) {
 			.focusout(function(){kekata_hide();$('#stokmax').focus().select()})
 			.keypress(function(e){if(e.which==13){ $(this).focusout();}})
 		
-		$('#frm1 #stokmax')
+		$('#frm1 #harga_1')
+			.focus(function(){$(this).select()})
+			.keyup(function(){kekata(this);})
+			.focusout(function(){kekata_hide();$('#harga_2').focus().select()})
+			.keypress(function(e){if(e.which==13){$(this).focusout();}})
+		$('#frm1 #harga_2')
+			.focus(function(){$(this).select()})
+			.keyup(function(){kekata(this);})
+			.focusout(function(){kekata_hide();$('#harga_3').focus().select()})
+			.keypress(function(e){if(e.which==13){$(this).focusout();}})
+		$('#frm1 #harga_3')
 			.focus(function(){$(this).select()})
 			.keyup(function(){kekata(this);})
 			.focusout(function(){kekata_hide();$('#stoklimit').focus().select()})
@@ -102,18 +116,21 @@ $(document).ready(function(e) {
 function _simpan_data(){
 	var path=$("#path").val()
 	$.post(path+'inventory/simpan_barang',{
-		'id_jenis'		:$('input#id_jenis').val(),
-		'id_kategori'	:$('input#id_kategori').val(),
+		'id_jenis'		 :$('input#id_jenis').val(),
+		'id_kategori'	  :$('input#id_kategori').val(),
 		'id_barang'		:$('#frm1 input#id_barang').val(),
 		'nm_barang'		:$('#frm1 input#nm_barang').val(),
 		'status_barang'	:$('#frm1 input#status_barang').val(),
 	    'id_satuan'		:$('input#id_satuan').val(),
-		'expired'		:$('#frm1 input#expired').val(),
-		'stokmin'		:$('#frm1 input#stokmin').val(),
-		'stokmax'		:$('#frm1 input#stokmax').val(),
-		'minstok'		:$('#frm1 input#stoklimit').val(),
-		'nm_jenis'		:$('#frm1 input#nm_jenis').val(),
-		'nm_kategori'	:$('#frm1 input#nm_kategori').val(),
+		'expired'		  :$('#frm1 input#expired').val(),
+		'stokmin'		  :$('#frm1 input#stokmin').val(),
+		'stokmax'		  :$('#frm1 input#stokmax').val(),
+		'harga_1'		  :$('#frm1 input#harga_1').val(),
+		'harga_2'		  :$('#frm1 input#harga_2').val(),
+		'harga_3'		  :$('#frm1 input#harga_3').val(),
+		'minstok'		  :$('#frm1 input#stoklimit').val(),
+		'nm_jenis'		 :$('#frm1 input#nm_jenis').val(),
+		'nm_kategori'	  :$('#frm1 input#nm_kategori').val(),
 	    'nm_satuan'		:$('#frm1 input#nm_satuan').val()
 		},
 		function(result){

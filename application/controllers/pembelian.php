@@ -252,12 +252,15 @@ class Pembelian extends CI_Controller{
 	}
 	
 	function get_satuan_konversi(){
-		$data=array();
+		$data=array();$opt='';
 		$kode=addslashes($_POST['nm_barang']);
 		$data=$this->purch_model->get_satuan_konv($kode);
 		foreach($data as $r){
-			echo "<option value='".$r->sat_beli."'>".$r->Satuan."</option>";	
+			$opt.= "<option value='".$r->sat_beli."'>".$r->Satuan."</option>";	
 		}
+		$id_s=rdb('inv_barang','id_satuan','id_satuan',"where nama_barang='".$kode."'");
+		$n_sat=rdb('inv_barang_satuan','satuan','satuan',"where id='".$id_s."'");
+		echo (!$data)?"<option value='".$id_s."'>".$n_sat."</option>":$opt;
 	}
 	function get_total_belanja(){
 		$data		=array();$tt_harga=0;

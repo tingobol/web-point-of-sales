@@ -170,18 +170,20 @@ class Inventory extends CI_Controller {
 		$data=array();$kat=array();$jen=array();$sat=array();$Stat_bar='';
 		$Stat_bar=empty($_POST['id_kategori'])?'':addslashes($_POST['id_kategori']);
 		$data['ID']			=empty($_POST['id_item'])?'0':$_POST['id_item'];
-		$data['ID_Jenis']	=empty($_POST['id_jenis'])?'':$_POST['id_jenis'];
-		$data['Kode']		=empty($_POST['id_barang'])?rand(1000,9999):addslashes(strtoupper($_POST['id_barang']));
-		$data['ID_Kategori']=empty($_POST['id_kategori'])?'':addslashes($_POST['id_kategori']);
-		$data['Nama_Barang']=addslashes(strtoupper($_POST['nm_barang']));
-		$data['ID_Satuan']	=empty($_POST['id_satuan'])?'1':$_POST['id_satuan'];
+		$data['ID_Jenis']	  =empty($_POST['id_jenis'])?'0':$_POST['id_jenis'];
+		$data['Kode']		  =empty($_POST['id_barang'])?rand(1000,9999):addslashes(strtoupper($_POST['id_barang']));
+		$data['ID_Kategori']   =empty($_POST['id_kategori'])?'':addslashes($_POST['id_kategori']);
+		$data['Nama_Barang']   =addslashes(strtoupper($_POST['nm_barang']));
+		$data['ID_Satuan']	 =empty($_POST['id_satuan'])?'1':$_POST['id_satuan'];
 		$data['Status']		=($Stat_bar=='106')?'JASA':'BARANG';
 		$data['Harga_Beli']	=empty($_POST['stokmin'])?'0':$_POST['stokmin'];
-		$data['Harga_Jual']	=empty($_POST['stokmax'])?'0':$_POST['stokmax'];
-		$data['minstok']	=empty($_POST['minstok'])?'0':$_POST['minstok'];
-		$kat['Kategori']	=empty($_POST['nm_kategori'])?'':addslashes(strtoupper($_POST['nm_kategori']));
+		$data['Harga_Jual']	=empty($_POST['harga_1'])?'0':$_POST['harga_1'];
+		$data['Harga_Partai']  =empty($_POST['harga_3'])?'0':$_POST['harga_3'];
+		$data['Harga_Cabang']  =empty($_POST['harga_2'])?'0':$_POST['harga_2'];
+		$data['minstok']	   =empty($_POST['minstok'])?'0':$_POST['minstok'];
+		$kat['Kategori']	   =empty($_POST['nm_kategori'])?'':addslashes(strtoupper($_POST['nm_kategori']));
 		$jen['JenisBarang']	=empty($_POST['nm_kategori'])?'':addslashes(strtoupper($_POST['nm_jenis']));
-		$sat['Satuan']		=empty($_POST['nm_kategori'])?'':addslashes(strtoupper($_POST['nm_satuan']));
+		$sat['Satuan']		 =empty($_POST['nm_kategori'])?'':addslashes(strtoupper($_POST['nm_satuan']));
 		if(rdb('inv_barang_kategori','Kategori','Kategori',"where Kategori='".strtoupper($_POST['nm_kategori'])."'")==''){
 			$this->Admin_model->replace_data('inv_barang_kategori',$kat);
 		}
@@ -358,14 +360,17 @@ class Inventory extends CI_Controller {
 		foreach($data as $r){
 			$n++;$stock=0;
 			//$stock=rdb('inv_material_stok','stock','sum(stock) as stock',"where id_barang='".$r->ID."'");
-			echo tr('xx','nm-'.$r->ID).td($n,'center').td($r->Kategori,'kotak\' nowrap=\'nowrap' ).td($r->JenisBarang). td(strtoupper($r->Kode)).
+			echo tr('xx','nm-'.$r->ID).td($n,'center').
+				 td($r->Kategori." ".$r->JenisBarang,'kotak\' nowrap=\'nowrap' ). td(strtoupper($r->Kode)).
 				 td(strtoupper($r->Nama_Barang)).td($r->Satuan).
 				 td(number_format($r->stock,2),'right').
 				 td((!$r->harga_beli)?number_format((int)$r->Harga_Beli,2):number_format($r->harga_beli,2),'right').
-				 td(number_format($r->Harga_Jual,2),'right').td($r->minstok,'center');
+				 td(number_format($r->Harga_Jual,2),'right').
+				 td(number_format($r->Harga_Cabang,2),'right').
+				 td(number_format($r->Harga_Partai,2),'right');
 			echo ($this->zetro_auth->cek_oto('e','listbarang')!='')?
 				($this->session->userdata('menus')=='QWNjb3VudGluZw==')?'':
-				 td(aksi('asset/images/clipboard_16.png','edit','Click for edit detail',"upd_det_barang('".$r->Nama_Barang."');").'&nbsp;'.
+				 td(/*aksi('asset/images/clipboard_16.png','edit','Click for edit detail',"upd_det_barang('".$r->Nama_Barang."');").'&nbsp;'.*/
 				    aksi('asset/images/editor.png','edit','Click for edit',"upd_barang('".$r->ID."');").'&nbsp;'.
 				 	aksi('asset/images/no.png','del','Click for delete',"delet_barang('".$r->ID."','".$r->batch."');"),'center'):'';
 			echo _tr();
@@ -384,8 +389,6 @@ class Inventory extends CI_Controller {
 	function edit_material(){
 		$data=array();
 		$nm_barang=str_replace('_',' ',$_POST['nm_barang']);
-		//$this->zetro_auth->frm_filename('asset/bin/zetro_inv.frm');
-		//$data=$this->zetro_auth->show_data_field('Barang','inv_barang',"where nama_barang='$nm_barang'");
 		$data=$this->inv_model->update_barang($nm_barang);
 		echo json_encode($data[0]);	
 	}

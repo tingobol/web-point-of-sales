@@ -60,7 +60,9 @@ $(document).ready(function (e) {
                     'nm_satuan': $('#frm1 select#nm_satuan').val(),
                     'expired': $('#frm1 input#expired').val(),
                     'stokmin': $('#frm1 input#stokmin').val(),
-                    'stokmax': $('#frm1 input#stokmax').val(),
+                    'harga_3': $('#frm9 input#harga_3').val(),
+                    'harga_1': $('#frm9 input#harga_1').val(),
+                    'harga_2': $('#frm9 input#harga_2').val(),
                     'linked': ''
                 }, function (result) {
                     $('#frm1 input:not(:button,:reset)').val('');
@@ -140,7 +142,9 @@ $(document).ready(function (e) {
                     'nm_barang': $('#frm9 input#nm_barang').val(),
                     'status_barang': $('#frm9 input#status_barang').val(),
                     'stokmin': $('#frm9 input#stokmin').val(),
-                    'stokmax': $('#frm9 input#stokmax').val(),
+                    'harga_3': $('#frm9 input#harga_3').val(),
+                    'harga_1': $('#frm9 input#harga_1').val(),
+                    'harga_2': $('#frm9 input#harga_2').val(),
                     'minstok': $('#frm9 input#stoklimit').val(),
                     'nm_jenis': $('#frm9 input#nm_jenis').val(),
                     'nm_kategori': $('#frm9 input#nm_kategori').val(),
@@ -464,7 +468,9 @@ function upd_barang(id) {
         $('#frm9 input#nm_barang').val(obj.Nama_Barang);
         $('#frm9 input#nm_satuan').val(obj.Satuan);
         $('#frm9 input#stokmin').val(obj.Harga_Beli);
-        $('#frm9 input#stokmax').val(obj.Harga_Jual);
+        $('#frm9 input#harga_1').val(obj.Harga_Jual);
+        $('#frm9 input#harga_2').val(obj.Harga_Cabang);
+        $('#frm9 input#harga_3').val(obj.Harga_Partai);
         $('#frm9 input#stoklimit').val(obj.minstok);
         $('#id_kategori').val(obj.ID_Kategori);
         $('#id_jenis').val(obj.ID_Jenis);
