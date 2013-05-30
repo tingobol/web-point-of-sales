@@ -31,10 +31,12 @@ class Purch_model extends CI_Model {
 	
 	function get_satuan_konv($nm_barang){
 		$data=array();
-		$sql="select ik.sat_beli,ik.isi_konversi,n.Satuan from inv_konversi as ik 
+		$sql="select ik.sat_beli,ik.isi_konversi,n.Satuan,b.ID from inv_konversi as ik 
 			  left join inv_barang_satuan as n
 			  on n.ID=ik.sat_beli
-			  where nm_barang='$nm_barang'";
+			  left join inv_barang as b
+			  on b.nama_barang=ik.nm_barang
+			  where nm_barang='$nm_barang'";//ACER AOD 257E-HAPPY2 1GB
 		$data=$this->db->query($sql);
 		return $data->result();
 	}

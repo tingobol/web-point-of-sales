@@ -200,7 +200,9 @@ class Inv_model extends CI_Model {
 	function list_barang($where){
 		$data=array();
 		$sql="select b.ID,bj.JenisBarang,bk.Kategori,b.Kode,b.Nama_Barang,
-				b.Harga_Beli,b.Harga_Jual,bs.Satuan,b.Status,b.minstok,sum(ms.stock) as stock,ms.harga_beli,ms.batch
+				b.Harga_Beli,b.Harga_Jual,
+				b.Harga_Cabang,
+				b.Harga_Partai,bs.Satuan,b.Status,b.minstok,sum(ms.stock) as stock,ms.harga_beli,ms.batch
 				from inv_barang as b
 				left join inv_barang_jenis as bj
 				on bj.ID=b.ID_Jenis
@@ -216,7 +218,8 @@ class Inv_model extends CI_Model {
 		return $data->result();
 	}
 	function update_barang($id){
-		$sql="select ib.*,k.Kategori,j.JenisBarang,s.Satuan from inv_barang as ib
+		$sql="select ib.*,k.Kategori,j.JenisBarang,s.Satuan 
+			  from inv_barang as ib
 			  left join inv_barang_kategori as k
 			  on k.ID=ib.ID_Kategori
 			  left join inv_barang_jenis as j

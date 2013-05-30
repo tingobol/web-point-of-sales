@@ -14,9 +14,11 @@
 4|Nama Barang,input,text n,nm_barang,w90 upper,,20%,60
 5|Satuan Jual,input,text n,nm_satuan,S35 upper,,5%,,,,15
 6|Harga Beli,input,text d,stokmin,w35 angka,0,7%,10
-7|Harga Toko,input,text d,stokmax,w35 angka,0,7%,10
-8|Minimum Stock,input,text d,stoklimit,w25 angka,,5%,10
-9|,input,hidden n,status_barang,w35 upper,Continue,,10
+7|Harga 1,input,text d,harga_1,w35 angka,0,7%,10
+8|Harga 2,input,text d,harga_2,w35 angka,0,7%,10
+9|Harga 3,input,text d,harga_3,w35 angka,0,7%,10
+10|Minimum Stock,input,text d,stoklimit,w25 angka,1,5%,10
+11|,input,hidden n,status_barang,w35 upper,Continue,,10
 
 [BarangDetail]
 1|Nama Barang,input,text n,nm_barang,w90 upper,,20%,60
@@ -34,14 +36,15 @@
 
 [BarangList]
 1|Kategori,input,text n,nm_kategori,w70 upper,,10%,,,,20
-2|Jenis Barang,input,text n,nm_jenis,w50 upper,,10%,,,,20
-3|Kode Barang,input,text n,id_barang,w70 upper,,8%,
-4|Nama Barang,input,text n,nm_barang,w90 upper,,20%,60
-5|Satuan Jual,input,text n,nm_satuan,S35 upper,,5%,,,,15
-6|Total Stock,input,text n,expired,w35,,10%,,15
-7|Harga Beli,input,text d,stokmin,w35 angka,0,7%,10
-8|Harga Toko,input,text d,stokmax,w35 angka,0,7%,10
-9|Minimum Stock,input,text d,stoklimit,w25 angka,,5%,10
+2|Kode Barang,input,text n,id_barang,w70 upper,,8%,
+3|Nama Barang,input,text n,nm_barang,w90 upper,,20%,60
+4|Satuan Jual,input,text n,nm_satuan,S35 upper,,5%,,,,15
+5|Total Stock,input,text n,expired,w35,,7%,,15
+6|Harga Beli,input,text d,stokmin,w35 angka,0,10%,10
+7|Harga 1,input,text d,stokmax,w35 angka,0,10%,10
+8|Harga 2,input,text d,stokmax,w35 angka,0,10%,10
+9|Harga 3,input,text d,stokmax,w35 angka,0,10%,10
+;9|Minimum Stock,input,text d,stoklimit,w25 angka,,5%,10
 
 [Harga Beli]
 1|Nama Barang,input,text n,nm_barang,w90 upper,,20%

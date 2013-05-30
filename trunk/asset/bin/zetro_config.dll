@@ -1,7 +1,7 @@
 [Server]
-hostname|192.168.1.150	
-username|
-password|
+hostname|localhost
+username|root
+password|xroot
 dbname|putridb
 
 [WebPage]
