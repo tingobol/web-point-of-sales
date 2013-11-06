@@ -15,3 +15,8 @@
 </div>
 </body>
 </html>
+<?
+link_css('bootstrap.css','asset/css');
+link_js('bootstrap-typeahead.js','asset/js');
+link_js('jquery-ui-1.9.2.custom.min.js','asset/js');
+?>

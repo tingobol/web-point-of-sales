@@ -115,19 +115,20 @@ class Pembelian extends CI_Controller{
 		$this->Admin_model->upd_data('inv_pembelian',"set ID_Bayar='".($tot_bel+$_POST['keterangan'])."'","where NoUrut='".$_POST['no_trans']."' and Tanggal='".tgltoSql($_POST['tanggal'])."'");
 		echo rdb('inv_pembelian_detail','ID','ID',"order by ID desc limit 1");
 		//process to jurnal temp
-		$ID_Jenis=empty($_POST['id_jenis'])?'1':$_POST['id_jenis'];
+		$ID_Jenis=empty($_POST['cbayar'])?'1':$_POST['cbayar'];
 		$TotalHg=$_POST['harga_beli'];
 		$this->no_transaksi($_POST['no_trans']);
 		$this->tanggal(($_POST['tanggal']));
-		$this->JenisBayar('6');
-		if($TotalHg!='0'){
+		$this->JenisBayar($ID_Jenis);
+		/*if($TotalHg!='0'){
 			if(($ID_Jenis!='4' || $ID_Jenis!='5') && $id_anggota!=''){
 				$this->process_to_jurnal($id_anggota,$TotalHg);
 			}else if($ID_Jenis=='6' && $id_anggota!=''){
 				$ket='';	
 				$this->process_to_jurnal($id_anggota,$TotalHg,$ket);
 			}
-		}
+		}*/
+		($this->id_jenis=='2')? $this->_set_pinjaman($id_anggota):'';
 	}
 	function JenisBayar($id_jenis){
 		$this->id_jenis=$id_jenis;	
@@ -323,6 +324,25 @@ class Pembelian extends CI_Controller{
 		$datax['ID_LapDetail']	=rdb('jenis_simpanan','ID_LapDetail','ID_LapDetail',"where ID='".$this->id_jenis."'");
 		echo $this->Admin_model->replace_data('perkiraan',$datax);
 		//print_r($datax);
+	}
+	
+	function _set_pinjaman($ID_Agt){
+		//penjualan selain tunai akan masuk table pinjaman
+		$data=array();
+		$data['ID']			=$this->no_trans;
+		$data['ID_Agt']		=$ID_Agt;
+		$data['ID_Unit']	='1';//rdb('jenis_simpanan','ID_Unit','ID_Unit',"where ID='".$this->id_jenis."'");
+		$data['Tanggal']	=tglToSql($this->tgl);
+		$data['ID_Bulan']	=substr($this->tgl,3,2);
+		$data['Tahun']		=substr($this->tgl,6,4);
+		$data['jml_pinjaman']	=rdb('inv_pembelian','ID_Bayar','ID_Bayar',"where NoUrut='".$this->no_trans."' and Tanggal='".tglToSql($this->tgl)."'");
+		$data['cara_bayar']	=$this->id_jenis;
+		$data['mulai_bayar']=rdb('inv_pembelian','Tanggal','Tanggal',"where NoUrut='".$this->no_trans."' and Tanggal='".tglToSql($this->tgl)."'");
+		$data['keterangan']	='Pembelian No: '.
+							 rdb('inv_pembelian','Nomor',"Nomor","where NoUrut='".$this->no_trans."' and Tanggal='".tglToSql($this->tgl)."'")."-".
+							 rdb('inv_pembelian','Deskripsi','Deskripsi',"where NoUrut='".$this->no_trans."' and Tanggal='".tglToSql($this->tgl)."'").
+							 '[ '.tglfromSql(rdb('inv_pembelian','Tanggal','Tanggal',"where NoUrut='".$this->no_trans."' and Tanggal='".tglToSql($this->tgl)."'")).' ]';
+		$this->Admin_model->replace_data('pinjaman',$data);//?'Kredited':'';
 	}
 	
 

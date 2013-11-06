@@ -17,12 +17,13 @@
 		  //echo $a->getColWidth();
 		  // set lebar tiap kolom tabel transaksi
 		 // $a->SetWidths(array(10,25,60,20,15,25));
-		  $a->SetWidths(array(10,28,52,25,15,20,20,15));
+		  $a->SetWidths(array(10,28,52,35,15,20,20,5));
 		  // set align tiap kolom tabel transaksi
 		  $a->SetAligns(array("C","C","L","L","R","L","R","L"));
 		  $a->SetFont('Arial','B',10);
 		  $a->SetFont('Arial','',9);
 		  //$rec = $temp_rec->result();
+		  //print_r($temp_rec);
 		  $n=0;$harga=0;$hgb=0;$hargaj=0;$jml=0;
 		  foreach($temp_rec as $r)
 		  {
@@ -33,7 +34,7 @@
 						 number_format($r->stock,0),
 						 rdb('inv_barang_satuan','Satuan','Satuan',"where ID='".$r->ID_Satuan."'"),
 						 number_format($r->harga_beli,2),
-						 $r->Status
+						 ''
 						  ));
 		  }
 		  $a->Output('application/logs/'.$this->session->userdata('userid').'_mutasi.pdf','F');

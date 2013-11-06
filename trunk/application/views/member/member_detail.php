@@ -13,6 +13,7 @@ echo "<table width='100%' border='0'>
 		$zfm->BuildForm('registrasi',false,'100%');
 echo "</td><td width='5%'>&nbsp;</td>
 	 <td width='50%'>";
+		$zfm->Addinput("<input type='hidden' id='idm' name='idm' value=''/>");
 		$zfm->AddBarisKosong(false);
 		$zfm->Start_form(true,'frm2');
 		$zfm->BuildForm('biodata',false,'100%');
@@ -126,6 +127,7 @@ function get_biodata(){
 				$('#frm1 #Faksimili').val(obj.Faksimili);
 				$('#frm1 #Status').val(obj.Status);
 				$('#frm2 #TanggalMasuk').val(tglFromSql(obj.TanggalMasuk));
+				$('#frm2 #idm').val(obj.ID);
 			})
 	
 }
@@ -162,6 +164,7 @@ function(result){
 				var Telepon		=$('#frm1 #Telepon').val();
 				var Faksimili	=$('#frm1 #Faksimili').val();
 				var ID_Aktif	=$('#frm1 #ID_Aktif').val();
+				var IDM		=$('#frm2 #idm').val();
 				$.post('set_anggota',{
 					'No_Agt'	:No_Agt,
 					'Catatan'	:ID_Dept,
@@ -173,7 +176,9 @@ function(result){
 					'Propinsi'	:Propinsi,
 					'Telepon'	:Telepon,
 					'Faksimili'	:Faksimili,
-					'ID_Aktif'	:ID_Aktif
+					'ID_Aktif'	:ID_Aktif,
+					'idm'		:IDM,
+					'tglm'	   :$('#TanggalMasuk').val()
 					},
 					function(result){
 						get_biodata();

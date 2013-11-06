@@ -214,6 +214,7 @@ function _simpan_detail_pembelian(){
 		'id_satuan'	:$('#frm2 #1__nm_satuan').val(),
 		'jumlah'	:$('#frm2 #1__jml_transaksi').val(),
 		'harga_beli':$('#frm2 #1__harga_beli').val(),
+		'cbayar'	:$('#frm1 #cara_bayar').val(),
 		'keterangan':$('#frm2 #1__ket_transaksi').val()
 	},function(result){
 		$.post('get_detail_trans',{'id':$.trim(result)},

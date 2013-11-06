@@ -69,7 +69,7 @@ class zetro_frmBuilder extends zetro_manager {
 				  		//echo "<".$fld[1]." type='".$fld[2]."' id='".$fld[3]."' value='".$fld[5]."' class='".$fld[4]."'></td>";
 					  break;	   
 				  }
-			echo "</td>\n<td id='c3$i' width='8%'>&nbsp;</td>\n</tr>";
+			echo "</td>\n<td id='c3$i' width='8%'>".$this->tambahtxt."</td>\n</tr>";
 		}
 		if($button==false){echo "</table><input type='reset' style='display:none' id='xx'>"; 
 			echo $this->end_form();}else{
@@ -90,7 +90,7 @@ class zetro_frmBuilder extends zetro_manager {
 				  echo "<input type='reset' id='batal' value='Cancel' Title='Cancel'>";
 				}
 				echo "</td>
-				<td>".$this->tambahtxt."</td></tr>\n";
+				<td></td></tr>\n";
 				$this->posisi='bawah';
 				echo $this->brs;
                 echo "</table>\n";

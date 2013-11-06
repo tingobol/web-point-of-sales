@@ -369,6 +369,10 @@
 			$data="<img src='".base_url()."asset/images/info_16.png' id='proses' onclick=\"images_click('".$id."','info');\" style='cursor:pointer' class='prosess' title='information '>";
 		 }else if($del==true && $only=='check'){
 			$data="<input type='checkbox' id='cen-".$id."' onclick=\"images_click('".$id."','check');\" style='cursor:pointer'>";
+		 }else if ($del==false && $only=='delete'){
+		   $data="<img src='".base_url()."asset/images/no.png' id='del' onclick=\"images_click('".$id."','delete');\" class='hapus' title='Click to delete'>";
+		 }else if ($del==false && $only=='edit'){
+		   $data="<img src='".base_url()."asset/images/editor.png' id='edited' onclick=\"images_click('".$id."','edited');\" class='hapus' title='Click to edit'>";
 		 }
 		 return $data;
 	}

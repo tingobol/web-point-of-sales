@@ -21,7 +21,7 @@ function Row($data,$rec=true,$color=false,$kolom='',$kolom1='',$kolom2='')
   $nb=0;
   for($i=0;$i<count($data);$i++)
     $nb=max($nb,$this->NbLines($this->widths[$i],$data[$i]));
-  $h=(5.5*$nb);
+  $h=(3.0*$nb);
   $this->CheckPageBreak($h);
   for($i=0;$i<count($data);$i++)
   {
@@ -33,7 +33,7 @@ function Row($data,$rec=true,$color=false,$kolom='',$kolom1='',$kolom2='')
    ($kolom==$i || $kolom1==$i || $kolom2==$i)?
     $this->SetTextColor(255,0,0): $this->SetTextColor(0);
    ($rec==true)? $this->Rect($x,$y,$w,$h+2):'';
-   $this->MultiCell($w,6,$data[$i],'',$a);
+   $this->MultiCell($w,5,$data[$i],'',$a);
    $this->SetXY($x+$w,$y);
   }
   $this->Ln($h+2);
@@ -41,7 +41,7 @@ function Row($data,$rec=true,$color=false,$kolom='',$kolom1='',$kolom2='')
 
 function CheckPageBreak($h)
 {
-  if($this->GetY()+$h>$this->PageBreakTrigger)
+  if($this->GetY()+($h+2)>$this->PageBreakTrigger)
   $this->AddPage($this->CurOrientation);
 }
 
@@ -106,45 +106,47 @@ function Header()
 	$fax	=$zn->rContent($lokasi,'Fax',$nfile);
 	$BH		=$zn->rContent($lokasi,'BH',$nfile);
 	   $this->Ln(2);
-	   $this->Image('asset/img/about.jpg',10,6,70,12);
-	   $this->Ln(2);
+	   $this->Image('asset/img/about.jpg',8,6,70,12);
+	   $this->Ln(1);
 	   //$this->SetFont('Arial','B',15);
 	  // $this->Cell(5);
 	  // $this->MultiCell(120,5,$co,0,1,'L');
 	   //$this->Cell(5);
 	   $this->SetFont('Arial','B',11);
 	   //$this->MultiCell(100,5,$BH,0,1,'C');
-	   $this->SetFont('Arial','',10);
+	   $this->SetFont('Arial','',9);
 	   //$this->Cell(3);
 	   $this->MultiCell(0,6,"",0,1,'C');
-	   $this->SetFont('Arial','',10);
+	   $this->SetFont('Arial','',9);
 	   //$this->Cell(5);
 	   $this->MultiCell(0,6,$address." ". $kota." ". $prop,0,1,'C');
 	   $this->MultiCell(0,4,$telp." ". $fax,0,1,'C');
-	   $this->Ln(5);
-	   $this->SetFont('Arial','B',10);
+	   $this->Ln(2);
+	   if($this->PageNo()==1){
+	   $this->SetFont('Arial','B',9);
 	   ($this->CurOrientation=='P')?
 	   $this->MultiCell(0,4,str_repeat("_",95),0,1,'C'):
 	   $this->MultiCell(0,4,str_repeat("_",140),0,1,'C');
-	   $this->SetFont('Arial','B',14);
+	   $this->SetFont('Arial','B',11);
 	   $this->Cell(0,10,$this->nama,2,1,'C');
-	   $this->SetFont('Arial','B',10);
-			  $this->Ln(2); // spasi enter
-			  $this->SetFont('Arial','B',11); // set font,size,dan properti (B=Bold)
+	   $this->SetFont('Arial','B',9);
+			  $this->Ln(1); // spasi enter
+			  $this->SetFont('Arial','B',9); // set font,size,dan properti (B=Bold)
 			  $n=0;
 			  foreach($this->refer as $rr){
-				  $this->Cell(40,6,$rr,0,0,'L');
-				  $this->Cell(130,6,': '.$this->filter[$n],0,1,'L');
+				  $this->Cell(40,5,$rr,0,0,'L');
+				  $this->Cell(130,5,': '.$this->filter[$n],0,1,'L');
 				$n++;
 			  }
-			  $this->Ln(2);
+			  $this->Ln(1);
+	   }
 			  // set nama header tabel transaksi
 			  $this->SetFillColor(225,225,225);
 			  $kol=$zn->Count($this->section,$this->nfilex);
-			  $this->Cell(10,8,'No.',1,0,'C',true);
+			  $this->Cell(10,7,'No.',1,0,'C',true);
 			  for ($i=1;$i<=$kol;$i++){
 				  $d=explode(',',$zn->rContent($this->section,$i,$this->nfilex));
-				  $this->Cell($d[9],8,$d[0],1,0,'C',true);
+				  $this->Cell($d[9],7,$d[0],1,0,'C',true);
 			  }
 			  $this->Ln();
 	
@@ -165,32 +167,32 @@ function Header()
 		   $this->Cell(110,6,$address." ". $kota,0,0,'L');
 		   $this->Cell(120,6,'Customer :',0,1,'L');
 		   $this->Cell(110,6,$telp." ". $fax,0,0,'L');
-		   $this->SetFont('Arial','IB',10);
+		   $this->SetFont('Arial','IB',9);
 		   $this->Cell(120,6,'   '.$this->refer,0,1,'L');
-		   $this->SetFont('Arial','',10);
+		   $this->SetFont('Arial','',9);
 		   $this->Cell(110,6,$npwp,0,0,'L');
 		   $this->SetFont('Arial','IB',10);
 		   $this->Cell(125,6,'   '.$this->filter,0,1,'L');
-		   $this->SetFont('Arial','',10);
+		   $this->SetFont('Arial','',9);
 		   $this->Cell(110,6,$nppkp,0,0,'L');
 		   $this->Cell(120,6,'NPWP :',0,1,'L');
 		   $this->Cell(110,4,'Nomor Seri faktur: '.$this->nofaktur,0,0,'L');
 		   $this->Cell(120,6,'Tanggal : '.$this->dataset,0,1,'L');
-		   $this->SetFont('Arial','B',10);
+		   $this->SetFont('Arial','B',9);
 		   $this->SetLineWidth(0.4);
 		   $this->Line(10,50,197,50);
 		   $this->Ln();
 		   $this->SetLineWidth(0.2);
-		   $this->SetFont('Arial','B',12);
+		   $this->SetFont('Arial','B',9);
 			//header table
 			// set nama header tabel transaksi
 			  $this->Ln(2);
 			  $this->SetFillColor(225,225,225);
 			  $kol=$zn->Count($this->section,$this->nfilex);
-			  $this->Cell(10,8,'No.',1,0,'C',true);
+			  $this->Cell(10,7,'No.',1,0,'C',true);
 			  for ($i=1;$i<=$kol;$i++){
 				  $d=explode(',',$zn->rContent($this->section,$i,$this->nfilex));
-				  $this->Cell($d[9],8,$d[0],1,0,'C',true);
+				  $this->Cell($d[9],7,$d[0],1,0,'C',true);
 			  }
 			  $this->Ln();
  }
@@ -239,21 +241,21 @@ function Header()
 	   //$this->Cell(5);
 	   $this->SetFont('Arial','B',11);
 	   //$this->MultiCell(100,5,$BH,0,1,'C');
-	   $this->SetFont('Arial','',10);
+	   $this->SetFont('Arial','',9);
 	   //$this->Cell(3);
 	   $this->MultiCell(0,6,"",0,1,'C');
-	   $this->SetFont('Arial','',10);
+	   $this->SetFont('Arial','',9);
 	   //$this->Cell(5);
 	   $this->MultiCell(0,6,$address." ". $kota." ". $prop,0,1,'C');
 	   $this->MultiCell(0,4,$telp." ". $fax,0,1,'C');
 	   $this->Ln(5);
-	   $this->SetFont('Arial','B',10);
+	   $this->SetFont('Arial','B',9);
 	   ($this->CurOrientation=='P')?
 	   $this->MultiCell(0,4,str_repeat("_",95),0,1,'C'):
 	   $this->MultiCell(0,4,str_repeat("_",140),0,1,'C');
-	   $this->SetFont('Arial','B',14);
+	   $this->SetFont('Arial','B',9);
 	   $this->Cell(0,10,$this->nama,2,1,'L');
-	   $this->SetFont('Arial','B',10);
+	   $this->SetFont('Arial','B',9);
 			  //$this->Ln(1); // spasi enter
 			  $this->SetFont('Arial','B',11); // set font,size,dan properti (B=Bold)
 			  $n=0;
@@ -265,7 +267,7 @@ function Header()
 				  }
 			  }
 			  $this->Ln(1);
-	   $this->SetFont('Arial','B',10);
+	   $this->SetFont('Arial','B',9);
 		   ($this->CurOrientation=='P')?
 		   $this->MultiCell(0,4,str_repeat("_",95),0,1,'C'):
 		   $this->MultiCell(0,4,str_repeat("_",140),0,1,'C');
@@ -275,9 +277,9 @@ function Header()
 
 function Footer(){
  // Position at 1.5 cm from bottom
-  ($this->kriteria=='neraca')?$this->SetY(-10):$this->SetY(-15);
+  ($this->kriteria=='neraca')?$this->SetY(-7):$this->SetY(-10);
   //Arial italic 8
-  $this->SetFont('Arial','i',7);
+  $this->SetFont('Arial','i',6);
   if($this->kriteria=='faktur'){
   $this->Cell(150,10,'Berlaku sebagai faktur pajak sesuai Peraturan Menkeu No. 38/PMK.03/2010',0,0,'L');
   }else{

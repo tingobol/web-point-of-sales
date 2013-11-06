@@ -32,6 +32,7 @@ addText(array('Cari Berdasarkan Nama'),
 }
 panel_multi_end();
 popup_full();
+panel_end();
 terbilang();
 ?>
 <input type='hidden' id='ordby' value='' class='w100'/>

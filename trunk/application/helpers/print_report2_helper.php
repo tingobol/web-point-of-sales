@@ -21,7 +21,7 @@ function Row($data,$rec=true,$color=false,$kolom='',$kolom1='',$kolom2='')
   $nb=0;
   for($i=0;$i<count($data);$i++)
     $nb=max($nb,$this->NbLines($this->widths[$i],$data[$i]));
-  $h=(5.5*$nb);
+  $h=(3.5*$nb);
   $this->CheckPageBreak($h);
   for($i=0;$i<count($data);$i++)
   {

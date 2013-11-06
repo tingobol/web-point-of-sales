@@ -29,7 +29,7 @@ $(document).ready(function(e) {
 	unlock('#carix')
 	$('#cari').css('opacity','1');
 	$('span#td').html(format_number($('#totdata').val(),0));
-	//find_by('');
+	find_by($('#carix').val());
 	
 	//add new member
 	
@@ -79,6 +79,24 @@ function find_by(nama){
 			})
 }
 
-function images_click(id){
-	show_member_detail(id);	
+function images_click(id,aksi){
+	switch(aksi)
+	{
+		case 'edit':
+		show_member_detail(id);
+		break;
+		case 'del':
+		jConfirm('Yakin akan hapus data ini','Alert',function(r)
+		{
+			if(r)
+			{
+				$.post('delete_member',{'id_member':id},
+				function(result)
+				{
+					find_by('')
+				})
+			}
+		})
+		break;
+	}
 }
