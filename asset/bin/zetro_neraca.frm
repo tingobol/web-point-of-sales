@@ -15,13 +15,13 @@
 5|Keterangan,,,,,,10%,,,40
 
 [detailbeli]
-1|Tanggal,,,,,,8%,,,20
-2|Nomor,,,,,,12%,,,20
+1|Tanggal,,,,,,8%,,,18
+2|Nomor,,,,,,12%,,,22
 3|Nama Barang,,,,,,20%,,,50
-4|Jumlah,,,,,,10%,,,22
+4|Jumlah,,,,,,10%,,,25
 5|Satuan,,,,,,10%,,,18
 6|Harga,,,,,,10%,,,25
-7|Total Harga,,,,,,10%,,,27
+7|Total Harga,,,,,,10%,,,25
 ;8|Keterangan,,,,,,10%,,,30
 
 [detailbelijual]
@@ -71,11 +71,11 @@
 [stocklist]
 1|Kode Barang,input,text n,Kode,w50,,15%,,,28,
 2|Nama Barang,input,text n,Nama_Barang,w90 upper,,25%,,,52,
-3|Kategori,input,text n,ID_Kategori,S70,,15%,,,25
+3|Kategori,input,text n,ID_Kategori,S70,,15%,,,35
 4|Jumlah,input,text d,stock,w35 angka,,10%,,,15,
 5|Satuan,input,text n,Satuan,w35,,10%,,,20
 6|Harga/Sat.,input,text d,Harga_Beli,w35 angka,,10%,,,20
-7|Status,input,text n,Status,w35,,10%,,,15,
+7|,input,text n,Status,w35,,10%,,,5,
 
 [stockadjust]
 1|Kode Barang,input,text n,Kode,w50,,15%,

@@ -48,19 +48,21 @@ class Member extends CI_Controller{
 					 $where .=" and id_Aktif='".$_POST['stat']."'";
 		 empty($_POST['searchby'])? $where .='':$where .=" and Nama like '%".$_POST['searchby']."%'";
 		 echo $where.$ordby;
+
 		$datax=$this->Admin_model->show_list('mst_anggota',$where.' '.$ordby);
 		//print_r($datax);
 		if(count($datax)>0){
 			foreach($datax as $row){
 			$n++;
-			echo tr().td($n,'center').
+		 $cek=rdb('inv_penjualan','ID_Anggota','ID_Anggota',"where ID_Anggota='".$row->ID."'");
+		 			echo tr().td($n,'center').
 					  td($row->No_Agt,'center').
 					  td($row->Nama).
 					  td($row->Catatan).
 					  td($row->Alamat." ".$row->Kota).
 					  td($row->Telepon."/".$row->Faksimili).
 					  td(number_format($row->Status,2),'right').
-					  td(img_aksi($row->ID),'center').
+					  td(($cek!='')?img_aksi($row->ID):img_aksi($row->ID,true),'center').
 					_tr();
 			}
 		}else{
@@ -73,8 +75,8 @@ class Member extends CI_Controller{
 		//table mst_anggota
 		$data=array();
 		$data['No_Agt']		=$_POST['No_Agt'];
-		$data['NoUrut']		=$_POST['No_Agt'];
-		$data['ID']			=$_POST['No_Agt'];
+		$data['NoUrut']		='0';//empty($_POST['No_Agt'];
+		$data['ID']			=empty($_POST['idm'])?'0':$_POST['idm'];
 		$data['ID_Dept']	='1';//$_POST['NIP'];
 		$data['Nama']		=addslashes(strtoupper($_POST['Nama']));
 		$data['Catatan']	=empty($_POST['Catatan'])?'':addslashes(strtoupper($_POST['Catatan']));
@@ -85,7 +87,7 @@ class Member extends CI_Controller{
 		$data['Faksimili']	=$_POST['Faksimili'];
 		$data['ID_Aktif']	=empty($_POST['ID_Aktif'])?'0':$_POST['ID_Aktif'];
 		$data['ID_Jenis']	='1';
-		$data['TanggalKeluar']=date('Ymd');
+		$data['TanggalMasuk']=empty($_POST['tglm'])?date('Ymd'):tgltoSql($_POST['tglm']);
 		$data['Status']		=empty($_POST['Status'])?'0':$_POST['Status'];
 		$this->Admin_model->replace_data('mst_anggota',$data);
 	}
@@ -114,7 +116,11 @@ class Member extends CI_Controller{
 		$datax=$this->member_model->get_propinsi($str);
 		echo json_encode($datax);	
 	}
-	
+	function delete_member()
+	{
+		$id=$_POST['id_member'];
+		$this->Admin_model->hps_data('mst_anggota',"where id='".$id."'");
+	}
 	function do_upload()
 	{	//upload foto anggota to uploads/member
 		$datax=array();
@@ -217,7 +223,7 @@ class Member extends CI_Controller{
 	
 	function get_member_kredit(){
 		$data=array();$n=0;
-		$where=($_POST['status']=='')?'':"where p.stat_pinjaman='".$_POST['status']."'";
+		$where=($_POST['status']=='')?'':"where p.stat_pinjaman='".$_POST['status']."' and left(p.ID,1)='4'";
 		$where=empty($_POST['cari'])?$where:"where a.Nama like '".$_POST['cari']."%'";
 		$orderby=" order by ".$_POST['orderby'];
 		$orderby.=empty($_POST['urutan'])? '':' '.$_POST['urutan'];

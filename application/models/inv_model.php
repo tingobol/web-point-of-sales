@@ -261,7 +261,7 @@ class Inv_model extends CI_Model {
 		return $data->result();
 	}
 	function get_detail_stocked($nm_barang,$sort='',$return='1',$limit='limit 1',$lokasi='1'){
-		$ret=($return=='1')?"and stock <>'0'":'';
+		$ret=($return=='1')?"and stock >='0'":'';
 		$sql="select batch, sum(stock) as stock, sum(blokstok) as blokstok,
 			   expired,nm_satuan,harga_beli from inv_material_stok where id_barang='$nm_barang'
 			   $ret and id_lokasi='$lokasi' group by batch order by doc_date,batch $sort $limit";
@@ -292,6 +292,55 @@ class Inv_model extends CI_Model {
 			  where pd.ID='".$id."'";
 		$data=$this->db->query($sql);
 		return $data->result();
+	}
+	/**
+	added on 31-07-2013
+	for support list transaksi method
+	
+	*/
+	function show_transjual($where)
+	{
+		$sql="select pd.ID,p.ID as ID_j,
+			p.ID_Jenis,p.Tanggal,p.NoUrut,
+			pd.ID_Barang,pd.Jumlah,pd.Harga,p.Total,p.ID_Post,
+			a.No_Agt,a.Nama,pj.Jenis_Jual
+			from inv_penjualan as p
+			left join inv_penjualan_detail as pd
+			on pd.ID_Jual=p.ID
+			left join mst_anggota as a
+			on a.ID=p.ID_Anggota
+			left join inv_penjualan_jenis as pj
+			on pj.ID=p.ID_Jenis
+			$where
+			group by p.ID
+			order by p.Tanggal,p.ID";	
+			$data=$this->db->query($sql);
+			return $data->result();
+	}
+	
+	function get_detail_transak($where)
+	{
+		$sql="select p.ID,p.ID_Jenis,p.Tanggal,p.ID_Barang,
+				b.Nama_Barang,sb.Satuan,p.Jumlah,p.Harga,p.ID_Post,p.Keterangan
+				from inv_penjualan_detail as p
+				left join inv_barang as b
+				on b.ID=p.ID_Barang
+				left join inv_barang_satuan as sb
+				on sb.ID=b.ID_Satuan ".$where ;
+			$data=$this->db->query($sql);
+			return $data->result();
+	}
+	//============================================
+	function trans_pemasok($where){
+		$sql="select a.Nama as Pemasok ,p.ID
+			  from inv_pembelian as p
+			  right join mst_anggota as a
+			  on a.ID=p.ID_Pemasok and p.ID_Pemasok<>'0'
+			  $where
+			  group by p.ID_Pemasok";
+			// echo $sql; 
+			$data=$this->db->query($sql);
+			return $data->result();
 	}
 	function auto_data(){
 	//membuat jenis pembelian

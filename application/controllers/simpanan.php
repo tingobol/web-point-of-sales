@@ -201,7 +201,7 @@ class Simpanan extends CI_Controller{
 			$this->Admin_model->upd_data('pinjaman',"set stat_pinjaman='1'","where ID='".$_POST['ID_Pinj']."' and Tahun='".$_POST['ThnAsal']."'"):
 			$this->Admin_model->upd_data('pinjaman',"set lama_cicilan='".($lama+1)."'","where ID='".$_POST['ID_Pinj']."' and Tahun='".$_POST['ThnAsal']."'");
 			//simpan kredit to table transaksi_temp / jurnal temporary
-			$datax['ID_Unit']	=rdb('jenis_simpanan','ID_Unit','ID_Unit',"where ID='".$id_jenis."'");
+			$datax['ID_Unit']	='1';//rdb('jenis_simpanan','ID_Unit','ID_Unit',"where ID='".$id_jenis."'");
 			$datax['ID_Dept']	=$this->session->userdata('gudang');//rdb('jenis_simpanan','ID_Dept','ID_Dept',"where ID='".$id_jenis."'");
 			$datax['ID_Klas']	=rdb('jenis_simpanan','ID_Klasifikasi','ID_Klasifikasi',"where ID='".$id_jenis."'");
 			$datax['ID_SubKlas']=rdb('jenis_simpanan','ID_SubKlas','ID_SubKlas',"where ID='".$id_jenis."'");

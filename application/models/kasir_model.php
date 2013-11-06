@@ -163,7 +163,7 @@ class Kasir_model extends CI_Model {
 			  on d.ID=b.ID_Aktif
 			  $where
 			  $orderby";
-			//echo $sql;
+			echo $sql;
 		$data=$this->db->query($sql);
 		return $data->result();
 	}
@@ -180,6 +180,7 @@ class Kasir_model extends CI_Model {
 			  on bs.ID=b.ID_Satuan
 			  where p.ID_Anggota='$ID' and p.ID_Jenis in('2','3') and pd.Jumlah <>'0'
 			  order by p.Tanggal";	
+			  echo $sql;
 		$data=$this->db->query($sql);
 		return $data->result();
 	}

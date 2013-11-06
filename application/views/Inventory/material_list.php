@@ -85,6 +85,7 @@ echo "<input type='hidden' value='".date('d/m/Y')."' id='today'>";
 		//$('#v_listobat table#ListTable').fixedHeader({width:900,height:400})
 	_show_data();
     });
+
 </script>
 <input type='hidden' id='id_kategori' value=''>
 <input type='hidden' id='id_jenis' value=''>

@@ -293,7 +293,8 @@ $(document).ready(function (e) {
         $('span#sat').html($('#frm4 select#nm_satuan option:selected').text());
     });
     $('#plh').change(function () {
-        _show_data();
+       // _show_data();
+		_show_jenis($(this).val());
     });
     $('#plh_jenis').change(function () {
         _show_data();
@@ -423,7 +424,12 @@ $(document).ready(function (e) {
         keluar_edit_detail_barang();
     });
 });
-
+function _show_jenis(id)
+{
+	$.post(path +'inventory/getjenisbarang',{'id':id},function(result){
+		$('#plh_jenis').html(result);
+	})
+}
 function upd_det_barang(id) {
     $('#pp-edit_detail_barang').css({
         'left': '20%',

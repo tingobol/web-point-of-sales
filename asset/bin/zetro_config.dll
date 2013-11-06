@@ -2,11 +2,11 @@
 hostname|localhost
 username|root
 password|xroot
-dbname|putridb
+dbname|pdsimpangdb
 
 [WebPage]
 Title|WaterMelons V.2.1
-subtitle|PUTRI KOMPUTER
+subtitle|PD.SIMPANG
 
 [Path]
 z_menu|asset/bin/zetro_menu.dll
@@ -16,79 +16,35 @@ z_form|asset/bin/form.cfg
 localhost|http://localhost/kbr
 
 [InfoCo]
-Name|PUTRI KOMPUTER
-subtitle|Toko Komputer
-Address|JL. IBRAHIM SINGADILAGA
+Name|PD.SIMPANG
+subtitle|JUAL BAHAN BANGUNAN
+Address|JL. KAPTEN HALIM NO.129 SIMPANG-
 Kota|PURWAKARTA 41152
 Propinsi|JAWA BARAT
-Telp|TELP :(0264) 6654
-Fax|FAX :(0264)5576
+Telp|TELP :(0264)202437
+Fax|FAX :(0264)
 Pobox|41152
 
 [PUSAT]
-Name|PUTRI KOMPUTER
-subtitle|Toko Komputer
-Address|JL. IBRAHIM SINGADILAGA NO.64 KONCARA
-Kota|PURWAKARTA
+Name|PD.SIMPANG
+subtitle|JUAL BAHAN BANGUNAN
+Address|JL. KAPTEN HALIM NO.129 SIMPANG-
+Kota|PURWAKARTA 41152
 Propinsi|JAWA BARAT
-Telp|TELP :(0264) 231230/8220524
-Fax|FAX :(0264)8221961
+Telp|TELP :(0264)202437
+Fax|FAX :(0264)
 Pobox|41152
 
-[DAWUAN]
-Name|PUTRI KOMPUTER
-subtitle|Toko Komputer
-Address|JL. A.YANI DAWUAN TENGAH CIKAMPEK
-Kota|KARAWANG
-Propinsi|JAWA BARAT
-Telp|TELP :(0264) 8386836
-Fax|FAX :(0264)8386837
-Pobox|41152
+[CABANG 1]
+Name|
+subtitle|
+Address|
+Kota|
+Propinsi|
+Telp|TELP 
+Fax|FAX 
+Pobox|
 
-[MALL CIKAMPEK]
-Name|PUTRI KOMPUTER
-subtitle|Toko Komputer
-Address|JL. A.YANI CIKAMPEK MALL LANTAI 3
-Kota|CIKAMPEK KARAWANG
-Propinsi|JAWA BARAT
-Telp|TELP :(0264) 231230/8220524
-Fax|FAX :(0264)8221961
-
-[NIAGA KARAWANG]
-Name|PUTRI KOMPUTER
-subtitle|Toko Komputer
-Address|JL. ARIF RAHMAN HAKIM RUKO NIAGA
-Kota|KARAWANG
-Propinsi|JAWA BARAT
-Telp|TELP :(0267) 8454137
-Fax|
-
-[MALL RAMAYANA]
-Name|PUTRI KOMPUTER
-subtitle|Toko Komputer
-Address|MALL KARAWANG
-Kota|KARAWANG
-Propinsi|JAWA BARAT
-Telp|0267 845 4137
-Fax|
-
-[SUBANG]
-Name|PUTRI KOMPUTER
-subtitle|Toko Komputer
-Address|JL. OTISTA NO. 145 
-Kota|SUBANG
-Propinsi|JAWA BARAT
-Telp|TELP :(0260) 722368
-Fax|
-
-[RIZAL KUNINGAN]
-Name|PUTRI KOMPUTER
-subtitle|Toko Komputer
-Address|Jl. JEND. SUDIRMAN RUKO GRIYA BOJONG
-Kota|KUNINGAN
-Propinsi|JAWA BARAT
-Telp|TELP :(0232) 8882283 /9110021
-Fax|
 
 [SHU Kode]
 1|35|SHU Tahun Lalu

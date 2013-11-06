@@ -1,0 +1,4 @@
+[POS PD Simpang]
+[04-09-2013]
+-penjualan
+	- proses to jurnal depreciated

@@ -339,12 +339,13 @@ class Master extends CI_Controller {
 		foreach($data as $row){
 			$n++;//tr('xx\' onClick="_show_detail(\''.$row->ID.'\');" attr=\'ax').
 			$cek=rdb('inv_pembelian','ID_Pemasok','ID_Pemasok',"where ID_Pemasok='".$row->ID."'");
+			$oto=$this->zetro_auth->cek_oto('e','listvendor');
 			echo tr().
 				 td($n,'center').
 				 td($row->No_Agt,'center').
 				 td($row->Nama,'xx\' onClick="_show_detail(\''.$row->ID.'\',\''.$row->Nama.'\');" attr=\'ax').
 				 td($row->Alamat).td($row->Kota).td($row->Propinsi).
-				 td(number_format($row->saldo_piutang,2),'right').
+				 td(number_format((int)rdb("pinjaman","total","sum(jml_pinjaman) as total","where ID_Agt='".$row->ID."' and left(ID,1)='5' group by ID_Agt"),2),'right').
 				 td(($cek=='')? img_aksi($row->ID.':'.$row->Nama,true):'','center').
 				 _tr();
 		}

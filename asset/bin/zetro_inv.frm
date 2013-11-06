@@ -152,3 +152,20 @@
 1|IDR,Rupiah
 2|USD,US Dolar
 3|EUR,Euro
+
+[listjual]
+1|Tanggal,,,,,,10%
+2|No. Trans,,,,,,10%
+3|Nama Anggota,,,,,,20%
+4|Status,,,,,,10%
+5|Jumlah,,,,,,10%
+6|Keterangan,,,,,,10%
+
+[transdetail]
+1|No. Trans,input,text,id_trans,w50,,,
+2|Tanggal,input,text,tgl_trans,w35,,,,
+3|Nama Barang,input,text,nm_barang,w90' data-provide='typeahead' data-items='10,,,
+4|Satuan,input,text,id_satuan,w35,,,
+5|Jumlah,input,text,jumlah,w50 angka,,,,
+6|Harga,input,text,harga,w50 angka,,,,
+

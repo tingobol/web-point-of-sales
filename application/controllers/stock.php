@@ -69,11 +69,16 @@ class Stock extends CI_Controller{
 	}
 	
 	function get_bacth(){
-		$data=array();
-		$id=$_POST['id_barang'];
+		$data=array();$bath=array();
+		$id=empty($_POST['id_barang'])?'':$_POST['id_barang'];
 		$lokasi=empty($_POST['lokasi'])?'1':$_POST['lokasi'];
-		$data=$this->inv_model->get_detail_stocked($id,'Desc','1','limit 1',$lokasi);	
-		echo (count($data)>0)?json_encode($data[0]):'{"batch":"0"}';
+		$data=$this->inv_model->get_detail_stocked($id,'Desc','1','limit 1',$lokasi);
+		foreach($data as $r){
+			$bath['batch']=$r->batch;
+			$bath['harga_beli']=$r->harga_beli;
+		}
+		//echo $bath;
+		echo ($data)?json_encode($data[0]):'{"batch":""}';
 	}
 	function list_filtered(){
 		$nmj=array(); $data='';$valfld='';$n=0;
@@ -112,7 +117,7 @@ class Stock extends CI_Controller{
 	}
 	function get_material_stock(){
 		$data=array();$stok=0;$sat='';$datax=array();
-		$id_material=$_POST['id_material'];
+		$id_material=empty($_POST['id_material'])?'':$_POST['id_material'];
 		$lokasi=empty($_POST['lokasi'])?'':" and s.id_lokasi='".$_POST['lokasi']."'";
 		$data=$this->inv_model->get_total_stock($id_material,$lokasi);
 		foreach($data as $r){
@@ -194,14 +199,14 @@ class Stock extends CI_Controller{
 		$data=array();$n=0; $where='';
 		$where=($this->input->post('Kategori')=='')?'':"where im.ID_Kategori='".$this->input->post('Kategori')."' and ms.Stock<>'0'";
 		$where.=($where=='' && $this->input->post('id_lokasi')!='')?
-				"where ms.id_lokasi='".$this->input->post('id_lokasi')."' and ms.Stock<>'0'":
-				"  and ms.id_lokasi='".$this->input->post('id_lokasi')."' and ms.Stock<>'0'";
+				"where ms.id_lokasi='".$this->input->post('id_lokasi')."' /*and ms.Stock<>'0'*/":
+				"  and ms.id_lokasi='".$this->input->post('id_lokasi')."' /*and ms.Stock<>'0'*/";
 		//$where.=($this->input->post('Stat')=='')?'':" and Status='".$this->input->post('Stat')."'";
 		$orderby=($this->input->post('orderby')=='')?'':" order by ".str_replace('-',',',$this->input->post('orderby'))." ";
 		$orderby.=($this->input->post('urutan')=='')?'':strtoupper($this->input->post('urutan'));
 		$data['kategori']=rdb('inv_barang_kategori','Kategori','Kategori',"where ID='".$this->input->post('Kategori')."'");
 		$data['status']	=$this->input->post('Stat');
-		$data['temp_rec']=$this->report_model->stock_list($where,'stock',$orderby);
+		$data['temp_rec']=$this->report_model->stock_list($where,'stock',$orderby,'right');
 			$this->zetro_auth->menu_id(array('trans_beli'));
 			$this->list_data($data);
 		    $this->View("laporan/transaksi/lap_stock_print");

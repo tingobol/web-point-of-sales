@@ -84,6 +84,12 @@ class Inventory extends CI_Controller {
 			}
 		}
 	}
+	function getjenisbarang()
+	{
+		$data=array();
+		$id=$_POST['id'];
+		dropdown("inv_barang_jenis_v",'ID','JenisBarang',"where ID_Kategori='".$id."' order by JenisBarang");	
+	}
 	function jenis_list(){
 		$data=array();$n=0;
 		$nTable=empty($_POST['tabel'])?'inv_barang_jenis':$_POST['tabel'];
